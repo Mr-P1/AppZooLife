@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "8229883615",
+    "project_id": "appzoolife",
+    "storage_bucket": "appzoolife.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8229883615:android:414ddee0295c6fd48a636a",
+        "android_client_info": {
+          "package_name": "com.notipush.zoolife"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2Ri4jLTZ1eA7pxzFvBFbwsvrKou4xYNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

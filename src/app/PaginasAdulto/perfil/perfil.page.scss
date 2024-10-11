@@ -1,0 +1,55 @@
+ion-content {
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.perfil-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.perfil-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.perfil-avatar {
+  width: 120px;
+  height: 120px;
+  border: 5px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.info-col {
+  text-align: center;
+  color: white;
+  font-size: 18px;
+}
+
+ion-card {
+  margin-top: 20px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+ion-card-content {
+  text-align: center;
+}
+
+ion-card-title {
+  color: #80a522;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2rem; /* Aumenta un poco el tamaño del título */
+}

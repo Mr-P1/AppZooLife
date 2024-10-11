@@ -1,0 +1,66 @@
+<ion-content>
+  <ion-searchbar
+  color="light"
+  placeholder="Buscar atracción"
+  (ionInput)="filterAnimals($event)"
+  [value]="searchTerm"
+  ></ion-searchbar>
+
+  <h2>Adulto</h2>
+
+  <ion-list *ngIf="filteredAnimals.length > 0">
+    <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
+      {{ animal.nombre_comun }}
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="filteredAnimals.length === 0 && searchTerm">
+    <ion-label>No se encontraron resultados</ion-label>
+  </ion-item>
+
+  <ion-card *ngFor="let animal of animales" class="animal-card">
+    <div class="image-container">
+      <img alt="{{animal.nombre_comun}}" src="{{animal.imagen}}" [routerLink]="['/animal-info', animal.id]"/>
+      <div class="icono-numero">{{animal.posicion_mapa}}</div>
+    </div>
+    <ion-card-header class="card-header">
+      <div class="header-content">
+        <ion-button fill="clear" (click)="like(animal.id)">
+          <img [src]="animal.reaccion === true ? '../../../assets/icon/likeVerde.png' : '../../../assets/icon/likeNegro.png'" alt="Me gusta" />
+        </ion-button>
+
+        <div class="title-container">
+          <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
+          <ion-card-subtitle class="estado"
+            [ngClass]="{
+              'estado-disponible': animal.disponibilidad === 'Disponible',
+              'estado-no-disponible': animal.disponibilidad === 'Tratamiento',
+              'estado-proximamente' : animal.disponibilidad === 'Proximamente'
+            }">{{animal.disponibilidad}}</ion-card-subtitle>
+        </div>
+
+        <ion-button fill="clear" (click)="dontLike(animal.id)">
+          <img [src]="animal.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'" alt="Me gusta" />
+        </ion-button>
+      </div>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="document"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="color-palette"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="globe"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-content>
+  <div class="perfil-content">
+    <div class="perfil-info-row">
+      <div class="info-col">
+        <h3>{{usuario?.puntos}}<br>Puntos</h3>
+      </div>
+
+      <ion-avatar class="perfil-avatar">
+        <img src="../../../assets/icon/raton.jpg" alt="Foto de perfil" />
+      </ion-avatar>
+
+      <div class="info-col">
+        <h3>{{usuario?.nivel}}<br>Nivel</h3>
+      </div>
+    </div>
+
+    <ion-card>
+      <ion-card-header >
+        <ion-card-title>Estadisticas</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p><strong>Preguntas correctas</strong>: 54 </p>
+        <p><strong>Preguntas incorrectas</strong>: 26 </p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-card-header >
+          <ion-card-title>Datos Personales</ion-card-title>
+        </ion-card-header>
+        <p><strong>Nombre</strong>: {{usuario?.nombre}} </p>
+        <p><strong>Teléfono</strong>: {{usuario?.telefono}}</p>
+        <p><strong>Correo</strong>: {{usuario?.correo}}</p>
+        <p><strong>Cuenta</strong>: {{usuario?.tipo}} </p>
+        <p><strong>Patente</strong>: {{usuario?.patente}}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

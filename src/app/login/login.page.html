@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Logearse</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+        type="email"
+        fill="solid"
+        label="Email"
+        labelPlacement="floating"
+        helperText="Enter a valid email"
+        errorText="Invalid email"
+        formControlName="email"
+      ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+        type="password"
+        fill="solid"
+        label="Contraseña"
+        labelPlacement="floating"
+        helperText="Debe tener 5 caracteres minimo"
+        errorText="contraseña invalida"
+        [counter]="true" minlength="5"
+        formControlName="password"
+      ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+        type="text"
+        fill="solid"
+        label="boleta"
+        labelPlacement="floating"
+        helperText="Enter a valid boleta"
+        errorText="Invalid boleta"
+        formControlName="boleta"
+      ></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <div>
+      <ion-button
+      type="submit"
+      expand="full">
+        Logearse
+      </ion-button>
+
+      <ion-button
+      expand="full"
+      [routerLink]="['/registrarse']">
+        Registrarse
+      </ion-button>
+
+
+
+    <ion-button [routerLink]="['/home']">
+      Home
+    </ion-button>
+    </div>
+
+
+  </form>
+</ion-content>
