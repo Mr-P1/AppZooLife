@@ -8,6 +8,10 @@ import {
 } from '@capacitor/push-notifications';
 import {Platform} from '@ionic/angular'
 
+
+import { register } from 'swiper/element/bundle';
+register();
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -38,28 +42,28 @@ export class AppComponent {
    //Añade al usuario para que reciba las notificaciones
     PushNotifications.addListener('registration',
       (token: Token) => {
-       
+
       }
     );
 
     // Some issue with our setup and push will not work
     PushNotifications.addListener('registrationError',
       (error: any) => {
-       
+
       }
     );
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-       
+
       }
     );
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
-       
+
       }
     );
   }
