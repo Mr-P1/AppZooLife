@@ -53,11 +53,16 @@ export const routes: Routes = [
         loadComponent: () => import('./PaginasAdulto/eventos/eventos.page').then(m => m.EventosPage)
       },
 
+
     ]
   },
   {
     path: 'animal-info/:id',
     loadComponent: () => import('./PaginasAdulto/animal-info/animal-info.page').then( m => m.AnimalInfoPage)
+  },
+  {
+    path: 'eventos-info/:id',
+    loadComponent: () => import('./PaginasAdulto/eventos-info/eventos-info.page').then( m => m.EventosInfoPage)
   },
 
 
@@ -74,6 +79,7 @@ export const routes: Routes = [
 
     ]
   },
+
 
 
 

@@ -6,7 +6,27 @@
   [value]="searchTerm"
   ></ion-searchbar>
 
-  <h2>Adulto</h2>
+   <!-- Carrusel de imágenes -->
+
+   <swiper-container [pagination]="true" [loop]="true" [autoplay]="{ delay: 3000 }" effect="cards" >
+    <swiper-slide *ngFor="let imagen of imagenes">
+      <img [src]="imagen" alt="Imagen de animal">
+    </swiper-slide>
+  </swiper-container>
+
+
+
+
+  <!-- Botones debajo del carrusel -->
+  <div class="buttons-container">
+    <ion-button fill="solid" class="custom-button" color="primary">
+      Especie
+    </ion-button>
+    <ion-button fill="solid" class="custom-button" color="primary">
+      Ruta sugerida
+    </ion-button>
+  </div>
+
 
   <ion-list *ngIf="filteredAnimals.length > 0">
     <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">

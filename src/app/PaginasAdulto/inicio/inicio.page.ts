@@ -9,12 +9,14 @@ import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { star,personCircle, chevronUpCircle, document, colorPalette, globe } from 'ionicons/icons';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 @Component({
   selector: 'app-inicio-adulto',
   templateUrl: './inicio.page.html',
   styleUrls: ['./inicio.page.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
   imports: [IonIcon, IonFabList, IonFabButton, IonFab, IonCardTitle, IonButton, IonCardHeader, IonCard, IonLabel, IonSearchbar, IonItem, IonList, IonContent, CommonModule, RouterLink,]
 })
@@ -34,6 +36,15 @@ export class InicioPage implements OnInit {
   ) {
     addIcons({chevronUpCircle,document,colorPalette,globe,star,personCircle});
   }
+
+
+  imagenes = [
+    'assets/slides/Slide1.jpg',
+    'assets/slides/Slide2.jpg',
+    'assets/slides/Slide3.jpg',
+    'assets/slides/Slide4.jpg',
+  ];
+
 
   ngOnInit(): void {
 

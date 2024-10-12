@@ -1,57 +1,101 @@
 ion-content {
-  --background: none; /* Elimina el background por defecto de Ionic */
-
-  /* Establece dos imágenes de fondo, una a la izquierda y otra a la derecha */
-  background-image: url(./../../assets/fondos/fondo_paginas.jpg), url(./../../assets/fondos/fondo_curiosidad.jpg) ;
-
-  /* Ajusta las imágenes para que cada una ocupe la mitad de la pantalla */
-  background-size: 50% 100%; /* Cada imagen ocupa el 50% del ancho y el 100% de la altura */
-
-  /* Posiciona la primera imagen en la izquierda y la segunda en la derecha */
-  background-position: left, right;
-
-  /* Evita que las imágenes se repitan */
+  --background: none;
+  background-image: url(./../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-
-  height: 100%; /* Asegura que el fondo cubra toda la altura */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Posicionamiento del texto en la esquina superior derecha */
-.top-right-text {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: black;
+/* Contenedor de la imagen superior */
+.top-image-container {
+  width: 100%;
+  max-width: 800px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Posicionamiento del texto en la esquina superior izquierda */
-.top-left-text {
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: black;
+.top-image-container img {
+  width: 70%;
+  height: auto;
+  object-fit: contain;
 }
 
-/* Contenedor de los botones a la izquierda */
-.buttons-container {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+/* Contenedor de las tarjetas */
+.cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "nino adulto"
+    "informacion informacion";
+  gap: 15px;
+  padding: 15px;
+  width: 90%;
+  max-width: 800px;
+  justify-content: center;
+  align-content: center;
+}
+
+/* Tarjetas con fondo blanco y sombra */
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: white; /* Fondo blanco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
 }
 
-/* Estilos personalizados para los botones */
-.custom-button {
-  width: 120px;
-  border-radius: 20px;
+/* Contenedor de las imágenes */
+.image-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Título superpuesto */
+ion-card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   text-align: center;
-  --background: rgba(255, 255, 255, 0.8); /* Fondo transparente */
-  --color: black;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+/* Asignación de áreas */
+.nino {
+  grid-area: nino;
+}
+
+.adulto {
+  grid-area: adulto;
+}
+
+.informacion {
+  grid-area: informacion;
+  height: 180px;
+  margin-top: -10px;
 }
