@@ -1,28 +1,39 @@
-<ion-header [translucent]="true">
-</ion-header>
-
 <ion-content [fullscreen]="true" class="content-custom">
 
-  <!-- Sección izquierda -->
-  <div class="half left-side">
-    <div class="top-left-text">
-      Bioparque
+  <!-- Imagen en la parte superior -->
+   <div class="half-image">
+    <div class="top-image-container">
+      <img src="../../assets/fondos/logo.png" alt="Zoo Logo" />
     </div>
-    <div class="buttons-container">
-      <ion-button fill="solid" class="custom-button" color="light" [routerLink]="['/adulto/inicio']">
-        Adulto
-      </ion-button>
-      <ion-button fill="solid" class="custom-button" color="light" [routerLink]="['/nino/inicio']">
-        Niño
-      </ion-button>
-    </div>
+
+   </div>
+
+
+  <!-- Contenedor de tarjetas de secciones -->
+  <div class="half-white">
+  <div class="cards-container">
+    <ion-card [routerLink]="['/nino/inicio']" class="card nino">
+      <div class="image-container">
+        <img src="https://finde.latercera.com/wp-content/uploads/2023/01/Buin-zoo-dinos-3-ok.jpg" />
+      </div>
+      <ion-card-title>Niño</ion-card-title>
+    </ion-card>
+
+    <ion-card [routerLink]="['/adulto/inicio']" class="card adulto">
+      <div class="image-container">
+        <img src="https://prensacurico.cl/portal/wp-content/uploads/2018/11/buin-zoo.jpg" />
+      </div>
+      <ion-card-title>Adulto</ion-card-title>
+    </ion-card>
+
+    <ion-card routerLink="/" class="card informacion">
+      <div class="image-container">
+        <img src="https://www.latercera.com/resizer/hNMszsJhkiyhjerQ2Iu0NflJcNU=/arc-anglerfish-arc2-prod-copesa/public/CSAVWFZEDREUDC6FAXZGRFL5YY.jpg" />
+      </div>
+      <ion-card-title>Información</ion-card-title>
+    </ion-card>
   </div>
 
-  <!-- Sección derecha -->
-  <div class="half right-side">
-    <div class="top-right-text">
-      Información
-    </div>
-  </div>
+</div>
 
 </ion-content>
