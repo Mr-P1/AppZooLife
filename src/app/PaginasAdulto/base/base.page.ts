@@ -9,15 +9,15 @@ import { map } from 'rxjs/operators';
 
 
 import { addIcons } from 'ionicons';
-import { star,personCircle, chevronUpCircle, document, colorPalette, globe } from 'ionicons/icons';
-import { IonHeader, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton, IonFab, IonFabList, IonIcon, IonFabButton } from "@ionic/angular/standalone";
+import { star,personCircle, chevronUpCircle, document, colorPalette, globe, homeOutline } from 'ionicons/icons';
+import { IonHeader, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton, IonFab, IonFabList, IonIcon, IonFabButton, IonApp } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-base',
   templateUrl: './base.page.html',
   styleUrls: ['./base.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonIcon, IonFabList, IonFab, IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
+  imports: [IonApp, IonFabButton, IonIcon, IonFabList, IonFab, IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
 })
 export class BasePage implements OnInit {
 
@@ -55,13 +55,13 @@ export class BasePage implements OnInit {
 
   // Método para actualizar el título basado en la URL
   private updateTitle(url: string) {
-    if (url.includes('home')) {
+    if (url.includes('inicio')) {
       this.pageTitle = 'Inicio';
     } else if (url.includes('perfil')) {
       this.pageTitle = 'Perfil';
     } else if (url.includes('trivia')) {
       this.pageTitle = 'Trivia';
-    } else if (url.includes('events')) {
+    } else if (url.includes('eventos')) {
       this.pageTitle = 'Eventos';
     } else if (url.includes('mapa')) {
       this.pageTitle = 'Mapa';
@@ -73,6 +73,8 @@ export class BasePage implements OnInit {
       this.pageTitle = 'Menú';  // Título por defecto
     }
   }
+
+
 
 
 
