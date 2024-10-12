@@ -6,17 +6,17 @@ import { AuthService } from 'src/app/common/servicios/auth.service';
 import { ContadorService } from './../../common/servicios/contador.service';
 import { PipesModule } from 'src/app/common/servicios/pipe.module';
 import { map } from 'rxjs/operators';
-import { IonHeader, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton, IonButton, IonIcon } from "@ionic/angular/standalone";
 
 
 import { addIcons } from 'ionicons';
-import { star,personCircle } from 'ionicons/icons';
+import { star,personCircle, homeOutline } from 'ionicons/icons';
 @Component({
   selector: 'app-base-nino',
   templateUrl: './base.page.html',
   styleUrls: ['./base.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
+  imports: [IonIcon, IonButton, IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
 })
 export class BasePage implements OnInit{
 
@@ -30,7 +30,7 @@ export class BasePage implements OnInit{
   pageTitle: string = 'Home';  // Título por defecto
 
   constructor() {
-    addIcons({ star,personCircle });
+    addIcons({homeOutline,star,personCircle});
 
     this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

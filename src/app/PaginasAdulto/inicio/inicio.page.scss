@@ -2,6 +2,11 @@
   margin: 15px;
   border-radius: 15px;
   overflow: hidden;
+  background-color: #ff8800;
+}
+
+.card-header{
+  background-color: #19e89c;
 }
 
 .image-container {
@@ -11,9 +16,9 @@
 }
 
 .image-container img {
-  width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho del contenedor */
-  height: 200px; /* Establece una altura fija para estandarizar el tamaño de las imágenes */
-  object-fit: cover; /* Asegúrate de que la imagen cubra todo el área sin distorsionarse */
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
   border-radius: 10px;
 }
 
@@ -24,14 +29,15 @@
   background-color: #ff8800;
   color: white;
   border-radius: 50%;
-  width: 40px; /* Asegura que el ancho del círculo sea suficiente para dos dígitos */
-  height: 40px; /* Hace el contenedor circular */
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   font-size: 16px;
 }
+
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -45,6 +51,20 @@
 .estado {
   font-size: 0.85em;
 }
+
+/* Estilos para los diferentes estados de disponibilidad */
+.estado-disponible {
+  color: green; /* Texto en verde para Disponible */
+}
+
+.estado-no-disponible {
+  color: orange; /* Texto en naranjo para Tratamiento */
+}
+
+.estado-proximamente {
+  color: rgb(232, 232, 43); /* Texto en amarillo para Proximamente */
+}
+
 
 ion-card-title {
   margin-top: 0.5rem;
@@ -65,10 +85,58 @@ ion-button img {
 }
 
 ion-content {
-  --background: none; /* Elimina el background por defecto si es necesario */
+  --background: none;
   background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
-  background-size: cover; /* Ajusta la imagen para cubrir completamente el modal */
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  height: 100%; /* Asegura que el fondo cubra toda la altura */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
 }
+
+
+/* Estilo para los botones debajo del carrusel */
+.buttons-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.custom-button {
+  width: 150px;
+  text-align: center;
+  --background: #ff8800;
+  --color: white;
+}
+
+
+swiper-container {
+  --swiper-pagination-bullet-inactive-color: var(--ion-text-color-step-800, #cccccc);
+  --swiper-pagination-color: var( #ffffff);
+  --swiper-pagination-progressbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.25);
+  --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+  --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
+  height: 230px; /* Ajusta este valor para controlar la altura */
+}
+
+
+
+
+swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+}
+
+
+swiper-slide img {
+  width: 100%;
+  height: 100%; /* Asegúrate de que la imagen ocupe toda la altura del slide */
+  object-fit: cover; /* Recorta las imágenes para que cubran completamente el área del slide */
+  object-position: center; /* Centra la imagen en caso de recorte */
+  border-radius: 10px; /* Opcional: le da bordes redondeados a las imágenes */
+}
+
+
