@@ -1,15 +1,18 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
 import { Reaction } from 'src/app/common/models/reaction.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from './../../common/servicios/auth.service';
-import { IonContent, IonSearchbar, IonList, IonItem, IonLabel, IonCardHeader, IonButton, IonCardTitle, IonCard } from "@ionic/angular/standalone";
+import { IonContent, IonSearchbar, IonList, IonItem, IonLabel, IonCardHeader, IonButton, IonCardTitle, IonCard} from "@ionic/angular/standalone";
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-inicio-nino',
   templateUrl: './inicio.page.html',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styleUrls: ['./inicio.page.scss'],
   standalone: true,
   imports: [IonCard, IonCardTitle, IonButton, IonCardHeader, IonLabel, IonItem, IonList, IonSearchbar, IonContent, CommonModule, RouterLink,]
@@ -20,6 +23,14 @@ export class InicioPage implements OnInit {
   userId:string = '';
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
   searchTerm: string = ''; // Para almacenar el término de búsqueda
+
+  imagenes = [
+    'assets/slides/Slide1.jpg',
+    'assets/slides/Slide2.jpg',
+    'assets/slides/Slide3.jpg',
+    'assets/slides/Slide4.jpg',
+  ];
+
 
   constructor(
     private animalsService: FirestoreService,

@@ -1,0 +1,173 @@
+.animal-card {
+  margin: 15px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  text-align: center;
+  padding: 5px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.icono-numero {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff8800;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-container {
+  text-align: center;
+}
+
+.estado {
+  font-size: 0.85em;
+}
+
+/* Estilos para los diferentes estados de disponibilidad */
+.estado-disponible {
+  color: green; /* Texto en verde para Disponible */
+}
+
+.estado-no-disponible {
+  color: orange; /* Texto en naranjo para Tratamiento */
+}
+
+.estado-proximamente {
+  color: rgb(222, 222, 26); /* Texto en amarillo para Proximamente */
+}
+
+
+ion-card-title {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+ion-card-subtitle {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+ion-button img {
+  width: 24px;
+  height: 24px;
+}
+
+ion-content {
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+
+/* Estilo para los botones debajo del carrusel */
+.buttons-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.custom-button {
+  width: 150px;
+  text-align: center;
+  --background: #ff8800;
+  --color: white;
+}
+
+
+swiper-container {
+  --swiper-pagination-bullet-inactive-color: var(--ion-text-color-step-800, #cccccc);
+  --swiper-pagination-color: var( #ffffff);
+  --swiper-pagination-progressbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.25);
+  --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+  --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
+  height: 230px; /* Ajusta este valor para controlar la altura */
+}
+
+// swiper-container {
+//   --swiper-pagination-bullet-inactive-color: var(--ion-text-color-step-800, #cccccc);
+//   --swiper-pagination-color: var(--ion-color-primary, #0054e9);
+//   --swiper-pagination-progressbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.25);
+//   --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+//   --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
+
+//   /* Ajusta la altura del contenedor del carrusel */
+//   height: 300px; /* Ajusta este valor para controlar la altura */
+// }
+
+
+swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+}
+
+
+swiper-slide img {
+  width: 100%;
+  height: 100%; /* Asegúrate de que la imagen ocupe toda la altura del slide */
+  object-fit: cover; /* Recorta las imágenes para que cubran completamente el área del slide */
+  object-position: center; /* Centra la imagen en caso de recorte */
+  border-radius: 10px; /* Opcional: le da bordes redondeados a las imágenes */
+}
+
+
+// swiper-container {
+//   --swiper-pagination-bullet-inactive-color: var(--ion-text-color-step-800, #cccccc);
+//   --swiper-pagination-color: var(--ion-color-primary, #0054e9);
+//   --swiper-pagination-progressbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.25);
+//   --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+//   --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
+
+//   /* Ajusta la altura del contenedor del carrusel */
+//   height: 300px; /* Ajusta este valor para controlar la altura */
+// }
+
+// swiper-slide {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   height: 100%;
+//   width: 100%;
+
+// }
+
+// swiper-slide img {
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover; /* Recorta la imagen pero la mantiene centrada */
+//   object-position: center; /* Centra la imagen */
+//   border-radius: 10px; /* Opcional: bordes redondeados */
+// }

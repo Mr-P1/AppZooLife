@@ -1,12 +1,36 @@
 <ion-content>
+
+  <!-- Barra de búsqueda -->
   <ion-searchbar
-  color="light"
-  placeholder="Buscar atracción"
-  (ionInput)="filterAnimals($event)"
-  [value]="searchTerm"
+    color="light"
+    placeholder="Buscar atracción"
+    (ionInput)="filterAnimals($event)"
+    [value]="searchTerm"
   ></ion-searchbar>
 
-  <h2>Niño</h2>
+  <!-- Carrusel de imágenes -->
+
+  <swiper-container [pagination]="true" [loop]="true" [autoplay]="{ delay: 3000 }" effect="cards" >
+    <swiper-slide *ngFor="let imagen of imagenes">
+      <img [src]="imagen" alt="Imagen de animal">
+    </swiper-slide>
+  </swiper-container>
+
+
+
+
+  <!-- Botones debajo del carrusel -->
+  <div class="buttons-container">
+    <ion-button fill="solid" class="custom-button" color="primary">
+      Especie
+    </ion-button>
+    <ion-button fill="solid" class="custom-button" color="primary">
+      Ruta sugerida
+    </ion-button>
+  </div>
+
+  <!-- Listado de animales -->
+  <h2>Animales por ruta sugerida</h2>
 
   <ion-list *ngIf="filteredAnimals.length > 0">
     <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
@@ -20,8 +44,8 @@
 
   <ion-card *ngFor="let animal of animales" class="animal-card">
     <div class="image-container">
-      <img alt="{{animal.nombre_comun}}" src="{{animal.imagen}}" [routerLink]="['/app/animal-info', animal.id]"/>
-      <div class="icono-numero">{{animal.posicion_mapa}}</div>
+      <img alt="{{animal.nombre_comun}}" src="{{animal.imagen}}" [routerLink]="['/app/animal-info', animal.id]" />
+      <div class="icono-numero">{{ animal.posicion_mapa }}</div>
     </div>
     <ion-card-header class="card-header">
       <div class="header-content">
@@ -35,14 +59,15 @@
             [ngClass]="{
               'estado-disponible': animal.disponibilidad === 'Disponible',
               'estado-no-disponible': animal.disponibilidad === 'Tratamiento',
-              'estado-proximamente' : animal.disponibilidad === 'Proximamente'
-            }">{{animal.disponibilidad}}</ion-card-subtitle>
+              'estado-proximamente': animal.disponibilidad === 'Proximamente'
+            }">{{ animal.disponibilidad }}</ion-card-subtitle>
         </div>
 
         <ion-button fill="clear" (click)="dontLike(animal.id)">
-          <img [src]="animal.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'" alt="Me gusta" />
+          <img [src]="animal.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'" alt="No me gusta" />
         </ion-button>
       </div>
     </ion-card-header>
   </ion-card>
+
 </ion-content>

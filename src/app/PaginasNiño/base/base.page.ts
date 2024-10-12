@@ -54,13 +54,13 @@ export class BasePage implements OnInit{
 
   // Método para actualizar el título basado en la URL
   private updateTitle(url: string) {
-    if (url.includes('home')) {
+    if (url.includes('inicio')) {
       this.pageTitle = 'Inicio';
     } else if (url.includes('perfil')) {
       this.pageTitle = 'Perfil';
     } else if (url.includes('trivia')) {
       this.pageTitle = 'Trivia';
-    } else if (url.includes('events')) {
+    } else if (url.includes('eventos')) {
       this.pageTitle = 'Eventos';
     } else if (url.includes('mapa')) {
       this.pageTitle = 'Mapa';

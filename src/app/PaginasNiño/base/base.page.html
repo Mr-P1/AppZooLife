@@ -1,31 +1,31 @@
 <ion-menu contentId="main-content">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu Content</ion-title>
+    <ion-toolbar class="custom-content">
+      <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">This is the menu content.
+  <ion-content class="ion-padding custom-content" >This is the menu content.
 
-    <ion-list>
-      <ion-item>
+    <ion-list class="custom-content">
+      <ion-item class="custom-content">
         <h5>Tiempo restante: {{ (tiempoRestante$ | async) | formatearTiempo }}</h5>
       </ion-item>
-      <ion-item button [routerLink]="['/app/home']">
+      <ion-item button [routerLink]="['/nino/inicio']">
         <ion-label>Inicio</ion-label>
       </ion-item>
-      <ion-item button [routerLink]="['/app/perfil']">
+      <ion-item button [routerLink]="['/nino/perfil']">
         <ion-label>Perfil</ion-label>
       </ion-item>
-      <ion-item button [routerLink]="['/app/trivia']">
+      <ion-item button [routerLink]="['/nino/trivia']">
         <ion-label>Trivia</ion-label>
       </ion-item>
-      <ion-item button [routerLink]="['/app/events']">
+      <ion-item button [routerLink]="['/nino/eventos']">
         <ion-label>Eventos</ion-label>
       </ion-item>
-      <ion-item button [routerLink]="['/app/mapa']">
+      <ion-item button [routerLink]="['/nino/mapa']">
         <ion-label>Mapa</ion-label>
       </ion-item>
-      <ion-item button [routerLink]="['/app/info-zoo']">
+      <ion-item button [routerLink]="['/nino/info-zoo']">
         <ion-label>Información</ion-label>
       </ion-item>
       <ion-item button (click)="cerrarSesion()">
@@ -36,15 +36,15 @@
 </ion-menu>
 <div class="ion-page" id="main-content">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar  class="custom-content">
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Menu</ion-title>
+      <ion-title>{{ pageTitle }}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-     Tap the button in the toolbar to open the menu.
+
 
      <ion-router-outlet></ion-router-outlet>
     </ion-content>
