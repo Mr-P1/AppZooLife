@@ -1,13 +1,105 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>trivia</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-spinner *ngIf="loading" name="crescent" class="spinner-center"></ion-spinner>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">trivia</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Mostrar mensaje si el usuario ha visto menos de 5 animales -->
+  <ion-card *ngIf="!loading && !puedeHacerTrivia">
+    <ion-card-header>
+      <ion-card-title>Lo sentimos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Para realizar la trivia debes visitar al menos 5 animales. <br> Has visto {{ animalesVistosCount }} animal/es.
+      <br />
+      <ion-button expand="full" [routerLink]="['/adulto/inicio']">
+        Volver al inicio
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar botón de comenzar si aún no ha comenzado la trivia -->
+  <ng-container *ngIf="puedeHacerTrivia && !triviaComenzada">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>¿Estás preparado/a?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>La trivia consta de 10 preguntas sobre los animales vistos en Zoolife. Tendrás 10 segundos para responder cada una. ¡Buena suerte!</p>
+        <ion-button (click)="comenzarTrivia()">Comenzar Trivia</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- Mostrar preguntas si la trivia ha comenzado y no ha finalizado -->
+  <ng-container *ngIf="puedeHacerTrivia && triviaComenzada && !triviaFinalizada">
+    <ion-card *ngIf="preguntaActual">
+      <ion-card-header>
+        <ion-card-title class="titulo-pregunta">{{ preguntaActual.pregunta }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button
+          expand="block"
+          [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'a' ? 'success' : 'danger') : 'primary'"
+          [disabled]="preguntaActual.respondida"
+          (click)="seleccionarRespuesta(preguntaActual, 'a')"
+        >
+          {{ preguntaActual.respuestas.a }}
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'b' ? 'success' : 'danger') : 'primary'"
+          [disabled]="preguntaActual.respondida"
+          (click)="seleccionarRespuesta(preguntaActual, 'b')"
+        >
+          {{ preguntaActual.respuestas.b }}
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'c' ? 'success' : 'danger') : 'primary'"
+          [disabled]="preguntaActual.respondida"
+          (click)="seleccionarRespuesta(preguntaActual, 'c')"
+        >
+          {{ preguntaActual.respuestas.c }}
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'd' ? 'success' : 'danger') : 'primary'"
+          [disabled]="preguntaActual.respondida"
+          (click)="seleccionarRespuesta(preguntaActual, 'd')"
+        >
+          {{ preguntaActual.respuestas.d }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Temporizador en un círculo -->
+    <div class="timer-circle" *ngIf="tiempoRestante >= 0">
+      <svg>
+        <circle cx="50%" cy="50%" r="45"></circle>
+        <circle
+          cx="50%"
+          cy="50%"
+          r="45"
+          [style.strokeDasharray]="circumference"
+          [style.strokeDashoffset]="circumference - (circumference * tiempoRestante) / 10"
+        ></circle>
+      </svg>
+      <div class="time-text">{{ tiempoRestante }}s</div>
+    </div>
+  </ng-container>
+
+  <!-- Mostrar resumen de trivia al finalizar -->
+  <ng-container *ngIf="triviaFinalizada">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Trivia finalizada</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Has respondido correctamente a {{ respuestasCorrectas }} preguntas.
+        <br />
+        <ion-button expand="full" [routerLink]="['/app/home']">Volver al inicio</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 </ion-content>

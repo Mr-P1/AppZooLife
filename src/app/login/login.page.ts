@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonInput, IonButton } from '@ionic/angular/standalone';
+import { IonContent,IonCol, IonHeader,IonGrid, IonTitle, IonToolbar, IonList, IonItem, IonInput, IonButton } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule,FormBuilder, FormControl,Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -17,7 +17,7 @@ import { mailOutline,keyOutline } from 'ionicons/icons';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonButton, IonInput, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,RouterModule,ReactiveFormsModule]
+  imports: [IonButton,IonCol,IonGrid, IonInput, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,RouterModule,ReactiveFormsModule]
 })
 export class LoginPage  {
 
