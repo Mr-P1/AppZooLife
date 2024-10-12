@@ -1,13 +1,12 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mapa</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mapa</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div id="zoom-container">
+    <div id="zoom-content">  <!-- Contenedor que agrupa imagen y botones -->
+      <img id="zoom-image" [src]="imageUrl" alt="Mapa">
+      <!-- Círculos clicables para animales -->
+      <div class="animal-point" (click)="goToAnimal(1)" style="top: 47.6%; left: 3.2%;"></div>
+      <div class="animal-point" (click)="goToAnimal(2)" style="top: 50.4%; left: 3.2%;"></div>
+      <div class="animal-point" (click)="goToAnimal(3)" style="top: 53.2%; left: 3.2%;"></div>
+      <div class="animal-point" (click)="goToAnimal(4)" style="top: 56%; left: 3.2%;"></div>
+    </div>
+  </div>
 </ion-content>
