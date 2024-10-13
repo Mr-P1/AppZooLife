@@ -30,6 +30,8 @@
     "@capacitor/push-notifications": "^6.0.2",
     "@capacitor/status-bar": "6.0.1",
     "@ionic/angular": "^8.0.0",
+    "@zxing/browser": "^0.1.5",
+    "@zxing/ngx-scanner": "^18.0.1",
     "ionicons": "^7.2.1",
     "pinch-zoom-js": "^2.3.5",
     "rxjs": "~7.8.0",

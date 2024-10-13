@@ -163,28 +163,86 @@ swiper-slide img {
 }
 
 
-.nav{
-  background-color: #a7ca50;
-  border-radius: 0 0 20px 20px;
-}
 
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Espacio entre el buscador y el ícono */
-  padding: 10px; /* Espaciado interno */
-  background-color: #a7ca50;
-}
 
 ion-searchbar {
   flex: 1; /* Hace que el buscador ocupe todo el espacio disponible */
 }
 
-.qr-icon {
-  font-size: 32px; /* Ajusta el tamaño del ícono */
-  color: #000; /* Cambia el color del ícono (puede ser blanco si lo necesitas) */
-  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color:rgba(255, 255, 255, 0.396);
+  border-radius: 10px;
+  padding: 1px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+}
 
+.button-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.custom-button {
+  --background: rgba(255, 255, 255, 0.396);
+  --color: #2a2c41;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-button img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.button-text {
+  margin-top: -5px;
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.separator-text {
+  margin: -60px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  top: -50px; /* Ajusta este valor según necesites */
+}
+
+.header-container {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  background-color: rgba(255, 255, 255, 0.396); /* Fondo blanco */
+  padding: 10px 20px; /* Espaciado interno */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin-bottom: 20px; /* Espaciado con el contenido siguiente */
+}
+
+.header-container h2 {
+  margin: 0; /* Elimina el margen predeterminado */
+  font-size: 1.5rem;
+  color: #000000; /* Color del texto */
+  font-weight: bold;
+}

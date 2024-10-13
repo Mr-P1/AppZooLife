@@ -1,10 +1,11 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
 import { Reaction } from 'src/app/common/models/reaction.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-
+import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
+import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
@@ -18,14 +19,18 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   styleUrls: ['./inicio.page.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [IonIcon, IonFabList, IonFabButton, IonFab, IonCardTitle, IonButton, IonCardHeader, IonCard, IonLabel, IonSearchbar, IonItem, IonList, IonContent, CommonModule, RouterLink,]
+  imports: [ZXingScannerModule,IonIcon, IonFabList, IonFabButton, IonFab, IonCardTitle, IonButton, IonCardHeader, IonCard, IonLabel, IonSearchbar, IonItem, IonList, IonContent, CommonModule, RouterLink,]
 })
 export class InicioPage implements OnInit {
-
+  @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
   animales: Animal[] = [];
   userId:string = '';
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
   searchTerm: string = ''; // Para almacenar el término de búsqueda
+  isScanning: boolean = false; // Variable para manejar el estado del escáner
+  allowedFormats = [BarcodeFormat.QR_CODE]; // Definir los formatos permitidos
+
+  
 
   constructor(
 
@@ -75,6 +80,49 @@ export class InicioPage implements OnInit {
     });
   }
 
+  toggleQrScan() {
+    this.isScanning = !this.isScanning;
+
+    if (!this.isScanning) {
+      // Si ya estaba escaneando, resetea (apaga) la cámara
+      if (this.scanner) {
+        this.scanner.reset();
+      }
+    }
+  }
+
+  onCodeResult(result: string) {
+    console.log('Contenido escaneado:', result);
+    this.isScanning = false;
+
+    const animalId = this.extractAnimalId(result);
+    if (animalId) {
+      console.log('Redirigiendo a la página del animal:', animalId);
+
+      // Detén el escáner al redirigir
+      if (this.scanner) {
+        this.scanner.reset();
+      }
+
+      this.router.navigate(['/animal-info', animalId]);
+    } else {
+      console.log('No se encontró un ID de animal válido en el QR.');
+
+      // Detén el escáner si no se encuentra un ID válido
+      if (this.scanner) {
+        this.scanner.reset();
+      }
+    }
+  }
+
+  extractAnimalId(result: string): string | null {
+    console.log('Procesando URL:', result);
+    const regex = /animal-info\/(\w+)/;
+    const match = result.match(regex);
+    return match ? match[1] : null;
+  }
+
+
   // Método para filtrar animales según el término de búsqueda
   filterAnimals(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
@@ -89,7 +137,7 @@ export class InicioPage implements OnInit {
 
   // Método para redirigir a la página de información del animal
   goToAnimal(animalId: string) {
-    this.router.navigate(['/app/animal-info', animalId]);
+    this.router.navigate(['/animal-info', animalId]);
     this.searchTerm = '';
     this.filteredAnimals = [];
   }
