@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCardContent, IonCard, IonCardTitle, IonCardHeader, IonAvatar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCardContent, IonCard, IonCardTitle, IonCardHeader, IonAvatar, IonApp, IonBadge, IonItem, IonLabel, IonList, IonGrid, IonIcon, IonCol, IonCardSubtitle, IonRow } from '@ionic/angular/standalone';
 
 
 import { AuthService } from 'src/app/common/servicios/auth.service';
@@ -12,7 +12,7 @@ import { Usuario } from '../../common/models/usuario.model';
   templateUrl: './perfil.page.html',
   styleUrls: ['./perfil.page.scss'],
   standalone: true,
-  imports: [IonAvatar, IonCardHeader, IonCardTitle, IonCard, IonCardContent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonRow, IonCardSubtitle, IonCol, IonIcon, IonGrid, IonList, IonLabel, IonItem, IonBadge, IonApp, IonAvatar, IonCardHeader, IonCardTitle, IonCard, IonCardContent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class PerfilPage implements OnInit {
 

@@ -1,25 +1,33 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent,IonCol, IonHeader,IonGrid, IonTitle, IonToolbar, IonList, IonItem, IonInput, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonCard, IonCol, IonHeader, IonGrid, IonTitle, IonToolbar, IonList, IonItem, IonInput, IonButton, IonIcon } from '@ionic/angular/standalone'; // Importa IonIcon
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule,FormBuilder, FormControl,Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { RouterLink,Router } from '@angular/router';
-import {AuthService} from './../common/servicios/auth.service'
-
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from './../common/servicios/auth.service';
 import { addIcons } from 'ionicons';
-import { mailOutline,keyOutline } from 'ionicons/icons';
-
+import { mailOutline, keyOutline, eyeOutline, eyeOffOutline, lockClosed } from 'ionicons/icons';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonButton,IonCol,IonGrid, IonInput, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,RouterModule,ReactiveFormsModule]
+  imports: [IonButton, IonIcon, IonCard, IonCol, IonGrid, IonInput, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterModule, ReactiveFormsModule, IonIcon], // Asegúrate de incluir IonIcon aquí
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Añade el esquema para permitir el uso de ion-icon
 })
-export class LoginPage  {
+export class LoginPage {
+
+  constructor(){
+    addIcons({
+      mailOutline,
+      keyOutline,
+      eyeOutline,
+      eyeOffOutline,
+      lockClosed
+    });
+  }
 
   private _formBuilder = inject(FormBuilder);
   private _authService = inject(AuthService);
@@ -42,27 +50,21 @@ export class LoginPage  {
     if (!email || !password || !boleta) return;
 
     try {
-      // Verificar si la boleta existe
       const boletaData = await this._authService.getBoleta(boleta);
       if (!boletaData) {
         alert('Boleta no encontrada.');
         return;
       }
 
-      // Autenticarse con el email y password
       await this._authService.logearse({ email, password });
 
-      // Obtener el ID del usuario actual
       const userId = this._authService.currentUserId;
       if (!userId) {
         alert('Error obteniendo los datos del usuario.');
         return;
       }
 
-      // Mover la boleta a Boletas_usadas y eliminarla de Boletas
       await this._authService.usarBoleta(boleta, userId);
-
-      // Navegar a la página principal
       this._router.navigate(['/home']);
     } catch (error) {
       console.error('Error durante el proceso de login:', error);
