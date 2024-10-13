@@ -1,13 +1,29 @@
 .animal-card {
-  margin: 15px;
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: #ff8800;
+ background-color: white;
+ border-radius: 15px 15px 20px 20px; /* Bordes redondeados si es necesario */
+ //background-image: url('https://cdn.discordapp.com/attachments/1275964393066336449/1294811835480014909/Diseno_sin_titulo_10.png?ex=670c5efe&is=670b0d7e&hm=564d2b7c7c4cbfef04a810dcb718c5380237cbc6d06afea7518e969147ac9181&');
+
 }
 
-.card-header{
-  background-color: #19e89c;
+
+.card-header {
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  height: 100px; /* Ajusta la altura según tus necesidades */
+  background-image: url('https://i.pinimg.com/1200x/c8/03/d4/c803d481f2a4fbc75aed5a1e16b7f063.jpg');
+
+  background-color: rgba(255, 255, 255, 0); /* Fondo transparente */
+  background-size: cover; /* La imagen cubre todo el contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* No repetir la imagen */
+
+  display: flex; /* Permite que el contenido interno se alinee correctamente */
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  border-radius: 0px 0px 20px 20px; /* Bordes redondeados si es necesario */
+  overflow: hidden; /* Oculta cualquier exceso de contenido */
 }
+
+
 
 .image-container {
   position: relative;
@@ -54,16 +70,23 @@
 
 /* Estilos para los diferentes estados de disponibilidad */
 .estado-disponible {
-  color: green; /* Texto en verde para Disponible */
+  color: rgb(255, 255, 255);
+  background-color: green;/* Texto en verde para Disponible */
 }
 
 .estado-no-disponible {
-  color: orange; /* Texto en naranjo para Tratamiento */
+  color: rgb(255, 255, 255); /* Texto en naranjo para Tratamiento */
+  background-color: rgb(255, 0, 0);/* Texto en verde para Disponible */
 }
 
 .estado-proximamente {
-  color: rgb(232, 232, 43); /* Texto en amarillo para Proximamente */
+  color: rgb(255, 255, 255); /* Texto en amarillo para Proximamente */
+  background-color: rgb(255, 238, 0);/* Texto en verde para Disponible */
 }
+
+// ion-card-subtitle{
+//   background-color: white;
+// }
 
 
 ion-card-title {
@@ -138,5 +161,30 @@ swiper-slide img {
   object-position: center; /* Centra la imagen en caso de recorte */
   border-radius: 10px; /* Opcional: le da bordes redondeados a las imágenes */
 }
+
+
+.nav{
+  background-color: #a7ca50;
+  border-radius: 0 0 20px 20px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el buscador y el ícono */
+  padding: 10px; /* Espaciado interno */
+  background-color: #a7ca50;
+}
+
+ion-searchbar {
+  flex: 1; /* Hace que el buscador ocupe todo el espacio disponible */
+}
+
+.qr-icon {
+  font-size: 32px; /* Ajusta el tamaño del ícono */
+  color: #000; /* Cambia el color del ícono (puede ser blanco si lo necesitas) */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
+
 
 

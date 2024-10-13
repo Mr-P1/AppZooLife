@@ -8,7 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { star,personCircle, chevronUpCircle, document, colorPalette, globe } from 'ionicons/icons';
+import { star,personCircle, chevronUpCircle, document, colorPalette, globe,qrCodeOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
@@ -34,7 +34,7 @@ export class InicioPage implements OnInit {
     private router: Router
 
   ) {
-    addIcons({chevronUpCircle,document,colorPalette,globe,star,personCircle});
+    addIcons({chevronUpCircle,document,colorPalette,globe,star,personCircle,qrCodeOutline});
   }
 
 
@@ -153,6 +153,9 @@ export class InicioPage implements OnInit {
   }
 
 
+  qr(){
+    console.log("hola")
+  }
 
 
 }
