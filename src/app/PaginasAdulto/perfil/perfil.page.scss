@@ -1,9 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
 ion-content {
   --background: none;
   background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.perfil{
+  background:  linear-gradient(45deg, #015234, #01521c);
+  border-radius: 0px 0px 20px 20px;
+  padding-bottom: 50px; /* Reduce espacio entre las tarjetas */
+}
+
+.fondo{
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
 }
 
 .profile-container {
@@ -17,7 +34,8 @@ ion-content {
 
 .profile-card {
   text-align: center;
-  margin-top: 10px; /* Reduce el espacio superior */
+  padding-top: 10px;
+  // margin-top: 10px; /* Reduce el espacio superior */
   margin-bottom: 10px; /* Agrega un pequeño espacio inferior */
 }
 
@@ -80,9 +98,9 @@ ion-card-content p {
 }
 
 .user-card, .ranking-card {
-  margin-bottom: 10px; /* Reduce espacio entre las tarjetas */
   padding: 10px; /* Reduce el padding interno de las tarjetas */
   border-radius: 8px; /* Redondeo más sutil */
+
 }
 
 /* Estilo para la card de puntos */
@@ -111,6 +129,7 @@ ion-card-content p {
 /* Ajuste del espaciado entre las columnas */
 .custom-card-col {
   padding: 5px;
+
 }
 
 /* Cards personalizadas */
@@ -119,4 +138,35 @@ ion-card-content p {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   text-align: center;
   color: white;
+}
+
+
+.texto-animal{
+  color:white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.fondo-usuario{
+  // background-image: url('../../../assets/fondos/Fondo_animales.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background:  linear-gradient(45deg, #015234, #01521c);
+
+
+
+}
+
+.texto-perfil {
+  color: white !important;
+  // font-size: 24px;
+  // font-weight: bold;
+  font-family: 'Chewy', cursive;
+}
+
+.user-card {
+  --ion-background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
 }

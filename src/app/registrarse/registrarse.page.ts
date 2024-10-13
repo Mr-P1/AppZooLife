@@ -36,7 +36,7 @@ export class RegistrarsePage  {
     password: this._formBuilder.control('', [Validators.required, Validators.minLength(5)]),
     nombre: this._formBuilder.control('', [Validators.required]),
     telefono: this._formBuilder.control('', [Validators.required]),
-    tipo: this._formBuilder.control('', [Validators.required]),
+    genero: this._formBuilder.control('', [Validators.required]),
     patente: this._formBuilder.control(''),
   });
 
@@ -47,12 +47,12 @@ export class RegistrarsePage  {
     }
 
     try {
-      const { email, password, telefono, nombre, tipo, patente } = this.form.value;
+      const { email, password, telefono, nombre, genero, patente } = this.form.value;
 
       if (!email || !password) return;
 
       // Intentar registrar al usuario
-      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(tipo), String(patente));
+      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(genero), String(patente));
 
       // Restablecer el formulario después del registro exitoso
       this.form.reset();

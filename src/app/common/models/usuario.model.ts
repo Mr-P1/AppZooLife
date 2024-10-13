@@ -3,7 +3,7 @@ export interface Usuario {
   nombre:string,
   correo:string,
   telefono:string,
-  tipo:string,
+  genero:string,
   puntos:number,
   nivel:number,
   patente?:string,
