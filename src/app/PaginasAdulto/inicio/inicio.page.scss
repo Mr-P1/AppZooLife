@@ -174,7 +174,7 @@ ion-searchbar {
 .search-container {
   display: flex;
   align-items: center;
-  background-color:rgba(255, 255, 255, 0.396);
+  background: linear-gradient(45deg,#ff8800, #ff5722);;
   border-radius: 10px;
   padding: 1px;
   margin: 10px;
@@ -195,7 +195,7 @@ ion-searchbar {
 }
 
 .custom-button {
-  --background: rgba(255, 255, 255, 0.396);
+  --background: linear-gradient(45deg,#ff8800, #ff5722);;
   --color: #2a2c41;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -234,7 +234,7 @@ ion-searchbar {
   display: flex;
   justify-content: center; /* Centra el contenido horizontalmente */
   align-items: center; /* Centra el contenido verticalmente */
-  background-color: rgba(255, 255, 255, 0.396); /* Fondo blanco */
+  background: linear-gradient(45deg,#ff8800, #ff5722);;
   padding: 10px 20px; /* Espaciado interno */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
   margin-bottom: 20px; /* Espaciado con el contenido siguiente */
@@ -243,6 +243,6 @@ ion-searchbar {
 .header-container h2 {
   margin: 0; /* Elimina el margen predeterminado */
   font-size: 1.5rem;
-  color: #000000; /* Color del texto */
+  color: #ffffff; /* Color del texto */
   font-weight: bold;
 }

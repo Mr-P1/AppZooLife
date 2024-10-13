@@ -6,50 +6,117 @@ ion-content {
   background-repeat: no-repeat;
 }
 
-.perfil-content {
+.profile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  background-color: #1e1e1e;
+  height: auto; /* Ajuste automático según el contenido */
+  padding: 15px; /* Reduce espacio dentro de la tarjeta del perfil */
 }
 
-.perfil-info-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 400px;
+.profile-card {
+  text-align: center;
+  margin-top: 10px; /* Reduce el espacio superior */
+  margin-bottom: 10px; /* Agrega un pequeño espacio inferior */
 }
 
-.perfil-avatar {
-  width: 120px;
-  height: 120px;
-  border: 5px solid white;
+.profile-image {
+  width: 100px; /* Tamaño más compacto */
+  height: 100px;
   border-radius: 50%;
-  overflow: hidden;
+  border: 3px solid #f4a261; /* Bordes más delgados */
+  object-fit: cover;
 }
 
-.info-col {
+h2 {
+  color: #f4a261;
+  margin-top: 5px; /* Reduce espacio entre la imagen y el nombre */
+  font-size: 18px; /* Tamaño de texto reducido */
+}
+
+p {
+  color: #fff;
+  margin-bottom: 5px; /* Reduce el espacio entre párrafos */
+  font-size: 14px; /* Tamaño más compacto */
+}
+
+ion-grid {
+  margin-top: 10px; /* Reduce el espacio superior */
+}
+
+ion-row {
+  justify-content: center;
+  margin-bottom: 10px; /* Reduce espacio entre filas */
+}
+
+.option-col {
+  text-align: center;
+  margin-bottom: 5px; /* Compacta las opciones */
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 8px; /* Redondeo más ligero */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
+  padding: 8px; /* Reduce padding interno */
+}
+
+.option-icon {
+  font-size: 32px; /* Iconos más pequeños */
+  color: #4caf50;
+  margin-bottom: 5px; /* Reduce espacio debajo del icono */
+}
+
+ion-card-content p {
+  font-size: 14px; /* Tamaño más compacto */
+  font-weight: bold;
+  color: #333;
+  margin: 0; /* Elimina espacio extra */
+}
+
+.user-card, .ranking-card {
+  margin-bottom: 10px; /* Reduce espacio entre las tarjetas */
+  padding: 10px; /* Reduce el padding interno de las tarjetas */
+  border-radius: 8px; /* Redondeo más sutil */
+}
+
+/* Estilo para la card de puntos */
+.points-card {
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+}
+
+/* Estilo para la card de nivel */
+.level-card {
+  background: linear-gradient(45deg, #4caf50, #8bc34a);
+}
+
+/* Íconos personalizados */
+.custom-icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+
+.custom-card p {
+  margin: 5px 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Ajuste del espaciado entre las columnas */
+.custom-card-col {
+  padding: 5px;
+}
+
+/* Cards personalizadas */
+.custom-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   text-align: center;
   color: white;
-  font-size: 18px;
-}
-
-ion-card {
-  margin-top: 20px;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-}
-
-ion-card-content {
-  text-align: center;
-}
-
-ion-card-title {
-  color: #80a522;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 1.2rem; /* Aumenta un poco el tamaño del título */
 }
