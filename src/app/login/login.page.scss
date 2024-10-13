@@ -90,3 +90,24 @@ ion-slide {
   position: absolute !important; /* Coloca los slides en posición absoluta (ignora su ubicación en el flujo del documento) */
   top: 0px !important; /* Establece que el inicio de la posición esté en la parte superior del contenedor */
 }
+
+.qr-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Espacio entre el icono y el texto */
+  color: white;
+  border-radius: 8px;
+  font-size: 18px;
+  padding: 10px;
+  transition: transform 0.2s;
+  border-radius: 20px;
+
+  ion-icon {
+    font-size: 24px;
+  }
+
+  &:hover {
+    transform: scale(1.05); /* Efecto al pasar el ratón */
+  }
+}

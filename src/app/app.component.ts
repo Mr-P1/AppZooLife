@@ -56,7 +56,8 @@ export class AppComponent {
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-
+        alert(notification.title);
+        alert(JSON.stringify(notification))
       }
     );
 

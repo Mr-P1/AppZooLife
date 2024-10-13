@@ -1,22 +1,22 @@
 <ion-content [fullscreen]="true">
   <!-- Tarjeta contenedora del formulario de inicio de sesión -->
   <ion-card class="container-login">
-
     <!-- Formulario que se enlaza con FormBuilder y ejecuta la función 'submit' al enviarse -->
     <form [formGroup]="form" (ngSubmit)="submit()">
-
       <!-- Icono de candado centrado en la parte superior -->
       <div class="ion-text-center ion-margin-vertical lock">
-        <img src=".././../assets/icon/logoBioparque.png" alt="">
+        <img src=".././../assets/icon/logoBioparque.png" alt="" />
       </div>
 
       <!-- Campo de entrada para el correo electrónico -->
-      <ion-item
-        lines="none"
-        class="ion-margin-horizontal ion-margin-top">
-
+      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
         <div>
-          <ion-icon slot="start" fill="clear" slot="icon-only" name="mail-outline"></ion-icon>
+          <ion-icon
+            slot="start"
+            fill="clear"
+            slot="icon-only"
+            name="mail-outline"
+          ></ion-icon>
         </div>
 
         <ion-input
@@ -27,8 +27,8 @@
           helperText="Enter a valid email"
           placeholder="Ingresa tu correo"
           errorText="* Ingresa un correo inválido"
-          formControlName="email">
-
+          formControlName="email"
+        >
           <!-- Etiqueta personalizada para el campo del correo -->
           <div slot="label">Correo <ion-text color="red">*</ion-text></div>
         </ion-input>
@@ -36,9 +36,13 @@
 
       <!-- Campo de entrada para la contraseña -->
       <ion-item class="ion-margin" lines="none">
-
         <div>
-          <ion-icon slot="start" fill="clear" slot="icon-only" name="key-outline"></ion-icon>
+          <ion-icon
+            slot="start"
+            fill="clear"
+            slot="icon-only"
+            name="key-outline"
+          ></ion-icon>
         </div>
 
         <ion-input
@@ -51,12 +55,25 @@
           errorText="Contraseña inválida"
           [counter]="true"
           minlength="5"
-          formControlName="password">
-
+          formControlName="password"
+        >
           <!-- Etiqueta personalizada para el campo de contraseña -->
           <div slot="label">Contraseña</div>
         </ion-input>
       </ion-item>
+      <ion-button expand="block" class="qr-button" (click)="toggleQrScan()">
+        <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+        Escanear QR
+      </ion-button>
+
+      <!-- Mostrar el escáner solo si está activado -->
+      <div *ngIf="isScanning">
+        <zxing-scanner
+          (scanSuccess)="onCodeResult($event)"
+          [formats]="allowedFormats">
+        </zxing-scanner>
+      </div>
+
 
       <!-- Enlace para recuperar la contraseña -->
       <div class="ion-text-right ion-margin-horizontal">
@@ -64,23 +81,31 @@
       </div>
 
       <!-- Botón de envío del formulario para iniciar sesión -->
-      <div class="ion-margin submit">
-        <ion-button class="login" expand="block" size="large" [strong]="true">
-          <ion-text style="text-transform: none;">Iniciar sesión</ion-text>
+      <div class="ion-margin">
+        <ion-button
+          type="submit"
+          class="login"
+          expand="block"
+          size="large"
+          [strong]="true"
+        >
+          <ion-text style="text-transform: none">Iniciar sesión</ion-text>
         </ion-button>
       </div>
 
       <!-- Botón de envío del formulario para registrarse -->
-      <div class="ion-margin submit">
-        <ion-button [routerLink]="['/registrarse']" expand="block" size="large" [strong]="true" >
-          <ion-text style="text-transform: none;">Registrarse</ion-text>
+      <div class="ion-margin">
+        <ion-button
+          [routerLink]="['/registrarse']"
+          expand="block"
+          size="large"
+          [strong]="true"
+        >
+          <ion-text style="text-transform: none">Registrarse</ion-text>
         </ion-button>
       </div>
 
-      <ion-button [routerLink]="['/home']">
-        Home
-      </ion-button>
-
+      <ion-button [routerLink]="['/home']"> Home </ion-button>
     </form>
   </ion-card>
 </ion-content>
