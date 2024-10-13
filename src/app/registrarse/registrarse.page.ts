@@ -5,23 +5,27 @@ import { RouterLink, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from './../common/servicios/auth.service';
 import { addIcons } from 'ionicons';
-import { mailOutline, keyOutline, personOutline, callOutline, carOutline } from 'ionicons/icons';
-import { IonHeader, IonRow, IonContent, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonText, IonLabel ,IonSelectOption, IonSelect} from "@ionic/angular/standalone";
+import { mailOutline, keyOutline, personOutline, callOutline, carOutline, eyeOutline, eyeOffOutline, lockClosed } from 'ionicons/icons';
+import { IonHeader, IonRow, IonContent, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonText, IonLabel ,IonSelectOption, IonSelect, IonIcon} from "@ionic/angular/standalone";
+import { IonCard } from '@ionic/angular/standalone';
+
 
 @Component({
   selector: 'app-registrarse',
   templateUrl: './registrarse.page.html',
   styleUrls: ['./registrarse.page.scss'],
   standalone: true,
-  imports: [IonLabel,IonSelect, IonText, IonButton, IonInput, IonItem, IonList, IonCol, IonGrid, IonContent, IonRow, IonHeader,  CommonModule, RouterLink, ReactiveFormsModule,IonSelectOption]
+  imports: [IonLabel, IonCard ,IonSelect, IonText, IonButton, IonInput, IonItem, IonList, IonCol, IonGrid, IonContent, IonRow, IonHeader,  CommonModule, RouterLink, ReactiveFormsModule,IonSelectOption, IonIcon]
 })
 export class RegistrarsePage  {
 
   constructor(
     private alertController: AlertController
   ) {
-    addIcons({ mailOutline, keyOutline, personOutline, callOutline, carOutline });
+    addIcons({ mailOutline, keyOutline, personOutline, callOutline, carOutline, eyeOutline, eyeOffOutline, lockClosed });
   }
+
+
 
   private _formBuilder = inject(FormBuilder);
   private _authService = inject(AuthService);
