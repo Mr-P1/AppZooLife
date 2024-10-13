@@ -1,74 +1,104 @@
 <ion-content>
+  <div class="nav">
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+      <ion-searchbar
+        color="light"
+        placeholder="Buscar atracción"
+        (ionInput)="filterAnimals($event)"
+        [value]="searchTerm"
+      ></ion-searchbar>
 
-  <!-- Barra de búsqueda -->
-  <ion-searchbar
-    color="light"
-    placeholder="Buscar atracción"
-    (ionInput)="filterAnimals($event)"
-    [value]="searchTerm"
-  ></ion-searchbar>
+      <ion-icon name="qr-code-outline" class="qr-icon" (click)="qr()"></ion-icon>
+    </div>
 
-  <!-- Carrusel de imágenes -->
+    <!-- Carrusel de imágenes -->
 
-  <swiper-container [pagination]="true" [loop]="true" [autoplay]="{ delay: 3000 }" effect="cards" >
-    <swiper-slide *ngFor="let imagen of imagenes">
-      <img [src]="imagen" alt="Imagen de animal">
-    </swiper-slide>
-  </swiper-container>
+    <swiper-container
+      [pagination]="true"
+      [loop]="true"
+      [autoplay]="{ delay: 3000 }"
+      effect="cards"
+    >
+      <swiper-slide *ngFor="let imagen of imagenes">
+        <img [src]="imagen" alt="Imagen de animal" />
+      </swiper-slide>
+    </swiper-container>
 
-
-
-
-  <!-- Botones debajo del carrusel -->
-  <div class="buttons-container">
-    <ion-button fill="solid" class="custom-button" color="primary">
-      Especie
-    </ion-button>
-    <ion-button fill="solid" class="custom-button" color="primary">
-      Ruta sugerida
-    </ion-button>
+    <!-- Botones debajo del carrusel -->
+    <div class="buttons-container">
+      <ion-button fill="solid" class="custom-button" color="primary">
+        Especie
+      </ion-button>
+      <ion-button fill="solid" class="custom-button" color="primary">
+        Ruta sugerida
+      </ion-button>
+    </div>
   </div>
 
   <!-- Listado de animales -->
-  <h2>Animales por ruta sugerida</h2>
 
-  <ion-list *ngIf="filteredAnimals.length > 0">
-    <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
-      {{ animal.nombre_comun }}
+
+  <div class="listado-animales">
+    <h2>Animales por ruta sugerida</h2>
+
+    <ion-list *ngIf="filteredAnimals.length > 0">
+      <ion-item
+        *ngFor="let animal of filteredAnimals"
+        (click)="goToAnimal(animal.id)"
+      >
+        {{ animal.nombre_comun }}
+      </ion-item>
+    </ion-list>
+
+    <ion-item *ngIf="filteredAnimals.length === 0 && searchTerm">
+      <ion-label>No se encontraron resultados</ion-label>
     </ion-item>
-  </ion-list>
 
-  <ion-item *ngIf="filteredAnimals.length === 0 && searchTerm">
-    <ion-label>No se encontraron resultados</ion-label>
-  </ion-item>
-
-  <ion-card *ngFor="let animal of animales" class="animal-card">
-    <div class="image-container">
-      <img alt="{{animal.nombre_comun}}" src="{{animal.imagen}}" [routerLink]="['/animal-info', animal.id]" />
-      <div class="icono-numero">{{ animal.posicion_mapa }}</div>
-    </div>
-    <ion-card-header class="card-header">
-      <div class="header-content">
-        <ion-button fill="clear" (click)="like(animal.id)">
-          <img [src]="animal.reaccion === true ? '../../../assets/icon/likeVerde.png' : '../../../assets/icon/likeNegro.png'" alt="Me gusta" />
-        </ion-button>
-
-        <div class="title-container">
-          <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
-          <ion-card-subtitle class="estado"
-            [ngClass]="{
-              'estado-disponible': animal.disponibilidad === 'Disponible',
-              'estado-no-disponible': animal.disponibilidad === 'Tratamiento',
-              'estado-proximamente': animal.disponibilidad === 'Proximamente'
-            }">{{ animal.disponibilidad }}</ion-card-subtitle>
-        </div>
-
-        <ion-button fill="clear" (click)="dontLike(animal.id)">
-          <img [src]="animal.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'" alt="No me gusta" />
-        </ion-button>
+    <ion-card *ngFor="let animal of animales" class="animal-card">
+      <div class="image-container">
+        <img
+          alt="{{animal.nombre_comun}}"
+          src="{{animal.imagen}}"
+          [routerLink]="['/animal-info', animal.id]"
+        />
+        <div class="icono-numero">{{ animal.posicion_mapa }}</div>
       </div>
-    </ion-card-header>
-  </ion-card>
+      <ion-card-header class="card-header">
+        <div class="header-content">
+          <ion-button fill="clear" (click)="like(animal.id)">
+            <img
+              [src]="animal.reaccion === true ? '../../../assets/icon/likeVerde.png' : '../../../assets/icon/likeNegro.png'"
+              alt="Me gusta"
+            />
+          </ion-button>
+
+          <div class="title-container">
+            <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
+            <ion-card-subtitle
+              class="estado"
+              [ngClass]="{
+                'estado-disponible': animal.disponibilidad === 'Disponible',
+                'estado-no-disponible': animal.disponibilidad === 'Tratamiento',
+                'estado-proximamente': animal.disponibilidad === 'Proximamente'
+              }"
+              >{{ animal.disponibilidad }}</ion-card-subtitle
+            >
+          </div>
+
+          <ion-button fill="clear" (click)="dontLike(animal.id)">
+            <img
+              [src]="animal.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'"
+              alt="No me gusta"
+            />
+          </ion-button>
+        </div>
+      </ion-card-header>
+    </ion-card>
+
+  </div>
+
+
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
@@ -86,5 +116,4 @@
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
-
 </ion-content>
