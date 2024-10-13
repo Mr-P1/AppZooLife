@@ -34,6 +34,8 @@ export class TriviaPage implements OnInit, OnDestroy {
   triviaComenzada: boolean = false; // Nueva variable para controlar si la trivia ha comenzado
   triviaFinalizada: boolean = false; // Nueva variable para controlar si la trivia ha finalizado
 
+  tipo = "";
+
   constructor(
     private preguntaService: FirestoreService,
     private authService: AuthService,
@@ -41,6 +43,7 @@ export class TriviaPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.tipo = localStorage.getItem('tipo')!;
     this.authService.authState$.subscribe((user) => {
       if (user) {
         this.userId = user.uid;
@@ -54,7 +57,7 @@ export class TriviaPage implements OnInit, OnDestroy {
               if (this.puedeHacerTrivia) {
                 this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe((preguntas: PreguntaTrivia[]) => {
                   this.preguntas = preguntas;
-                  this.rellenarPreguntasRandom(data.tipo);
+                  this.rellenarPreguntasRandom(this.tipo);
                   this.loading = false; // Datos cargados, desactiva la carga
                 });
               } else {
@@ -162,7 +165,7 @@ export class TriviaPage implements OnInit, OnDestroy {
 
       if (respuestaCorrecta) {
         nivelGanado += 3; // 3 puntos de nivel por respuesta correcta
-        puntosGanados += this.usuario?.tipo.toLowerCase() === 'adulto' ? 10 : 5;
+        puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 5;
       }
     }
 

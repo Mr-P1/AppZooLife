@@ -1,69 +1,71 @@
 <ion-content>
-  <div class="search-container">
-    <ion-searchbar
-      color="light"
-      placeholder="Buscar atracción"
-      (ionInput)="filterAnimals($event)"
-      [value]="searchTerm"
-    ></ion-searchbar>
-    <ion-button fill="clear" (click)="toggleQrScan()">
-      <img src="../../../assets/icon/qrIcon.png" alt="Escanear QR"/>
-    </ion-button>
-  </div>
+    <div class="nav">
 
-<!-- Mostrar el escáner solo si está activado -->
-<div *ngIf="isScanning">
-  <zxing-scanner
-    (scanSuccess)="onCodeResult($event)"
-    [formats]="allowedFormats"
-  ></zxing-scanner>
-</div>
-
-  <ion-list *ngIf="filteredAnimals.length > 0">
-    <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
-      {{ animal.nombre_comun }}
-    </ion-item>
-  </ion-list>
-
-  <ion-item *ngIf="filteredAnimals.length === 0 && searchTerm">
-    <ion-label>No se encontraron resultados</ion-label>
-  </ion-item>
-
-    <!-- Carrusel de imágenes -->
-
-    <swiper-container
-      [pagination]="true"
-      [loop]="true"
-      [autoplay]="{ delay: 3000 }"
-      effect="cards"
-    >
-      <swiper-slide *ngFor="let imagen of imagenes">
-        <img [src]="imagen" alt="Imagen de animal" />
-      </swiper-slide>
-    </swiper-container>
-    <br>
-
-    <!-- Botones debajo del carrusel -->
-    <div class="buttons-container">
-      <div class="button-item">
-        <ion-button fill="solid" class="custom-button">
-          <img src="../../../assets/icon/rutaIcon.png" alt="Huella Icon" />
+      <div class="search-container">
+        <ion-searchbar
+          color="light"
+          placeholder="Buscar atracción"
+          (ionInput)="filterAnimals($event)"
+          [value]="searchTerm"
+        ></ion-searchbar>
+        <ion-button fill="clear" (click)="toggleQrScan()">
+          <img src="../../../assets/icon/qrIcon.png" alt="Escanear QR"/>
         </ion-button>
-        <p class="button-text">Ruta sugerida</p>
       </div>
 
-      <div class="separator-text">
-        <h3>Mostrar por</h3>
-      </div>
-    
-      <div class="button-item">
-        <ion-button fill="solid" class="custom-button">
-          <img src="../../../assets/icon/huellaIcon.png" alt="Huella Icon" />
-        </ion-button>
-        <p class="button-text">Especie</p>
-      </div>
+    <!-- Mostrar el escáner solo si está activado -->
+    <div *ngIf="isScanning">
+      <zxing-scanner
+        (scanSuccess)="onCodeResult($event)"
+        [formats]="allowedFormats"
+      ></zxing-scanner>
     </div>
-  
+
+      <ion-list *ngIf="filteredAnimals.length > 0">
+        <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
+          {{ animal.nombre_comun }}
+        </ion-item>
+      </ion-list>
+
+      <ion-item *ngIf="filteredAnimals.length === 0 && searchTerm">
+        <ion-label>No se encontraron resultados</ion-label>
+      </ion-item>
+
+        <!-- Carrusel de imágenes -->
+
+        <swiper-container
+          [pagination]="true"
+          [loop]="true"
+          [autoplay]="{ delay: 3000 }"
+          effect="cards"
+        >
+          <swiper-slide *ngFor="let imagen of imagenes">
+            <img [src]="imagen" alt="Imagen de animal" />
+          </swiper-slide>
+        </swiper-container>
+        <br>
+
+        <!-- Botones debajo del carrusel -->
+        <div class="buttons-container">
+          <div class="button-item">
+            <ion-button fill="solid" class="custom-button">
+              <img src="../../../assets/icon/rutaIcon.png" alt="Huella Icon" />
+            </ion-button>
+            <p class="button-text">Ruta sugerida</p>
+          </div>
+
+          <div class="separator-text">
+            <h3>Mostrar por</h3>
+          </div>
+
+          <div class="button-item">
+            <ion-button fill="solid" class="custom-button">
+              <img src="../../../assets/icon/huellaIcon.png" alt="Huella Icon" />
+            </ion-button>
+            <p class="button-text">Especie</p>
+          </div>
+        </div>
+    </div>
 
   <!-- Listado de animales -->
 

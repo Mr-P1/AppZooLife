@@ -1,115 +1,122 @@
-<ion-app>
+<ion-content>
 
+    <div class="perfil">
 
+      <div class="profile-card">
+        <img [src]="getAnimalImage(usuario?.nivel)" alt="profile-image" class="profile-image" />
+        <h3 class="texto-animal">{{ getAnimalTitle(usuario?.nivel) }}</h3>
+        <h2>{{ usuario?.nombre }}</h2>
+        <p>Usuario ({{ tipo }})</p>
+      </div>
 
-  <ion-content class="ion-padding profile-container">
-    <div class="profile-card">
-      <img src="https://media-cdn.tripadvisor.com/media/photo-s/06/60/95/74/parque-zoologico-buin.jpg" alt="profile-image" class="profile-image" />
-      <h2>Esteban</h2>
-      <p>Usuario(Adulto)</p>
-    </div>
+      <ion-grid>
+        <ion-row>
+          <!-- Card Nivel -->
+          <ion-col size="6" class="custom-card-col">
+            <ion-card class="level-card custom-card">
+              <ion-card-header>
+                <ion-card-title>Nivel</ion-card-title>
+                <ion-card-subtitle>Actual</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
 
-    <ion-grid>
-      <ion-row>
-        <!-- Card Nivel -->
-        <ion-col size="6" class="custom-card-col">
-          <ion-card class="level-card custom-card">
-            <ion-card-header>
-              <ion-card-title>Nivel</ion-card-title>
-              <ion-card-subtitle>Actual</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-icon name="trending-up-outline" class="custom-icon"></ion-icon>
-              <p>80</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
+                <p>{{usuario?.nivel}}</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
 
-         <!-- Card Puntos -->
-         <ion-col size="6" class="custom-card-col">
-          <ion-card class="points-card custom-card">
-            <ion-card-header>
-              <ion-card-title>Puntos</ion-card-title>
-              <ion-card-subtitle>Acumulados</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-icon name="star-outline" class="custom-icon"></ion-icon>
-              <p>200</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+           <!-- Card Puntos -->
+           <ion-col size="6" class="custom-card-col">
+            <ion-card class="points-card custom-card">
+              <ion-card-header>
+                <ion-card-title>Puntos</ion-card-title>
+                <ion-card-subtitle>Acumulados</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
 
-    <ion-grid>
-     <!-- Card de Ranking -->
-     <ion-card class="ranking-card">
-      <ion-card-header>
-        <ion-card-title>Ranking de Jugadores</ion-card-title>
-      </ion-card-header>
+                <p>{{usuario?.puntos}}</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-      <ion-card-content>
-        <ion-list lines="none">
-          <ion-item class="player-item">
-            <ion-avatar slot="start">
-              <img src="https://www.buinzoo.cl/wp-content/uploads/2018/09/animal_mini_4.jpg" />
-            </ion-avatar>
-            <ion-label>
-              <h2>Juanito </h2>
-              <p>Nivel: 85</p>
-            </ion-label>
-            <ion-badge color="success" slot="end">1°</ion-badge>
-          </ion-item>
-
-          <ion-item class="player-item">
-            <ion-avatar slot="start">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxy4shKTfHiJ9FuBFTRTyGujyI0R5RCjMMTw&s" />
-            </ion-avatar>
-            <ion-label>
-              <h2>Diego</h2>
-              <p>Nivel: 80</p>
-            </ion-label>
-            <ion-badge color="warning" slot="end">2°</ion-badge>
-          </ion-item>
-
-          <ion-item class="player-item">
-            <ion-avatar slot="start">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmd5pEmYxnrvrwmGEEXKK7hTTaEEK7Lf0MhA&s" />
-            </ion-avatar>
-            <ion-label>
-              <h2>Juan</h2>
-              <p>Nivel: 75</p>
-            </ion-label>
-            <ion-badge color="tertiary" slot="end">3°</ion-badge>
-          </ion-item>
-
-          <ion-item class="player-item">
-            <ion-avatar slot="start">
-              <img src="https://i.ytimg.com/vi/-ewL3s4sIn0/maxresdefault.jpg" />
-            </ion-avatar>
-            <ion-label>
-              <h2>Pedro</h2>
-              <p>Nivel: 70</p>
-            </ion-label>
-            <ion-badge color="medium" slot="end">4°</ion-badge>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-
-         <!-- Card de Información del Usuario -->
-        <ion-card class="user-card">
-         <ion-card-header>
-          <ion-card-title>Datos Personales</ion-card-title>
+        <!-- Card de Información del Usuario -->
+        <ion-card class="user-card fondo-usuario">
+          <ion-card-header>
+            <ion-card-title class="texto-perfil">Datos Personales</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-          <p><strong>Nombre: Esteban</strong> {{usuario?.nombre}}</p>
-          <p><strong>Teléfono: 123456789</strong> {{usuario?.telefono}}</p>
-          <p><strong>Correo:EstebanEsteban</strong> {{usuario?.correo}}</p>
-          <p><strong>Cuenta: Visitante (Adulto)</strong> {{usuario?.tipo}}</p>
-          <p><strong>Patente: Sin patente</strong> {{usuario?.patente}}</p>
-        </ion-card-content>
+            <p class="texto-perfil">Nombre: {{usuario?.nombre}}</p>
+            <p class="texto-perfil">Teléfono: {{usuario?.telefono}}</p>
+            <p class="texto-perfil">Correo: {{usuario?.correo}}</p>
+            <p class="texto-perfil">Cuenta: Visitante ({{tipo}})</p>
+            <p class="texto-perfil">Patente: {{usuario?.patente ? usuario?.patente : "Sin patente"}}</p>
+          </ion-card-content>
         </ion-card>
-    </ion-grid>
+    </div>
+
+    <div  class="ion-padding profile-container fondo">
+
+    <ion-grid>
+      <!-- Card de Ranking -->
+      <ion-card class="ranking-card">
+       <ion-card-header>
+         <ion-card-title>Ranking de Jugadores</ion-card-title>
+       </ion-card-header>
+
+       <ion-card-content>
+         <ion-list lines="none">
+           <ion-item class="player-item">
+             <ion-avatar slot="start">
+               <img src="https://www.buinzoo.cl/wp-content/uploads/2018/09/animal_mini_4.jpg" />
+             </ion-avatar>
+             <ion-label>
+               <h2>Juanito </h2>
+               <p>Nivel: 85</p>
+             </ion-label>
+             <ion-badge color="success" slot="end">1°</ion-badge>
+           </ion-item>
+
+           <ion-item class="player-item">
+             <ion-avatar slot="start">
+               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxy4shKTfHiJ9FuBFTRTyGujyI0R5RCjMMTw&s" />
+             </ion-avatar>
+             <ion-label>
+               <h2>Diego</h2>
+               <p>Nivel: 80</p>
+             </ion-label>
+             <ion-badge color="warning" slot="end">2°</ion-badge>
+           </ion-item>
+
+           <ion-item class="player-item">
+             <ion-avatar slot="start">
+               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmd5pEmYxnrvrwmGEEXKK7hTTaEEK7Lf0MhA&s" />
+             </ion-avatar>
+             <ion-label>
+               <h2>Juan</h2>
+               <p>Nivel: 75</p>
+             </ion-label>
+             <ion-badge color="tertiary" slot="end">3°</ion-badge>
+           </ion-item>
+
+           <ion-item class="player-item">
+             <ion-avatar slot="start">
+               <img src="https://i.ytimg.com/vi/-ewL3s4sIn0/maxresdefault.jpg" />
+             </ion-avatar>
+             <ion-label>
+               <h2>Pedro</h2>
+               <p>Nivel: 70</p>
+             </ion-label>
+             <ion-badge color="medium" slot="end">4°</ion-badge>
+           </ion-item>
+         </ion-list>
+       </ion-card-content>
+     </ion-card>
+
+
+     </ion-grid>
+    </div>
+
+
   </ion-content>
-</ion-app>
