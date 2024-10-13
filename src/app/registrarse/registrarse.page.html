@@ -1,8 +1,3 @@
-<head>
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
-</head>
-
-
 <ion-content [fullscreen]="true">
   <!-- Tarjeta contenedora del formulario de inicio de sesión -->
   <ion-card class="container-login">
@@ -10,27 +5,24 @@
     <!-- Formulario que se enlaza con FormBuilder y ejecuta la función 'submit' al enviarse -->
     <form [formGroup]="form" (ngSubmit)="submit()">
 
-      <!-- Icono de buin zoo -->
+      <!-- Icono de candado centrado en la parte superior -->
       <div class="ion-text-center ion-margin-vertical lock">
         <img src=".././../assets/icon/logonuevobuin.png" alt="">
       </div>
 
-      <ion-row>
-        <ion-col>
-          <h1 style="text-align: center; color: white">Registro</h1>
-        </ion-col>
-      </ion-row>
+      <h1>
+        ZooLife
+      </h1>
 
-      <!-- Campo de entrada para el nombre -->
-      <ion-item lines="none"
-      class="ion-margin-horizontal ion-margin-top">
+<!-- Campo de entrada para el nombre -->
+      <ion-item class="ion-margin" lines="none">
         <ion-input
           type="text"
           fill="solid"
           label="Nombre"
           labelPlacement="floating"
           helperText="Ingrese su nombre"
-          errorText="Nombre Invalido"
+          errorText="Nombre Inválido"
           formControlName="nombre"
         ></ion-input>
       </ion-item>
@@ -49,6 +41,8 @@
           errorText="* Ingresa un correo inválido"
           formControlName="email">
 
+          <!-- Etiqueta personalizada para el campo del correo -->
+          <div slot="label">Correo <ion-text color="red">*</ion-text></div>
         </ion-input>
       </ion-item>
 
@@ -60,7 +54,7 @@
           label="Contraseña"
           labelPlacement="floating"
           placeholder="Ingresa tu contraseña"
-          helperText="Debe tener 5 caracteres mínimo"
+          helperText="Debe tener un 5 mínimo de caracteres"
           errorText="Contraseña inválida"
           [counter]="true"
           minlength="5"
@@ -71,7 +65,7 @@
         </ion-input>
       </ion-item>
 
-      <!-- Campo de entrada para el teléfono -->
+ <!-- Campo de entrada para el teléfono -->
       <ion-item class="ion-margin" lines="none">
         <ion-input
           type="number"
@@ -85,8 +79,6 @@
           formControlName="telefono"
         ></ion-input>
       </ion-item>
-
-      <!-- Campo para la patente -->
 
       <ion-item class="ion-margin" lines="none">
         <ion-input
@@ -113,6 +105,7 @@
         </ion-select>
       </ion-item>
 
+
       <!-- Botón de envío del formulario para iniciar sesión -->
       <div class="ion-margin submit">
         <ion-button expand="block" size="large" [strong]="true">
@@ -123,6 +116,8 @@
     </form>
   </ion-card>
 </ion-content>
+
+
 
 
 
