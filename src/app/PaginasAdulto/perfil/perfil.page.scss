@@ -14,14 +14,7 @@ ion-content {
   padding-bottom: 50px; /* Reduce espacio entre las tarjetas */
 }
 
-.fondo{
-  --background: none;
-  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 
-}
 
 .profile-container {
   display: flex;
@@ -47,10 +40,10 @@ ion-content {
   object-fit: cover;
 }
 
-h2 {
+h1 {
   color: #f4a261;
   margin-top: 5px; /* Reduce espacio entre la imagen y el nombre */
-  font-size: 18px; /* Tamaño de texto reducido */
+  font-size: 24px; /* Tamaño de texto reducido */
 }
 
 p {
@@ -97,7 +90,7 @@ ion-card-content p {
   margin: 0; /* Elimina espacio extra */
 }
 
-.user-card, .ranking-card {
+.user-card{
   padding: 10px; /* Reduce el padding interno de las tarjetas */
   border-radius: 8px; /* Redondeo más sutil */
 
@@ -153,20 +146,109 @@ ion-card-content p {
   background-position: center;
   background-repeat: no-repeat;
 
-  background:  linear-gradient(45deg, #015234, #01521c);
+  // background:  linear-gradient(45deg, #015234, #01521c);
+  background-color: #4caf50; /* Fondo verde */
+
+}
 
 
+// .user-card {
+//   --ion-background-color: transparent;
+//   background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+// }
 
+.texto-perfil-titulo {
+  color: white !important;
+  text-align: center;
+  // font-size: 24px;
+  // font-weight: bold;
+  font-family: 'Chewy', ;
+}
+
+.texto-perfil-titulo-2 {
+  color: rgb(0, 0, 0) !important;
+  text-align: center;
+  // font-size: 24px;
+  // font-weight: bold;
+  font-family: 'Chewy', ;
 }
 
 .texto-perfil {
   color: white !important;
-  // font-size: 24px;
-  // font-weight: bold;
-  font-family: 'Chewy', cursive;
+  font-size: 24px;
+
 }
 
-.user-card {
-  --ion-background-color: transparent;
-  background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+
+
+
+.nivel-user{
+  color: black;
+}
+
+
+.fondo{
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+
+.ranking {
+  background-color: #4caf50; /* Fondo verde */
+  padding: 20px;
+  border-radius: 20px; /* Bordes redondeados del contenedor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+
+  .titulo-ranking {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 16px;
+    font-weight: bold;
+  }
+
+  .player-item {
+    margin: 10px 0;
+    border-radius: 20px; /* Bordes redondeados para cada ítem */
+    background-color: white; /* Fondo blanco para contraste */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.02); /* Efecto de hover */
+    }
+
+    ion-avatar {
+      margin-right: 10px;
+    }
+
+    ion-label {
+      h2 {
+        text-align: center; /* Centrando el nombre del usuario */
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+        color: #2a2c41; /* Color del texto (azul oscuro de tu paleta) */
+      }
+
+      p {
+        margin: 0;
+        color: #4f4f4f;
+        font-size: 14px;
+      }
+    }
+
+    ion-badge {
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 10px;
+    }
+  }
 }

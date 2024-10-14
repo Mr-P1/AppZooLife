@@ -9,7 +9,7 @@ import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { star,personCircle, chevronUpCircle, document, colorPalette, globe,qrCodeOutline } from 'ionicons/icons';
+import { star,personCircle, chevronUpCircle, document, colorPalette, globe,qrCodeOutline,earthOutline,mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
@@ -29,8 +29,13 @@ export class InicioPage implements OnInit {
   searchTerm: string = ''; // Para almacenar el término de búsqueda
   isScanning: boolean = false; // Variable para manejar el estado del escáner
   allowedFormats = [BarcodeFormat.QR_CODE]; // Definir los formatos permitidos
+  isSorted: boolean = false; // Controla el estado del orden
 
-  
+
+  filteredAnimals2: Animal[] = []; // Lista de animales filtrados
+
+
+
 
   constructor(
 
@@ -39,7 +44,7 @@ export class InicioPage implements OnInit {
     private router: Router
 
   ) {
-    addIcons({chevronUpCircle,document,colorPalette,globe,star,personCircle,qrCodeOutline});
+    addIcons({earthOutline,mapOutline,chevronUpCircle,document,colorPalette,globe,star,personCircle,qrCodeOutline});
   }
 
 
@@ -201,9 +206,7 @@ export class InicioPage implements OnInit {
   }
 
 
-  qr(){
-    console.log("hola")
-  }
-
 
 }
+
+

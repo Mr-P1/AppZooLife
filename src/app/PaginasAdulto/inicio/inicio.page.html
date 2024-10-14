@@ -13,7 +13,7 @@
         </ion-button>
       </div>
 
-    <!-- Mostrar el escáner solo si está activado -->
+
     <div *ngIf="isScanning">
       <zxing-scanner
         (scanSuccess)="onCodeResult($event)"
@@ -31,7 +31,7 @@
         <ion-label>No se encontraron resultados</ion-label>
       </ion-item>
 
-        <!-- Carrusel de imágenes -->
+
 
         <swiper-container
           [pagination]="true"
@@ -45,13 +45,19 @@
         </swiper-container>
         <br>
 
-        <!-- Botones debajo del carrusel -->
         <div class="buttons-container">
           <div class="button-item">
-            <ion-button fill="solid" class="custom-button">
+            <ion-button fill="solid" class="custom-button" >
               <img src="../../../assets/icon/rutaIcon.png" alt="Huella Icon" />
             </ion-button>
             <p class="button-text">Ruta sugerida</p>
+          </div>
+
+          <div class="button-item">
+            <ion-button fill="solid" class="custom-button">
+              <ion-icon class="icono" name="earth-outline"></ion-icon>
+            </ion-button>
+            <p class="button-text">Bioparque</p>
           </div>
 
           <div class="separator-text">
@@ -64,10 +70,17 @@
             </ion-button>
             <p class="button-text">Especie</p>
           </div>
+
+          <div class="button-item">
+            <ion-button fill="solid" class="custom-button">
+              <ion-icon class="icono" name="map-outline"></ion-icon>
+            </ion-button>
+            <p class="button-text">Area</p>
+          </div>
+
+
         </div>
     </div>
-
-  <!-- Listado de animales -->
 
 
 
@@ -150,3 +163,6 @@
     </ion-fab-list>
   </ion-fab>
 </ion-content>
+
+
+
