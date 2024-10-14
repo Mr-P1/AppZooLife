@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/nino/inicio" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="contenidoPrincipal">
+  <ng-container *ngIf="animal$ | async as animal; else loading">
+    <ion-card>
+      <div>
+        <img alt="Silhouette of mountains" src="{{animal.imagen}}" />
+        <div class="icono-numero">{{animal.posicion_mapa}}</div>
+      </div>
+
+      <ion-card-header>
+        <div class="header-content">
+
+          <!-- Botón para curiosidad -->
+          <ion-button id="curiosidad-trigger" fill="clear">
+            <img src="../../../assets/icon/ampolleta.png" alt="Curiosidad" />
+          </ion-button>
+          <ion-popover trigger="curiosidad-trigger" triggerAction="click">
+            <ng-template>
+              <ion-content class="ion-padding">
+                        {{ animal.dato_curioso }}
+            </ion-content>
+            </ng-template>
+          </ion-popover>
+
+          <div class="title-container">
+            <h6 [ngClass]="{'estado-disponible': animal.disponibilidad === 'Disponible', 'estado-no-disponible': animal.disponibilidad !== 'Disponible'}">
+              {{animal.disponibilidad}}
+            </h6>
+            <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
+            <ion-card-subtitle>{{ animal.nombre_cientifico }}</ion-card-subtitle>
+          </div>
+
+          <!-- Botón para precaución -->
+          <ion-button id="precaucion-trigger" fill="clear">
+            <img src="../../../assets/icon/precaución_rojo.png" alt="Precaución" />
+          </ion-button>
+          <ion-popover trigger="precaucion-trigger" triggerAction="click">
+            <ng-template>
+              <ion-content class="ion-padding">
+                <ion-list>
+                  <ion-item>
+                      <ion-label>
+                        {{ animal.precaucion_1 }}
+                      </ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>
+                      {{ animal.precaucion_2 }}
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label>
+                    {{ animal.precaucion_3 }}
+                  </ion-label>
+              </ion-item>
+
+                </ion-list>
+            </ion-content>
+            </ng-template>
+          </ion-popover>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p><strong>Descripción: </strong>{{ animal.descripcion_1 }}</p>
+        <p><strong>Mas acerca del {{animal.nombre_comun}}: </strong>{{ animal.descripcion_2 }}</p>
+        <p><strong></strong>{{ animal.descripcion_3 }}</p>
+        <p><strong>Comportamiento:</strong> {{ animal.comportamiento }}</p>
+        <p><strong>Dieta </strong>{{ animal.dieta }}</p>
+        <p><strong>Peso:</strong> {{ animal.peso }}</p>
+        <p><strong>Altura:</strong> {{ animal.altura }}</p>
+        <p><strong>Clase:</strong> {{ animal.clase }}</p>
+        <p><strong>Habitat:</strong> {{ animal.habitat }}</p>
+        <p><strong>Estado de conservación:</strong> {{ animal.estado_conservacion }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Contenido multimedia</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ng-container *ngIf="animal.audio; else noAudio">
+          <ion-card-subtitle>Audio explicativo</ion-card-subtitle>
+          <audio controls>
+            <source [src]="animal.audio" type="audio/mp3" />
+            Tu navegador no soporta la reproducción de audio.
+          </audio>
+        </ng-container>
+        <ng-template #noAudio>
+          <p>No hay audio disponible para este animal.</p>
+        </ng-template>
+
+        <ng-container *ngIf="animal.video; else noVideo">
+          <ion-card-subtitle>Video</ion-card-subtitle>
+          <video width="100%" height="auto" controls>
+            <source [src]="animal.video" type="video/mp4" />
+            Tu navegador no soporta la reproducción de video.
+          </video>
+        </ng-container>
+        <ng-template #noVideo>
+          <p>No hay video disponible para este animal.</p>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-template #loading>
+    <ion-card>
+      <ion-card-content>
+        <p>Cargando información del animal...</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

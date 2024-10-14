@@ -81,7 +81,7 @@ ion-button img {
 
 ion-content {
   --background: none;
-  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-image: url(./../../../assets/fondos/fondoninos.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -92,12 +92,13 @@ ion-content {
 /* Estilo para los botones debajo del carrusel */
 .buttons-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  background-color: transparent;
   padding: 10px;
 }
 
 .custom-button {
-  width: 150px;
+  width: 100px;
   text-align: center;
   --background: #ff8800;
   --color: white;
@@ -141,6 +142,46 @@ swiper-slide img {
   object-fit: cover; /* Recorta las imágenes para que cubran completamente el área del slide */
   object-position: center; /* Centra la imagen en caso de recorte */
   border-radius: 10px; /* Opcional: le da bordes redondeados a las imágenes */
+}
+
+p {
+  margin-top: 5%;
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Chewy', cursive; /* Aplicar la fuente Chewy */
+  color: #ffffff;
+  font-size: 25px;
+}
+
+h2 {
+  margin-top: 5%;
+  margin-bottom: 0px;
+  margin-right: 40px;
+  margin-left: 40px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Chewy', cursive; /* Aplicar la fuente Chewy */
+  color: #ffffff;
+  font-size: 25px;
+  background-image: url(./../../../assets/fondos/tablatitulo.png);
+}
+.custom-button.one {
+  color: white; /* Color del texto */
+  --background: #bd4622; /* Para asegurarte de que se aplique */
+  --color: white; /* Color del texto en el botón */
+}
+
+.custom-button.two {
+  color: white; /* Color del texto */
+  --background: #c9bd15; /* Para asegurarte de que se aplique */
+  --color: white; /* Color del texto en el botón */
+}
+
+.custom-button.three {
+  color: white; /* Color del texto */
+  --background: #145dbd; /* Para asegurarte de que se aplique */
+  --color: white; /* Color del texto en el botón */
 }
 
 

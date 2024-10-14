@@ -1,17 +1,99 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>informacion</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">informacion</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button default-href="/home" text=""></ion-back-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <div>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, quae totam. Modi dolore qui sit laborum natus exercitationem, consequatur unde dicta, incidunt blanditiis amet rem adipisci nobis? Sint, tempora ad.
+  <!-- Contenedor de las cards -->
+  <div class="card-container">
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Horarios Buin Zoo</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Lunes: Cerrado</p>
+        <p>Martes a Viernes: 9:30 a 17:30 hrs</p>
+        <p>Sábado, Domingo y Feriados: 9:30 a 18:00 hrs</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Reglas de Comportamiento</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ul>
+          <li>No se permite el ingreso de bebidas alcohólicas.</li>
+          <li>No se permiten bicicletas, patines, skates, etc.</li>
+          <li>Prohibido ingresar globos, pelotas o mascotas.</li>
+          <li>No se permite el uso de drones.</li>
+          <li>Prohibido fumar dentro del parque.</li>
+          <li>No se realizan devoluciones por entradas.</li>
+        </ul>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Servicios</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Restaurante Rafiki y el Patio de Comidas Palafito.</p>
+        <p>Se permite el ingreso de snacks y bebidas personales.</p>
+        <p>Estacionamiento con capacidad para 1.000 vehículos.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Custodia</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Servicio de custodia gratuito junto al Centro de Atención al Invitado (CAI).</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Eventos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Cumpleaños con reservación para más de 15 invitados.</p>
+        <p>Visitas educativas para colegios con precios preferenciales.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Atracciones Adicionales</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Dino Parque: Safari de dinosaurios animatronics.</p>
+        <p>Buin Marino: Muestra educativa con animales marinos.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Datos Adicionales</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>No se cierran los días de lluvia.</p>
+        <p>Aforo limitado por seguridad.</p>
+        <p>El parque tiene una parada especial de metro tren EFE.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-header>
+        <ion-card-title>Baños</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Todos los baños incluyen mudadores para bebés.</p>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

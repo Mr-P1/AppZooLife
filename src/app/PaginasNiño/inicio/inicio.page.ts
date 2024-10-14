@@ -1,13 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
+// import { FirestoreService } from '../../common/servicios/firestore.service';
+// import { Animal } from '../../common/models/animal.model';
+// import { Reaction } from 'src/app/common/models/reaction.model';
+// import { CommonModule } from '@angular/common';
+// import { Router, RouterLink } from '@angular/router';
+// import { AuthService } from './../../common/servicios/auth.service';
+// import { IonContent, IonSearchbar, IonList, IonItem, IonLabel, IonCardHeader, IonButton, IonCardTitle, IonCard} from "@ionic/angular/standalone";
+// import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// import Swiper from 'swiper';
+
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
 import { Reaction } from 'src/app/common/models/reaction.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
+import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
-import { IonContent, IonSearchbar, IonList, IonItem, IonLabel, IonCardHeader, IonButton, IonCardTitle, IonCard} from "@ionic/angular/standalone";
+import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
+import { addIcons } from 'ionicons';
+import { star, personCircle, chevronUpCircle, document, colorPalette, globe, qrCodeOutline, earthOutline, mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import Swiper from 'swiper';
 
 @Component({
   selector: 'app-inicio-nino',
@@ -18,11 +32,21 @@ import Swiper from 'swiper';
   imports: [IonCard, IonCardTitle, IonButton, IonCardHeader, IonLabel, IonItem, IonList, IonSearchbar, IonContent, CommonModule, RouterLink,]
 })
 export class InicioPage implements OnInit {
+  @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
 
   animales: Animal[] = [];
-  userId:string = '';
+  userId: string = '';
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
   searchTerm: string = ''; // Para almacenar el término de búsqueda
+
+
+
+  animalesOriginal: Animal[] = []; // Guardar el orden original
+
+  isScanning: boolean = false;
+  allowedFormats = [BarcodeFormat.QR_CODE];
+  isSortedByMap: boolean = false; // Controla si está ordenado por posición
+
 
   imagenes = [
     'assets/slides/Slide1.jpg',
@@ -37,7 +61,7 @@ export class InicioPage implements OnInit {
     private authService: AuthService,
     private router: Router
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -82,7 +106,7 @@ export class InicioPage implements OnInit {
 
   // Método para redirigir a la página de información del animal
   goToAnimal(animalId: string) {
-    this.router.navigate(['/app/animal-info', animalId]);
+    this.router.navigate(['/animal-info-nino', animalId]);
     this.searchTerm = '';
     this.filteredAnimals = [];
   }
@@ -105,6 +129,7 @@ export class InicioPage implements OnInit {
           const reaction: Reaction = {
             animalId: animalId,
             userId: this.userId,
+            fecha: new Date(),
             reaction: true
           };
 
@@ -134,6 +159,7 @@ export class InicioPage implements OnInit {
           const reaction: Reaction = {
             animalId: animalId,
             userId: this.userId,
+            fecha: new Date(),
             reaction: false
           };
 
@@ -144,6 +170,46 @@ export class InicioPage implements OnInit {
       });
     }
   }
+
+  onCodeResult(result: string) {
+    console.log('Contenido escaneado:', result);
+    this.isScanning = false;
+
+    const animalId = this.extractAnimalId(result);
+    if (animalId) {
+      console.log('Redirigiendo a la página del animal:', animalId);
+
+      // Detén el escáner al redirigir
+      if (this.scanner) {
+        this.scanner.reset();
+      }
+
+      this.router.navigate(['/animal-info', animalId]);
+    } else {
+      console.log('No se encontró un ID de animal válido en el QR.');
+
+      // Detén el escáner si no se encuentra un ID válido
+      if (this.scanner) {
+        this.scanner.reset();
+      }
+    }
+  }
+
+
+  extractAnimalId(result: string): string | null {
+    console.log('Procesando URL:', result);
+    const regex = /animal-info\/(\w+)/;
+    const match = result.match(regex);
+    return match ? match[1] : null;
+  }
+
+  toggleQrScan() {
+    this.isScanning = !this.isScanning;
+    if (!this.isScanning && this.scanner) {
+      this.scanner.reset();
+    }
+  }
+
 
 
 }

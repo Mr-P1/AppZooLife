@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+ion-content {
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.perfil{
+  background:  linear-gradient(45deg, #015234, #01521c);
+  border-radius: 0px 0px 20px 20px;
+  padding-bottom: 50px; /* Reduce espacio entre las tarjetas */
+}
+
+
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1e1e1e;
+  height: auto; /* Ajuste automático según el contenido */
+  padding: 15px; /* Reduce espacio dentro de la tarjeta del perfil */
+}
+
+.profile-card {
+  text-align: center;
+  padding-top: 10px;
+  // margin-top: 10px; /* Reduce el espacio superior */
+  margin-bottom: 10px; /* Agrega un pequeño espacio inferior */
+}
+
+.profile-image {
+  width: 100px; /* Tamaño más compacto */
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #f4a261; /* Bordes más delgados */
+  object-fit: cover;
+}
+
+h1 {
+  color: #f4a261;
+  margin-top: 5px; /* Reduce espacio entre la imagen y el nombre */
+  font-size: 24px; /* Tamaño de texto reducido */
+}
+
+p {
+  color: #fff;
+  margin-bottom: 5px; /* Reduce el espacio entre párrafos */
+  font-size: 14px; /* Tamaño más compacto */
+}
+
+ion-grid {
+  margin-top: 10px; /* Reduce el espacio superior */
+}
+
+ion-row {
+  justify-content: center;
+  margin-bottom: 10px; /* Reduce espacio entre filas */
+}
+
+.option-col {
+  text-align: center;
+  margin-bottom: 5px; /* Compacta las opciones */
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 8px; /* Redondeo más ligero */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
+  padding: 8px; /* Reduce padding interno */
+}
+
+.option-icon {
+  font-size: 32px; /* Iconos más pequeños */
+  color: #4caf50;
+  margin-bottom: 5px; /* Reduce espacio debajo del icono */
+}
+
+ion-card-content p {
+  font-size: 14px; /* Tamaño más compacto */
+  font-weight: bold;
+  color: #333;
+  margin: 0; /* Elimina espacio extra */
+}
+
+.user-card{
+  padding: 10px; /* Reduce el padding interno de las tarjetas */
+  border-radius: 8px; /* Redondeo más sutil */
+
+}
+
+/* Estilo para la card de puntos */
+.points-card {
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+}
+
+/* Estilo para la card de nivel */
+.level-card {
+  background: linear-gradient(45deg, #4caf50, #8bc34a);
+}
+
+/* Íconos personalizados */
+.custom-icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+
+.custom-card p {
+  margin: 5px 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Ajuste del espaciado entre las columnas */
+.custom-card-col {
+  padding: 5px;
+
+}
+
+/* Cards personalizadas */
+.custom-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: white;
+}
+
+
+.texto-animal{
+  color:white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.fondo-usuario{
+  // background-image: url('../../../assets/fondos/Fondo_animales.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  // background:  linear-gradient(45deg, #015234, #01521c);
+  background-color: #4caf50; /* Fondo verde */
+
+}
+
+
+// .user-card {
+//   --ion-background-color: transparent;
+//   background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+// }
+
+.texto-perfil-titulo {
+  color: white !important;
+  text-align: center;
+  // font-size: 24px;
+  // font-weight: bold;
+  font-family: 'Chewy', ;
+}
+
+.texto-perfil-titulo-2 {
+  color: rgb(0, 0, 0) !important;
+  text-align: center;
+  // font-size: 24px;
+  // font-weight: bold;
+  font-family: 'Chewy', ;
+}
+
+.texto-perfil {
+  color: white !important;
+  font-size: 24px;
+
+}
+
+
+
+
+.nivel-user{
+  color: black;
+}
+
+
+.fondo{
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+
+.ranking {
+  background-color: #4caf50; /* Fondo verde */
+  padding: 20px;
+  border-radius: 20px; /* Bordes redondeados del contenedor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+
+  .titulo-ranking {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 16px;
+    font-weight: bold;
+  }
+
+  .player-item {
+    margin: 10px 0;
+    border-radius: 20px; /* Bordes redondeados para cada ítem */
+    background-color: white; /* Fondo blanco para contraste */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.02); /* Efecto de hover */
+    }
+
+    ion-avatar {
+      margin-right: 10px;
+    }
+
+    ion-label {
+      h2 {
+        text-align: center; /* Centrando el nombre del usuario */
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+        color: #2a2c41; /* Color del texto (azul oscuro de tu paleta) */
+      }
+
+      p {
+        margin: 0;
+        color: #4f4f4f;
+        font-size: 14px;
+      }
+    }
+
+    ion-badge {
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 10px;
+    }
+  }
+}

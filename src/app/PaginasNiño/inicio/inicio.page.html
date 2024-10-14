@@ -1,14 +1,42 @@
+<link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+
+
 <ion-content>
-
   <!-- Barra de búsqueda -->
-  <ion-searchbar
-    color="light"
-    placeholder="Buscar atracción"
-    (ionInput)="filterAnimals($event)"
-    [value]="searchTerm"
-  ></ion-searchbar>
+   <div>
 
-  <!-- Carrusel de imágenes -->
+    <div class="search-container">
+      <ion-searchbar
+        color="light"
+        placeholder="Buscar atracción"
+        (ionInput)="filterAnimals($event)"
+        [value]="searchTerm"
+      ></ion-searchbar>
+      <ion-button fill="clear" (click)="toggleQrScan()">
+        <img src="../../../assets/icon/qrIcon.png" alt="Escanear QR"/>
+      </ion-button>
+    </div>
+
+
+  <div *ngIf="isScanning">
+    <zxing-scanner
+
+      [formats]="allowedFormats"
+    ></zxing-scanner>
+  </div>
+
+    <ion-list *ngIf="filteredAnimals.length > 0">
+      <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
+        {{ animal.nombre_comun }}
+      </ion-item>
+    </ion-list>
+
+    <ion-item *ngIf="filteredAnimals.length === 0 && searchTerm">
+      <ion-label>No se encontraron resultados</ion-label>
+    </ion-item>
+
+
+     <!-- Carrusel de imágenes -->
 
   <swiper-container [pagination]="true" [loop]="true" [autoplay]="{ delay: 3000 }" effect="cards" >
     <swiper-slide *ngFor="let imagen of imagenes">
@@ -16,18 +44,25 @@
     </swiper-slide>
   </swiper-container>
 
-
-
+<p>Mostrar por</p>
 
   <!-- Botones debajo del carrusel -->
   <div class="buttons-container">
-    <ion-button fill="solid" class="custom-button" color="primary">
-      Especie
+    <ion-button fill="solid" class="custom-button one" color="primary">
+      <img src="./../../../assets/icon/especieninoicon.png" alt="">
     </ion-button>
-    <ion-button fill="solid" class="custom-button" color="primary">
-      Ruta sugerida
+    <ion-button fill="solid" class="custom-button two" color="primary">
+      <img src="./../../../assets/icon/rutasugeridanino.png" alt="">
+    </ion-button>
+    <ion-button fill="solid" class="custom-button three" color="primary">
+      <img src="./../../../assets/icon/areaninoicon.png" alt="">
     </ion-button>
   </div>
+
+   </div>
+
+
+
 
   <!-- Listado de animales -->
   <h2>Animales por ruta sugerida</h2>
@@ -44,7 +79,7 @@
 
   <ion-card *ngFor="let animal of animales" class="animal-card">
     <div class="image-container">
-      <img alt="{{animal.nombre_comun}}" src="{{animal.imagen}}" [routerLink]="['/app/animal-info', animal.id]" />
+      <img alt="{{animal.nombre_comun}}" src="{{animal.imagen}}" [routerLink]="['/animal-info-nino', animal.id]" />
       <div class="icono-numero">{{ animal.posicion_mapa }}</div>
     </div>
     <ion-card-header class="card-header">
