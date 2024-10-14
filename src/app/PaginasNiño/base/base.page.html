@@ -1,52 +1,44 @@
 <ion-menu contentId="main-content">
   <ion-header>
-    <ion-toolbar class="custom-content">
+    <ion-toolbar class="menu">
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding custom-content" >This is the menu content.
 
-
-    <ion-list class="custom-content">
-      <ion-item class="custom-content">
+  <ion-content class="custom-content">
+    <div class="menu-buttons">
+      <div class="fondo-tiempo">
         <h5>Tiempo restante: {{ (tiempoRestante$ | async) | formatearTiempo }}</h5>
-      </ion-item>
-      <ion-item button [routerLink]="['/nino/inicio']">
-        <ion-label>Inicio</ion-label>
-      </ion-item>
-      <ion-item button [routerLink]="['/nino/perfil']">
-        <ion-label>Perfil</ion-label>
-      </ion-item>
-      <ion-item button [routerLink]="['/nino/trivia']">
-        <ion-label>Trivia</ion-label>
-      </ion-item>
-      <ion-item button [routerLink]="['/nino/eventos']">
-        <ion-label>Eventos</ion-label>
-      </ion-item>
-      <ion-item button [routerLink]="['/nino/mapa']">
-        <ion-label>Mapa</ion-label>
-      </ion-item>
-      <ion-item button [routerLink]="['/nino/info-zoo']">
-        <ion-label>Información</ion-label>
-      </ion-item>
-      <ion-item button (click)="cerrarSesion()">
-        <ion-label>Cerrar Sesión</ion-label>
-      </ion-item>
-    </ion-list>
+      </div>
+
+      <button ion-button class="menu-button" [routerLink]="['/adulto/inicio']">Inicio</button>
+      <button ion-button class="menu-button" [routerLink]="['/adulto/perfil']">Perfil</button>
+      <button ion-button class="menu-button" [routerLink]="['/adulto/trivia']">Trivia</button>
+      <button ion-button class="menu-button" [routerLink]="['/adulto/eventos']">Eventos</button>
+      <button ion-button class="menu-button" [routerLink]="['/adulto/mapa']">Mapa</button>
+      <button ion-button class="menu-button" [routerLink]="['/adulto/info-zoo']">Información</button>
+    </div>
+
+    <button ion-button class=" cerrar-sesion" (click)="cerrarSesion()">
+      Cerrar Sesión
+    </button>
   </ion-content>
 </ion-menu>
+
 <div class="ion-page" id="main-content">
   <ion-header>
-    <ion-toolbar  class="custom-content">
+    <ion-toolbar  class="nav">
+
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-menu-button class="boton"></ion-menu-button>
       </ion-buttons>
+
       <ion-title>{{ pageTitle }}</ion-title>
+
     </ion-toolbar>
   </ion-header>
+
   <ion-content class="ion-padding">
-
-
-     <ion-router-outlet></ion-router-outlet>
-    </ion-content>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
 </div>
