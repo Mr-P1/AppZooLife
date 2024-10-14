@@ -1,0 +1,43 @@
+ion-content {
+  --background: none;
+  background-image: url(./../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.custom-card {
+  border-radius: 15px;
+  background: linear-gradient(135deg, #FF724C, #FDBF50);
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+ion-card-title {
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+ion-card-content {
+  font-size: 1rem;
+  padding: 15px;
+}
+
+ul {
+  list-style: disc;
+  padding-left: 20px;
+}

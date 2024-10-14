@@ -1,12 +1,116 @@
-ion-menu::part(backdrop){
-  background-color: green;
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+ion-menu::part(backdrop) {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-ion-menu::part(container){
+ion-menu::part(container) {
   border-radius: 0 20px 20px 0;
-  box-shadow: 4px 0px 16px black;
+
+  box-shadow: 4px 0px 16px rgba(0, 0, 0, 0.18);
 }
 
-.custom-content{
-  --background:green;
+
+.menu{
+  --background: #004129;
+}
+
+
+ion-title{
+ color:white;
+}
+
+.custom-content {
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondomenuninos3.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  font-family: 'Chewy';
+  position: relative; /* Necesario para que el botón se posicione relativo a este contenedor */
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Botón de Cerrar Sesión */
+.cerrar-sesion {
+  background-color: rgba(255, 255, 255, 0);
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/008/490/123/small/wooden-sign-boards-wooden-blank-ribbons-design-png.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(64, 20, 20);
+  font-family: 'Chewy', ;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 22px;
+
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%); /* Centra el botón horizontalmente */
+  width: calc(100% - 40px); /* Ajusta el ancho del botón */
+
+
+  transition: background-color 0.3s, transform 0.3s;
+
+}
+
+.menu-button {
+  background-color: rgba(255, 255, 255, 0);
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/008/490/123/small/wooden-sign-boards-wooden-blank-ribbons-design-png.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(64, 20, 20);
+  font-family: 'Chewy';
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 22px;
+  transition: background-color 0.3s, transform 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.fondo-tiempo {
+  background-color: rgba(255, 255, 255, 0.982);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+
+.nav{
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+.boton{
+  color: white;
+
+}
+
+.texto-menu {
+  color: white !important;
+  text-align: center;
+  font-family: 'Chewy', ;
 }

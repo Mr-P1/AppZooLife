@@ -76,9 +76,29 @@ export const routes: Routes = [
         path: 'inicio',
         loadComponent: () => import('./PaginasNiño/inicio/inicio.page').then(m => m.InicioPage)
       },
+      {
+        path: 'perfil',
+        loadComponent: () => import('./PaginasNiño/perfil/perfil.page').then( m => m.PerfilPage)
+      },
+      {
+        path: 'mapa',
+        loadComponent: () => import('./PaginasNiño/mapa/mapa.page').then( m => m.MapaPage)
+      },
+      {
+        path: 'trivia-nino',
+        loadComponent: () => import('./PaginasNiño/trivia/trivia.page').then( m => m.TriviaPage)
+      },
 
     ]
   },
+  {
+    path: 'animal-info-nino/:id',
+    loadComponent: () => import('./PaginasNiño/info-animal/info-animal.page').then( m => m.InfoAnimalPage)
+  },
+
+
+
+
 
 
 

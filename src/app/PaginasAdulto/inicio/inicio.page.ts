@@ -104,7 +104,7 @@ export class InicioPage implements OnInit {
             console.log('Reacción actualizada a Like');
           });
         } else {
-          const reaction: Reaction = { animalId, userId: this.userId, reaction: true };
+          const reaction: Reaction = { animalId, userId: this.userId, reaction: true, fecha:new Date(), };
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como Like');
           });
@@ -123,7 +123,7 @@ export class InicioPage implements OnInit {
             console.log('Reacción actualizada a No me gusta');
           });
         } else {
-          const reaction: Reaction = { animalId, userId: this.userId, reaction: false };
+          const reaction: Reaction = { animalId, userId: this.userId, reaction: false,fecha:new Date(),};
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como No me gusta');
           });
