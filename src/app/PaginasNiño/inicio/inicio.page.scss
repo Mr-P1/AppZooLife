@@ -147,15 +147,18 @@ swiper-slide img {
 p {
   margin-top: 5%;
   margin-bottom: 0px;
+  margin-right: 40px;
+  margin-left: 40px;
   display: flex;
   justify-content: center;
   font-family: 'Chewy', cursive; /* Aplicar la fuente Chewy */
   color: #ffffff;
   font-size: 25px;
+  background-image: url(./../../../assets/fondos/tablatitulo.png);
 }
 
 h2 {
-  margin-top: 5%;
+  margin-top: 0%;
   margin-bottom: 0px;
   margin-right: 40px;
   margin-left: 40px;
@@ -168,7 +171,7 @@ h2 {
 }
 .custom-button.one {
   color: white; /* Color del texto */
-  --background: #bd4622; /* Para asegurarte de que se aplique */
+  --background: linear-gradient(45deg, #ff8800, #ff8800);/* Para asegurarte de que se aplique */
   --color: white; /* Color del texto en el botón */
 }
 
