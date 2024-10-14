@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
 ion-menu::part(backdrop) {
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -43,7 +45,8 @@ ion-title{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  color: rgb(0, 0, 0);
+  color: rgb(64, 20, 20);
+  font-family: 'Chewy', ;
   border: none;
   border-radius: 8px;
   padding: 10px;
@@ -66,7 +69,8 @@ ion-title{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  color: rgb(0, 0, 0);
+  color: rgb(64, 20, 20);
+  font-family: 'Chewy', ;
   border: none;
   border-radius: 8px;
   padding: 10px;
@@ -102,4 +106,10 @@ ion-title{
 .boton{
   color: white;
 
+}
+
+.texto-menu {
+  color: white !important;
+  text-align: center;
+  font-family: 'Chewy', ;
 }

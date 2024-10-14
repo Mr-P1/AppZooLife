@@ -15,6 +15,8 @@ import {
 } from '@angular/fire/firestore';
 import { catchError, from, map, Observable, of, switchMap, throwError } from 'rxjs';
 
+import { orderBy, limit } from '@angular/fire/firestore';
+
 import { Animal } from '../models/animal.model';
 import { Reaction } from '../models/reaction.model';
 import { Usuario } from '../models/usuario.model';
@@ -167,4 +169,19 @@ export class FirestoreService {
   guardarRespuestaTrivia(respuesta: { resultado: boolean; user_id: string; pregunta_id: string }): Observable<void> {
     return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => {}));
   }
+
+
+  //Ranking 5 usuarios con mas nivel
+  getTopUsuarios(): Observable<Usuario[]> {
+    const topUsuariosQuery = query(
+      this._rutaUsuarios,
+      orderBy('nivel', 'desc'),
+      limit(5)
+    );
+
+    return collectionData(topUsuariosQuery, { idField: 'id' }) as Observable<Usuario[]>;
+  }
+
+
+
 }

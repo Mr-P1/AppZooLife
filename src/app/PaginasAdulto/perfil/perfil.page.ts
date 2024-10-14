@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCardContent, IonCard, IonCardTitle, IonCardHeader, IonAvatar, IonApp, IonBadge, IonItem, IonLabel, IonList, IonGrid, IonIcon, IonCol, IonCardSubtitle, IonRow } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCardContent, IonCard, IonCardTitle, IonCardHeader, IonAvatar, IonApp, IonBadge, IonItem, IonLabel, IonList, IonGrid, IonIcon, IonCol, IonCardSubtitle, IonRow, IonButton } from '@ionic/angular/standalone';
 
 
 import { AuthService } from 'src/app/common/servicios/auth.service';
 import { Usuario } from '../../common/models/usuario.model';
+import { FirestoreService } from 'src/app/common/servicios/firestore.service';
+
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
   styleUrls: ['./perfil.page.scss'],
   standalone: true,
-  imports: [IonRow, IonCardSubtitle, IonCol, IonIcon, IonGrid, IonList, IonLabel, IonItem, IonBadge, IonApp, IonAvatar, IonCardHeader, IonCardTitle, IonCard, IonCardContent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonButton, IonRow, IonCardSubtitle, IonCol, IonIcon, IonGrid, IonList, IonLabel, IonItem, IonBadge, IonApp, IonAvatar, IonCardHeader, IonCardTitle, IonCard, IonCardContent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class PerfilPage implements OnInit {
 
@@ -20,14 +22,18 @@ export class PerfilPage implements OnInit {
   uid: string | null = null;
   email: string = '';  // Inicialización de email por defecto
   tipo = "";
+  topUsuarios: Usuario[] = []; // Almacena los 5 usuarios con más nivel
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private firestoreService: FirestoreService
+  ) {}
 
   ngOnInit() {
     // El ngOnInit se llama solo una vez cuando la página se crea por primera vez.
     this.loadUserData();
     this.tipo = localStorage.getItem('tipo')!;
-
+    this.loadTopUsuarios();
 
   }
 
@@ -52,6 +58,17 @@ export class PerfilPage implements OnInit {
     } catch (error) {
       console.error('Error al obtener los datos del usuario:', error);
     }
+  }
+
+  loadTopUsuarios() {
+    this.firestoreService.getTopUsuarios().subscribe(
+      (usuarios) => {
+        this.topUsuarios = usuarios;
+      },
+      (error) => {
+        console.error('Error al cargar los usuarios:', error);
+      }
+    );
   }
 
 
@@ -89,5 +106,18 @@ export class PerfilPage implements OnInit {
       return 'Rey de las sabanas';
     }
   }
+
+
+  getBadgeColor(index: number): string {
+    switch (index) {
+      case 0: return 'success';
+      case 1: return 'warning';
+      case 2: return 'tertiary';
+      case 3: return '';
+      default: return 'medium';
+    }
+  }
+
+
 
 }

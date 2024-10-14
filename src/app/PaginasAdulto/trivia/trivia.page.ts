@@ -156,7 +156,9 @@ export class TriviaPage implements OnInit, OnDestroy {
         resultado: respuestaCorrecta,
         user_id: this.userId,
         pregunta_id: pregunta.id,
-        fecha: new Date()
+        fecha: new Date(),
+        genero_usuario:this.usuario.genero,
+        tipo:localStorage.getItem('tipo'),
       };
 
       this.preguntaService.guardarRespuestaTrivia(respuesta).subscribe(() => {
