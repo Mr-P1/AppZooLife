@@ -6,7 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { AuthService } from './../common/servicios/auth.service';
 import { addIcons } from 'ionicons';
 import { mailOutline, keyOutline, personOutline, callOutline, carOutline, eyeOutline, eyeOffOutline, lockClosed } from 'ionicons/icons';
-import { IonHeader, IonRow, IonContent, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonText, IonLabel ,IonSelectOption, IonSelect, IonIcon} from "@ionic/angular/standalone";
+import { IonHeader, IonRow, IonContent, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonText, IonLabel ,IonSelectOption, IonSelect, IonIcon, IonNote } from "@ionic/angular/standalone";
 import { IonCard } from '@ionic/angular/standalone';
 
 
@@ -15,7 +15,7 @@ import { IonCard } from '@ionic/angular/standalone';
   templateUrl: './registrarse.page.html',
   styleUrls: ['./registrarse.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonCard ,IonSelect, IonText, IonButton, IonInput, IonItem, IonList, IonCol, IonGrid, IonContent, IonRow, IonHeader,  CommonModule, RouterLink, ReactiveFormsModule,IonSelectOption, IonIcon]
+  imports: [IonNote, IonLabel, IonCard ,IonSelect, IonText, IonButton, IonInput, IonItem, IonList, IonCol, IonGrid, IonContent, IonRow, IonHeader,  CommonModule, RouterLink, ReactiveFormsModule,IonSelectOption, IonIcon]
 })
 export class RegistrarsePage  {
 

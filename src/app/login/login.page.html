@@ -61,10 +61,7 @@
           <div slot="label">Contraseña</div>
         </ion-input>
       </ion-item>
-      <ion-button expand="block" class="qr-button" (click)="toggleQrScan()">
-        <ion-icon slot="start" name="qr-code-outline"></ion-icon>
-        Escanear QR
-      </ion-button>
+
 
       <!-- Mostrar el escáner solo si está activado -->
       <div *ngIf="isScanning">
@@ -82,27 +79,32 @@
 
       <!-- Botón de envío del formulario para iniciar sesión -->
       <div class="ion-margin">
+
         <ion-button
-          type="submit"
-          class="login"
-          expand="block"
-          size="large"
-          [strong]="true"
-        >
-          <ion-text style="text-transform: none">Iniciar sesión</ion-text>
+        class="login"
+        expand="block"
+        size="large"
+        [strong]="true" class="qr-button" (click)="toggleQrScan()">
+          <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+          Escanear QR
         </ion-button>
+
+        <ion-button
+        [routerLink]="['/registrarse']"
+        class="login"
+        expand="block"
+        size="large"
+        [strong]="true"
+        class="qr-button">
+
+          Registrarse
+        </ion-button>
+
       </div>
 
       <!-- Botón de envío del formulario para registrarse -->
       <div class="ion-margin">
-        <ion-button
-          [routerLink]="['/registrarse']"
-          expand="block"
-          size="large"
-          [strong]="true"
-        >
-          <ion-text style="text-transform: none">Registrarse</ion-text>
-        </ion-button>
+
       </div>
 
       <ion-button [routerLink]="['/home']"> Home </ion-button>

@@ -88,13 +88,21 @@ export class LoginPage {
     console.log('Contenido escaneado:', result);
 
     // Asignar el resultado escaneado al control 'boleta'
-    this.boleta= result;
+    this.boleta = result;
 
     // Apagar el escáner
     this.isScanning = false;
 
     if (this.scanner) {
       this.scanner.reset();
+    }
+
+    // Verifica que los otros campos también estén completos antes de iniciar sesión
+    if (this.form.valid && this.boleta) {
+      // Llamar automáticamente al submit() para iniciar sesión
+      this.submit();
+    } else {
+      alert('Por favor, completa el correo y la contraseña antes de escanear.');
     }
   }
 
