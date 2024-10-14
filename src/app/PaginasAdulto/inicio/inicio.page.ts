@@ -23,30 +23,23 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 })
 export class InicioPage implements OnInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
+
   animales: Animal[] = [];
-  userId:string = '';
-  filteredAnimals: Animal[] = []; // Lista de animales filtrados
+  animalesOriginal: Animal[] = []; // Guardar el orden original
+  userId: string = '';
   searchTerm: string = ''; // Para almacenar el término de búsqueda
-  isScanning: boolean = false; // Variable para manejar el estado del escáner
-  allowedFormats = [BarcodeFormat.QR_CODE]; // Definir los formatos permitidos
-  isSorted: boolean = false; // Controla el estado del orden
-
-
-  filteredAnimals2: Animal[] = []; // Lista de animales filtrados
-
-
-
+  isScanning: boolean = false;
+  allowedFormats = [BarcodeFormat.QR_CODE];
+  isSortedByMap: boolean = false; // Controla si está ordenado por posición
+  filteredAnimals: Animal[] = []; // Lista de animales filtrados
 
   constructor(
-
     private animalsService: FirestoreService,
     private authService: AuthService,
     private router: Router
-
   ) {
-    addIcons({earthOutline,mapOutline,chevronUpCircle,document,colorPalette,globe,star,personCircle,qrCodeOutline});
+    addIcons({ earthOutline, mapOutline, chevronUpCircle, document, colorPalette, globe, star, personCircle, qrCodeOutline });
   }
-
 
   imagenes = [
     'assets/slides/Slide1.jpg',
@@ -55,48 +48,91 @@ export class InicioPage implements OnInit {
     'assets/slides/Slide4.jpg',
   ];
 
-
   ngOnInit(): void {
-
     this.animalsService.getAnimales().subscribe((data: Animal[]) => {
       this.animales = data;
-    })
+      this.animalesOriginal = [...data]; // Guarda el orden original
+    });
 
     this.authService.authState$.subscribe(user => {
       if (user) {
         this.userId = user.uid;
-        // Cargar los animales y luego las reacciones del usuario
         this.loadAnimalsWithReactions();
       }
     });
-
   }
 
   loadAnimalsWithReactions() {
     this.animalsService.getAnimales().subscribe((animales: Animal[]) => {
       this.animales = animales;
+      this.animalesOriginal = [...animales]; // Guarda el orden original
 
-      // Para cada animal, buscamos la reacción del usuario
       this.animales.forEach(animal => {
         this.animalsService.getUserReaction(animal.id, this.userId).subscribe(reaction => {
-          animal.reaccion = reaction ? reaction.reaction : null; // true = like, false = don't like, null = sin reacción
+          animal.reaccion = reaction ? reaction.reaction : null;
         });
       });
     });
   }
 
+  // Alterna entre ordenar por posición y restaurar el orden original
+  toggleOrdenRuta() {
+    if (this.isSortedByMap) {
+      // Restaurar el orden original
+      this.animales = [...this.animalesOriginal];
+    } else {
+      // Ordenar por 'posicion_mapa'
+      this.animales.sort((a, b) => a.posicion_mapa - b.posicion_mapa);
+    }
+    this.isSortedByMap = !this.isSortedByMap; // Cambiar el estado
+  }
+
   toggleQrScan() {
     this.isScanning = !this.isScanning;
-
-    if (!this.isScanning) {
-      // Si ya estaba escaneando, resetea (apaga) la cámara
-      if (this.scanner) {
-        this.scanner.reset();
-      }
+    if (!this.isScanning && this.scanner) {
+      this.scanner.reset();
     }
   }
 
-  onCodeResult(result: string) {
+  like(animalId: string) {
+    const animal = this.animales.find(a => a.id === animalId);
+    if (animal) {
+      animal.reaccion = true;
+      this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
+        if (existingReaction && existingReaction.id) {
+          this.animalsService.updateReaction(existingReaction.id, { reaction: true }).subscribe(() => {
+            console.log('Reacción actualizada a Like');
+          });
+        } else {
+          const reaction: Reaction = { animalId, userId: this.userId, reaction: true };
+          this.animalsService.addReaction(reaction).subscribe(() => {
+            console.log('Reacción guardada como Like');
+          });
+        }
+      });
+    }
+  }
+
+  dontLike(animalId: string) {
+    const animal = this.animales.find(a => a.id === animalId);
+    if (animal) {
+      animal.reaccion = false;
+      this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
+        if (existingReaction && existingReaction.id) {
+          this.animalsService.updateReaction(existingReaction.id, { reaction: false }).subscribe(() => {
+            console.log('Reacción actualizada a No me gusta');
+          });
+        } else {
+          const reaction: Reaction = { animalId, userId: this.userId, reaction: false };
+          this.animalsService.addReaction(reaction).subscribe(() => {
+            console.log('Reacción guardada como No me gusta');
+          });
+        }
+      });
+    }
+  }
+
+    onCodeResult(result: string) {
     console.log('Contenido escaneado:', result);
     this.isScanning = false;
 
@@ -120,7 +156,7 @@ export class InicioPage implements OnInit {
     }
   }
 
-  extractAnimalId(result: string): string | null {
+    extractAnimalId(result: string): string | null {
     console.log('Procesando URL:', result);
     const regex = /animal-info\/(\w+)/;
     const match = result.match(regex);
@@ -128,7 +164,7 @@ export class InicioPage implements OnInit {
   }
 
 
-  // Método para filtrar animales según el término de búsqueda
+    // Método para filtrar animales según el término de búsqueda
   filterAnimals(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
     if (this.searchTerm && this.searchTerm.trim() !== '') {
@@ -147,66 +183,9 @@ export class InicioPage implements OnInit {
     this.filteredAnimals = [];
   }
 
-  like(animalId: string) {
-    const animal = this.animales.find(a => a.id === animalId);
-    if (animal) {
-      // Actualiza el estado de la UI inmediatamente
-      animal.reaccion = true;
-
-      // Luego realiza la operación en Firestore
-      this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
-        if (existingReaction && existingReaction.id) {
-          // Actualiza la reacción en Firestore
-          this.animalsService.updateReaction(existingReaction.id, { reaction: true }).subscribe(() => {
-            console.log('Reacción actualizada a Like');
-          });
-        } else {
-          // Crea una nueva reacción en Firestore
-          const reaction: Reaction = {
-            animalId: animalId,
-            userId: this.userId,
-            reaction: true
-          };
-
-          this.animalsService.addReaction(reaction).subscribe(() => {
-            console.log('Reacción guardada como Like');
-          });
-        }
-      });
-    }
-  }
-
-  dontLike(animalId: string) {
-    const animal = this.animales.find(a => a.id === animalId);
-    if (animal) {
-      // Actualiza el estado de la UI inmediatamente
-      animal.reaccion = false;
-
-      // Luego realiza la operación en Firestore
-      this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
-        if (existingReaction && existingReaction.id) {
-          // Actualiza la reacción en Firestore
-          this.animalsService.updateReaction(existingReaction.id, { reaction: false }).subscribe(() => {
-            console.log('Reacción actualizada a No me gusta');
-          });
-        } else {
-          // Crea una nueva reacción en Firestore
-          const reaction: Reaction = {
-            animalId: animalId,
-            userId: this.userId,
-            reaction: false
-          };
-
-          this.animalsService.addReaction(reaction).subscribe(() => {
-            console.log('Reacción guardada como No me gusta');
-          });
-        }
-      });
-    }
-  }
-
 
 
 }
+
 
 

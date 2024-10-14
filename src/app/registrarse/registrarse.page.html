@@ -19,7 +19,7 @@
         <ion-input
           type="text"
           fill="solid"
-          label="Nombre"
+          label="Nombre (Obligatorio)"
           labelPlacement="floating"
           helperText="Ingrese su nombre"
           errorText="Nombre Inválido"
@@ -34,7 +34,7 @@
         <ion-input
           type="email"
           fill="solid"
-          label="Correo"
+          label="Correo (Obligatorio)"
           labelPlacement="floating"
           helperText="Enter a valid email"
           placeholder="Ingresa tu correo"
@@ -51,15 +51,14 @@
         <ion-input
           type="password"
           fill="solid"
-          label="Contraseña"
+          label="Contraseña (Obligatorio)"
           labelPlacement="floating"
-          placeholder="Ingresa tu contraseña"
+          placeholder="Ingresa tu contraseña (Obligatorio)"
           helperText="Debe tener un 5 mínimo de caracteres"
           errorText="Contraseña inválida"
           [counter]="true"
           minlength="5"
           formControlName="password">
-
           <!-- Etiqueta personalizada para el campo de contraseña -->
           <div slot="label">Contraseña</div>
         </ion-input>
@@ -70,11 +69,11 @@
         <ion-input
           type="number"
           fill="solid"
-          label="Teléfono"
+          label="Teléfono (Obligatorio)"
           [counter]="true"
           maxlength="9"
           labelPlacement="floating"
-          helperText="Ingresa un número de teléfono"
+          helperText="Ingresa un número de teléfono (Obligatorio)"
           errorText="Teléfono inválido"
           formControlName="telefono"
         ></ion-input>
@@ -84,9 +83,9 @@
         <ion-input
           type="text"
           fill="solid"
-          label="Patente"
+          label="Patente (Opcional)"
           labelPlacement="floating"
-          helperText="Ingresa una patente de vehículo"
+          helperText="Ingresa una patente de vehículo (Opcional)"
           formControlName="patente"
         >
           <ion-text color="success">(Opcional)</ion-text>
@@ -96,7 +95,7 @@
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="genero"
-          label="Genero de usuario"
+          label="Genero (Obligatorio)"
           placeholder="Seleccionar genero"
           errorText="Genero de usuario inválido"
         >
