@@ -50,6 +50,11 @@
   object-fit: cover;
 }
 
+ion-title {
+  display: flex;
+  justify-content: center;
+}
+
 ion-card-title {
   font-family: 'Chewy', cursive;
   font-weight: bold;  /* Esto también puede ayudar a aplicar el estilo correctamente */

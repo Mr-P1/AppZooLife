@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
 ion-menu::part(backdrop) {
   background-color: rgba(0, 0, 0, 0.5);
@@ -22,7 +23,7 @@ ion-title{
 
 .custom-content {
   --background: none;
-  background-image: url('https://cdn.discordapp.com/attachments/1275964393066336449/1294777947898777630/Diseno_sin_titulo_7.png?ex=670c3f6e&is=670aedee&hm=ce01c6c28001518ee9c7bde358052b762231f9a7568cda635413356cf916331e&');
+  background-image: url('./../../../assets/fondos/fondomenuadulto2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -46,12 +47,11 @@ ion-title{
   background-position: center;
   background-repeat: no-repeat;
   color: rgb(64, 20, 20);
-  font-family: 'Chewy', ;
+  font-family: 'Chewy', cursive;
   border: none;
   border-radius: 8px;
   padding: 10px;
   font-size: 22px;
-
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -61,6 +61,12 @@ ion-title{
 
   transition: background-color 0.3s, transform 0.3s;
 
+}
+
+h5 {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
 .menu-button {
@@ -83,8 +89,10 @@ ion-title{
 }
 
 .fondo-tiempo {
-  background-color: rgba(255, 255, 255, 0.982);
-  color: rgb(0, 0, 0);
+  background-image: url(./../../../assets/fondos/tablatitulo.png);
+  color: white;
+  font-family: 'Chewy', cursive;
+  font-weight: 300;
   border: none;
   border-radius: 8px;
   padding: 10px;
