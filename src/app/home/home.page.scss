@@ -5,25 +5,6 @@
   background-image: url(./../../assets/fondos/fondo_paginas.jpg);
 }
 
-.button-row {
-  display: flex;
-  justify-content: space-around;
-  margin: 10px 0;
-}
-
-.btn-search, .btn-tickets {
-  --background: #2a2c41;
-  color: white;
-  border-radius: 20px;
-  width: 45%;
-}
-
-.card-grid {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Chewy', cursive;
-}
-
 .full-width-card {
   width: 95%;
   border-radius: 12px;
@@ -31,22 +12,11 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.side-by-side-cards {
-  display: flex;
-}
 
-.side-by-side-cards ion-card {
-  flex: 1;
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.1);
-  height: 180px; /* Ajusta según prefieras el tamaño de las tarjetas */
-  width: 200px;
-}
 
 .custom-card img {
   width: 100%;
-  height: 120px;
+  height: 150px;
   object-fit: cover;
 }
 
@@ -62,25 +32,33 @@ ion-card-title {
   text-align: center;
 }
 
-ion-toolbar {
-  --background: #2a2c41;
+
+.top-image-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 150px; /* Altura del contenedor (ajusta según sea necesario) */
 }
 
-ion-card .custom-card ion-card-title {
-  font-family: 'Chewy', cursive;
+.small-logo {
+  width: 300px; /* Controla el tamaño de la imagen */
+  height: auto;
 }
 
-ion-icon {
-  color: white;
+.full-width-card {
+  width: 90%; /* Asegura que todas las cards tengan un tamaño consistente */
+  max-width: 400px; /* Limita el ancho máximo */
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Centra la card dentro del ion-content */
 }
 
-.invisible {
-  visibility: hidden; /* La tarjeta no es visible pero mantiene su espacio reservado */
+ion-content {
+  display: flex;
+  flex-direction: column; /* Alineación vertical */
+  align-items: center; /* Centra las cards horizontalmente */
+  gap: 16px; /* Espacio entre las cards */
+  padding: 16px 0;
 }
 
-.fondo-cartas {
-  background-color: white; /* Establece el fondo blanco */
-  padding: 16px;           /* Agrega un poco de espacio interno */
-  border-radius: 12px;      /* Bordes redondeados para un mejor diseño */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Opcional: Añade sombra para destacar */
-}
