@@ -4,6 +4,10 @@
   margin: 15px;
   border-radius: 15px;
   overflow: hidden;
+  background-image: url(./../../../assets/fondos/fondocardinfo3.png);
+  background-size: cover; /* Ajusta la imagen para cubrir el contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
 
 .image-container {
@@ -42,6 +46,7 @@
 
 .title-container {
   text-align: center;
+  color: rgb(78, 41, 5);
 }
 
 .estado {
@@ -53,12 +58,21 @@ ion-card-title {
   margin-bottom: 0.25rem;
   font-size: 1.5rem;
   font-weight: bold;
+  color: rgb(78, 41, 5);
+  font-family: 'Chewy', cursive;
+}
+
+.card-header {
+  margin-top: 0%;
+  padding-bottom: 0%;
 }
 
 ion-card-subtitle {
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
+  color: rgb(78, 41, 5);
+  font-family: 'Chewy', cursive;
 }
 
 ion-button img {
