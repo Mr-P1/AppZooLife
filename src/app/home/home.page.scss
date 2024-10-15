@@ -1,85 +1,78 @@
-ion-content {
+
+.content-bg {
   --background: none;
   background-image: url(./../../assets/fondos/fondo_paginas.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
+}
+
+.button-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  margin: 10px 0;
 }
 
-/* Contenedor de la imagen superior */
-.top-image-container {
-  width: 100%;
-  max-width: 800px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.btn-search, .btn-tickets {
+  --background: #2a2c41;
+  color: white;
+  border-radius: 20px;
+  width: 45%;
 }
 
-/* Ajustar tamaño del logo */
-.top-image-container img {
-  width: 40%; /* Reduce el tamaño del logo al 40% del contenedor */
-  max-width: 150px; /* Define un máximo para evitar que crezca demasiado */
-  height: auto;
-  object-fit: contain;
-}
-
-/* Contenedor de las tarjetas */
-.cards-container {
-  display: grid;
-  grid-template-columns: 1fr; /* Todas las tarjetas a una columna */
-  gap: 15px;
-  padding: 15px;
-  width: 90%;
-  max-width: 800px;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Tarjetas con fondo blanco y sombra */
-.card {
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
-  width: 100%;
-  height: 180px; /* Mismo alto para todas las tarjetas */
+.card-grid {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Asegura que el título esté abajo */
-  align-items: center;
+
+
 }
 
-/* Contenedor de las imágenes */
-.image-container {
-  width: 100%;
-  height: 100%;
+.full-width-card {
+  width: 95%;
+  border-radius: 12px;
   overflow: hidden;
-  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.image-container img {
+.side-by-side-cards {
+  display: flex;
+}
+
+.side-by-side-cards ion-card {
+  flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 180px; /* Ajusta según prefieras el tamaño de las tarjetas */
+  width: 200px;
+}
+
+.custom-card img {
   width: 100%;
-  height: 100%;
+  height: 120px;
   object-fit: cover;
-  border-radius: 15px; /* Asegura bordes redondeados */
 }
 
-/* Título superpuesto */
 ion-card-title {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  font-size: 20px;
   font-weight: bold;
-  padding: 5px 0;
+  color: white;
+  text-align: center;
 }
+
+ion-toolbar {
+  --background: #2a2c41;
+}
+
+ion-icon {
+  color: white;
+}
+
+.invisible {
+  visibility: hidden; /* La tarjeta no es visible pero mantiene su espacio reservado */
+
+}
+
+.fondo-cartas {
+  background-color: white; /* Establece el fondo blanco */
+  padding: 16px;           /* Agrega un poco de espacio interno */
+  border-radius: 12px;      /* Bordes redondeados para un mejor diseño */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Opcional: Añade sombra para destacar */
+}
+
