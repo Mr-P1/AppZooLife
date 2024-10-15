@@ -21,7 +21,6 @@ ion-content {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
 .animal-card {
  background-color: white;
  border-radius: 15px 15px 20px 20px; /* Bordes redondeados si es necesario */
@@ -195,17 +194,6 @@ ion-searchbar {
 
 
 
-.search-container {
-  display: flex;
-  align-items: center;
-  background: linear-gradient(45deg,#e07f24, #e07f24);;
-  // border-radius: 10px;
-  border-radius: 5px;
-  padding: 1px;
-  margin: 0px 10px 10px 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 
 .buttons-container {
   display: flex;
@@ -221,7 +209,7 @@ ion-searchbar {
 }
 
 .custom-button {
-  --background: linear-gradient(45deg,#e07f24, #e07f24);;
+  --background: linear-gradient(45deg,#e07f24, #ff8800);;
   --color: #2a2c41;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -262,7 +250,7 @@ ion-searchbar {
   justify-content: center; /* Centra el contenido horizontalmente */
   align-items: center; /* Centra el contenido verticalmente */
 
-  background: linear-gradient(45deg,#e07f24, #e07f24);;
+  background: #ffffff56;;
 
   padding: 10px 20px; /* Espaciado interno */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
