@@ -92,3 +92,14 @@ ion-button img {
   width: 24px;
   height: 24px;
 }
+
+
+
+ion-toolbar {
+  --background: #103116; /* Fondo del toolbar */
+  --color: #fff; /* Texto del toolbar */
+}
+
+ion-back-button {
+  --color: #fff; /* Color del botón de retroceso */
+}
