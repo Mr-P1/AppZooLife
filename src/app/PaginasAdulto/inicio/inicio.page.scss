@@ -4,11 +4,23 @@ ion-content {
   font-family: 'Work Sans', sans-serif;
 }
 .nav{
-  background-color: #015234;
-  border-radius: 0px 0px 20px 20px;
+  background-image: url('../../../assets/fondos/fondoCarrusel.jpg');
+
   padding-top: 10px;
 
 }
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #ffffff56;;
+  // border-radius: 10px;
+  border-radius: 5px;
+  padding: 1px;
+  margin: 0px 10px 10px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 
 .animal-card {
  background-color: white;
@@ -19,35 +31,35 @@ ion-content {
 
 
 .card-header {
-  width: 100%; /* Asegura que ocupe todo el ancho disponible */
-  height: 100px; /* Ajusta la altura según tus necesidades */
+  width: 100%;
+  height: 70px; /* Ajusta esta altura según lo que necesites */
+  padding: 5px 10px; /* Ajusta el espaciado interno */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 0px 0px 10px 10px; /* Ajusta los bordes inferiores */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   background-image: url('https://i.pinimg.com/1200x/c8/03/d4/c803d481f2a4fbc75aed5a1e16b7f063.jpg');
-
-  background-color: rgba(255, 255, 255, 0); /* Fondo transparente */
-  background-size: cover; /* La imagen cubre todo el contenedor */
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* No repetir la imagen */
-
-  display: flex; /* Permite que el contenido interno se alinee correctamente */
-  align-items: center; /* Centra el contenido verticalmente */
-  justify-content: center; /* Centra el contenido horizontalmente */
-  border-radius: 0px 0px 20px 20px; /* Bordes redondeados si es necesario */
-  overflow: hidden; /* Oculta cualquier exceso de contenido */
 }
 
 
 
 .image-container {
-  position: relative;
-  text-align: center;
-  padding: 5px;
+  padding: 0; /* Asegúrate de que no haya padding */
+  margin: 0; /* Elimina cualquier margen innecesario */
+  border: none;
 }
 
 .image-container img {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 10px;
+  border: none; /* Elimina cualquier borde */
+  outline: none; /* Elimina cualquier contorno */
+  display: block; /* Evita que las imágenes se comporten como elementos inline */
 }
 
 .icono-numero {
@@ -108,11 +120,7 @@ ion-card-title {
   font-weight: bold;
 }
 
-ion-card-subtitle {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-}
+
 
 ion-button img {
   width: 24px;
@@ -186,6 +194,7 @@ ion-searchbar {
 
 
 
+
 .search-container {
   display: flex;
   align-items: center;
@@ -196,6 +205,7 @@ ion-searchbar {
   margin: 0px 10px 10px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 .buttons-container {
   display: flex;
@@ -244,14 +254,16 @@ ion-searchbar {
   color: #ffffff;
   text-align: center;
   position: relative;
-  top: -50px; /* Ajusta este valor según necesites */
+  top: -60px; /* Ajusta este valor según necesites */
 }
 
 .header-container {
   display: flex;
   justify-content: center; /* Centra el contenido horizontalmente */
   align-items: center; /* Centra el contenido verticalmente */
+
   background: linear-gradient(45deg,#e07f24, #e07f24);;
+
   padding: 10px 20px; /* Espaciado interno */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
   margin-bottom: 20px; /* Espaciado con el contenido siguiente */
