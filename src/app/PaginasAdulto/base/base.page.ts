@@ -10,14 +10,14 @@ import { map } from 'rxjs/operators';
 
 import { addIcons } from 'ionicons';
 import { star,personCircle, chevronUpCircle, document, colorPalette, globe, homeOutline } from 'ionicons/icons';
-import { IonHeader, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton, IonFab, IonFabList, IonIcon, IonFabButton, IonApp } from "@ionic/angular/standalone";
+import { IonHeader, IonMenuToggle, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton, IonFab, IonFabList, IonIcon, IonFabButton, IonApp } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-base',
   templateUrl: './base.page.html',
   styleUrls: ['./base.page.scss'],
   standalone: true,
-  imports: [IonApp, IonFabButton, IonIcon, IonFabList, IonFab, IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
+  imports: [IonApp, IonMenuToggle, IonFabButton, IonIcon, IonFabList, IonFab, IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
 })
 export class BasePage implements OnInit {
 

@@ -1,3 +1,7 @@
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+</head>
+
 <ion-content class="content-bg">
 
   <div class="half-image">
@@ -6,9 +10,9 @@
     </div>
   </div>
 
-
-
   <div class="card-grid">
+
+    <ion-title>Bienvenidos al Bioparque</ion-title>
 
     <ion-card class="custom-card full-width-card invisible">
       <img src="./../../assets/icon/infoicon.png" alt="Actividades" />
@@ -17,16 +21,15 @@
       </ion-card-header>
     </ion-card>
 
-
     <div class="side-by-side-cards">
-      <ion-card class="custom-card"  (click)="guardarTipo('niño')" [routerLink]="['/nino/inicio']">
+      <ion-card class="custom-card" (click)="guardarTipo('niño')" [routerLink]="['/nino/inicio']">
         <img src="./../../assets/icon/cardnino.png" alt="Charlas" />
         <ion-card-header>
           <ion-card-title>Niños</ion-card-title>
         </ion-card-header>
       </ion-card>
 
-      <ion-card class="custom-card"  (click)="guardarTipo('adulto')" [routerLink]="['/adulto/inicio']" >
+      <ion-card class="custom-card" (click)="guardarTipo('adulto')" [routerLink]="['/adulto/inicio']">
         <img src="./../../assets/icon/adultoicon.jpg" alt="Mapa" />
         <ion-card-header>
           <ion-card-title>Adultos</ion-card-title>
@@ -34,14 +37,15 @@
       </ion-card>
     </div>
 
-    <ion-card class="custom-card full-width-card" [routerLink]="['/informacion']">
-      <img src="./../../assets/icon/infoicon.png" alt="Actividades" />
+
+    <ion-card class="custom-card full-width-card">
+      <img src="./../../assets/icon/infoicon.png" alt="Actividades" [routerLink]="['/informacion']" />
+
       <ion-card-header>
         <ion-card-title>Informaciones</ion-card-title>
       </ion-card-header>
     </ion-card>
   </div>
 
-
-
 </ion-content>
+

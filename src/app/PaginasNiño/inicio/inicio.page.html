@@ -38,16 +38,16 @@
 
      <!-- Carrusel de imágenes -->
 
-  <swiper-container [pagination]="true" [loop]="true" [autoplay]="{ delay: 3000 }" effect="cards" >
+  <!-- <swiper-container [pagination]="true" [loop]="true" [autoplay]="{ delay: 3000 }" effect="cards" >
     <swiper-slide *ngFor="let imagen of imagenes">
       <img [src]="imagen" alt="Imagen de animal">
     </swiper-slide>
-  </swiper-container>
+  </swiper-container> -->
 
-<p>Mostrar por</p>
+<!-- <p>Mostrar por</p> -->
 
   <!-- Botones debajo del carrusel -->
-  <div class="buttons-container">
+  <!-- <div class="buttons-container">
     <ion-button fill="solid" class="custom-button one" color="primary">
       <img src="./../../../assets/icon/especieninoicon.png" alt="">
     </ion-button>
@@ -57,15 +57,18 @@
     <ion-button fill="solid" class="custom-button three" color="primary">
       <img src="./../../../assets/icon/areaninoicon.png" alt="">
     </ion-button>
-  </div>
+  </div> -->
+
+  <!-- mapa -->
+
+<div>
+  <img src="./../../../assets/fondos/mapanuevo.jpg" alt="">
+</div>
 
    </div>
 
-
-
-
   <!-- Listado de animales -->
-  <h2>Animales por ruta sugerida</h2>
+  <!-- <h2>Animales por ruta sugerida</h2> -->
 
   <ion-list *ngIf="filteredAnimals.length > 0">
     <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
@@ -80,7 +83,7 @@
   <ion-card *ngFor="let animal of animales" class="animal-card">
     <div class="image-container">
       <img alt="{{animal.nombre_comun}}" src="{{animal.imagen}}" [routerLink]="['/animal-info-nino', animal.id]" />
-      <div class="icono-numero">{{ animal.posicion_mapa }}</div>
+      <!-- <div class="icono-numero">{{ animal.posicion_mapa }}</div> -->
     </div>
     <ion-card-header class="card-header">
       <div class="header-content">

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+
 .animal-card {
   margin: 15px;
   border-radius: 15px;
@@ -71,4 +73,5 @@ ion-content {
   background-position: center; /* Centra la imagen */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   height: 100%; /* Asegura que el fondo cubra toda la altura */
+  font-family: 'Work Sans', sans-serif;
 }
