@@ -111,16 +111,6 @@
 
             <div class="title-container">
               <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
-              <ion-card-subtitle
-                class="estado"
-                [ngClass]="{
-                  'estado-disponible': animal.disponibilidad === 'Disponible',
-                  'estado-no-disponible': animal.disponibilidad === 'Tratamiento',
-                  'estado-proximamente': animal.disponibilidad === 'Proximamente'
-                }"
-              >
-                {{ animal.disponibilidad }}
-              </ion-card-subtitle>
             </div>
 
             <ion-button fill="clear" (click)="dontLike(animal.id)">
