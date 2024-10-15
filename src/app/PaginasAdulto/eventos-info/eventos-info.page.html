@@ -1,6 +1,5 @@
 <ion-header>
   <ion-toolbar>
-
     <ion-buttons slot="start">
       <ion-back-button default-href="/adulto/inicio" text=""></ion-back-button>
     </ion-buttons>
@@ -26,29 +25,8 @@
 
       <ion-card-content>
         <p><strong>Descripción: </strong>{{ evento.descripcion }}</p>
-        <p><strong>Fecha inicio :</strong> {{ evento.fecha_inicio }} a las {{evento.hora_inicio}}</p>
-        <p><strong>Fecha termini: </strong>{{ evento.fecha_termino }} a las {{evento.hora_termino}}</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Contenido multimedia</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <ng-container >
-          <ion-card-subtitle>Audio explicativo</ion-card-subtitle>
-          <audio controls>
-            <source type="audio/mp3" />
-            Tu navegador no soporta la reproducción de audio.
-          </audio>
-        </ng-container>
-        <ng-template #noAudio>
-          <p>No hay audio disponible para este animal.</p>
-        </ng-template>
-
-
+        <p><strong>Fecha inicio:</strong> {{ evento.fecha_inicio }} a las {{evento.hora_inicio}}</p>
+        <p><strong>Fecha término: </strong>{{ evento.fecha_termino }} a las {{evento.hora_termino}}</p>
       </ion-card-content>
     </ion-card>
   </ng-container>
@@ -56,7 +34,7 @@
   <ng-template #loading>
     <ion-card>
       <ion-card-content>
-        <p>Cargando información del animal...</p>
+        <p>Cargando información del evento...</p>
       </ion-card-content>
     </ion-card>
   </ng-template>

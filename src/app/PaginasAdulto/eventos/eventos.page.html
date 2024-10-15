@@ -1,34 +1,20 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>eventos</ion-title>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content [fullscreen]="true">
-
   <ion-card *ngFor="let evento of eventos" class="animal-card">
     <div class="image-container">
       <img alt="{{evento.nombre_evento}}" src="{{evento.imagen}}" (click)="goToEvento(evento.id)"/>
-
     </div>
     <ion-card-header class="card-header">
       <div class="header-content">
-
-
         <div class="title-container">
           <ion-card-title>{{ evento.nombre_evento }}</ion-card-title>
           <ion-card-subtitle class="estado">
             Estas invitado al evento {{evento.descripcion}} , el cual comenzara el dia {{evento.fecha_inicio}} a las {{evento.hora_inicio}} y finalizara el dia
             {{evento.fecha_termino}} a las {{evento.hora_termino}}
-
           </ion-card-subtitle>
         </div>
-
-
       </div>
     </ion-card-header>
   </ion-card>
-
-
-
 </ion-content>
