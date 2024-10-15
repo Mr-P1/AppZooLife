@@ -70,25 +70,6 @@
       </ion-card-header>
 
       <ion-card-content>
-        <p><strong>Descripción: </strong>{{ animal.descripcion_1 }}</p>
-        <p><strong>Mas acerca del {{animal.nombre_comun}}: </strong>{{ animal.descripcion_2 }}</p>
-        <p><strong></strong>{{ animal.descripcion_3 }}</p>
-        <p><strong>Comportamiento:</strong> {{ animal.comportamiento }}</p>
-        <p><strong>Dieta </strong>{{ animal.dieta }}</p>
-        <p><strong>Peso:</strong> {{ animal.peso }}</p>
-        <p><strong>Altura:</strong> {{ animal.altura }}</p>
-        <p><strong>Clase:</strong> {{ animal.clase }}</p>
-        <p><strong>Habitat:</strong> {{ animal.habitat }}</p>
-        <p><strong>Estado de conservación:</strong> {{ animal.estado_conservacion }}</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Contenido multimedia</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
         <ng-container *ngIf="animal.audio; else noAudio">
           <ion-card-subtitle>Audio explicativo</ion-card-subtitle>
           <audio controls>
@@ -110,6 +91,22 @@
         <ng-template #noVideo>
           <p>No hay video disponible para este animal.</p>
         </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>Ficha técnica</ion-card-title><br>
+        <p><strong>Descripción: </strong>{{ animal.descripcion_1 }}</p>
+        <p><strong>Mas acerca del {{animal.nombre_comun}}: </strong>{{ animal.descripcion_2 }}</p>
+        <p><strong></strong>{{ animal.descripcion_3 }}</p>
+        <p><strong>Comportamiento:</strong> {{ animal.comportamiento }}</p>
+        <p><strong>Dieta </strong>{{ animal.dieta }}</p>
+        <p><strong>Peso:</strong> {{ animal.peso }}</p>
+        <p><strong>Altura:</strong> {{ animal.altura }}</p>
+        <p><strong>Clase:</strong> {{ animal.clase }}</p>
+        <p><strong>Habitat:</strong> {{ animal.habitat }}</p>
+        <p><strong>Estado de conservación:</strong> {{ animal.estado_conservacion }}</p>
       </ion-card-content>
     </ion-card>
   </ng-container>

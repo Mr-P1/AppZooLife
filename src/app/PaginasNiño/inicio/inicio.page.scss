@@ -1,22 +1,3 @@
-.animal-card {
-  margin: 15px;
-  border-radius: 15px;
-  overflow: hidden;
-}
-
-.image-container {
-  position: relative;
-  text-align: center;
-  padding: 5px;
-}
-
-.image-container img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
 .search-container {
   display: flex;
   align-items: center;
@@ -26,6 +7,46 @@
   padding: 1px;
   margin: 0px 10px 10px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.animal-card {
+ background-color: white;
+ border-radius: 15px 15px 20px 20px; /* Bordes redondeados si es necesario */
+ //background-image: url('https://cdn.discordapp.com/attachments/1275964393066336449/1294811835480014909/Diseno_sin_titulo_10.png?ex=670c5efe&is=670b0d7e&hm=564d2b7c7c4cbfef04a810dcb718c5380237cbc6d06afea7518e969147ac9181&');
+
+}
+
+
+.card-header {
+  width: 100%;
+  height: 70px; /* Ajusta esta altura según lo que necesites */
+  padding: 5px 10px; /* Ajusta el espaciado interno */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 0px 0px 10px 10px; /* Ajusta los bordes inferiores */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: url('https://i.pinimg.com/1200x/c8/03/d4/c803d481f2a4fbc75aed5a1e16b7f063.jpg');
+}
+
+
+
+.image-container {
+  padding: 0; /* Asegúrate de que no haya padding */
+  margin: 0; /* Elimina cualquier margen innecesario */
+  border: none;
+}
+
+.image-container img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border: none; /* Elimina cualquier borde */
+  outline: none; /* Elimina cualquier contorno */
+  display: block; /* Evita que las imágenes se comporten como elementos inline */
 }
 
 .icono-numero {
