@@ -1,3 +1,4 @@
+
 import { inject, Injectable } from '@angular/core';
 import {
   addDoc,
@@ -21,8 +22,10 @@ import { Animal } from '../models/animal.model';
 import { Reaction } from '../models/reaction.model';
 import { Usuario } from '../models/usuario.model';
 import { PreguntaTrivia } from '../models/trivia.models';
+import { Planta } from './../models/plantas.model';
 
 const PATH_ANIMALES = 'Animales';
+const PATH_PLANTAS = 'Plantas';
 const PATH_REACCIONES = 'Reacciones';
 const PATH_USUARIOS = 'Usuarios';
 const PATH_ANIMALES_VISTOS = 'AnimalesVistos';
@@ -35,6 +38,7 @@ const PATH_RESPUESTAS_TRIVIA = 'RespuestasTrivia';
 export class FirestoreService {
   private _firestore = inject(Firestore);
   private _rutaAnimal = collection(this._firestore, PATH_ANIMALES);
+  private _rutaPlantas = collection(this._firestore, PATH_PLANTAS);
   private _rutaReacciones = collection(this._firestore, PATH_REACCIONES);
   private _rutaUsuarios = collection(this._firestore, PATH_USUARIOS);
   private _rutaAnimalesVistos = collection(this._firestore, PATH_ANIMALES_VISTOS);
@@ -182,6 +186,17 @@ export class FirestoreService {
     return collectionData(topUsuariosQuery, { idField: 'id' }) as Observable<Usuario[]>;
   }
 
+  getPlantas(): Observable<Planta[]> {
+    return collectionData(this._rutaPlantas, { idField: 'id' }) as Observable<Planta[]>;
+  }
+
+  // Método para obtener un animal por ID
+  getPlanta(id: string): Observable<Planta | null> {
+    const docRef = doc(this._rutaPlantas, id);
+    return from(getDoc(docRef)).pipe(
+      map((doc) => (doc.exists() ? { id: doc.id, ...doc.data() } as Planta : null))
+    );
+  }
 
 
 }

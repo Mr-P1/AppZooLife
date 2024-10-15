@@ -1,101 +1,78 @@
-ion-content {
+
+
+.content-bg {
   --background: none;
   background-image: url(./../../assets/fondos/fondo_paginas.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
+}
+
+.button-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  margin: 10px 0;
 }
 
-/* Contenedor de la imagen superior */
-.top-image-container {
-  width: 100%;
-  max-width: 800px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.btn-search, .btn-tickets {
+  --background: #2a2c41;
+  color: white;
+  border-radius: 20px;
+  width: 45%;
 }
 
-.top-image-container img {
-  width: 70%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Contenedor de las tarjetas */
-.cards-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "nino adulto"
-    "informacion informacion";
-  gap: 15px;
-  padding: 15px;
-  width: 90%;
-  max-width: 800px;
-  justify-content: center;
-  align-content: center;
-}
-
-/* Tarjetas con fondo blanco y sombra */
-.card {
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: white; /* Fondo blanco */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
+.card-grid {
   display: flex;
   flex-direction: column;
-  align-items: center;
+
+
 }
 
-/* Contenedor de las imágenes */
-.image-container {
-  width: 100%;
-  height: 100%;
+.full-width-card {
+  width: 95%;
+  border-radius: 12px;
   overflow: hidden;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.image-container img {
+.side-by-side-cards {
+  display: flex;
+}
+
+.side-by-side-cards ion-card {
+  flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 180px; /* Ajusta según prefieras el tamaño de las tarjetas */
+  width: 200px;
+}
+
+.custom-card img {
   width: 100%;
-  height: 100%;
+  height: 120px;
   object-fit: cover;
 }
 
-/* Título superpuesto */
 ion-card-title {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  font-size: 20px;
   font-weight: bold;
-  padding: 5px 0;
+  color: white;
+  text-align: center;
 }
 
-/* Asignación de áreas */
-.nino {
-  grid-area: nino;
+ion-toolbar {
+  --background: #2a2c41;
 }
 
-.adulto {
-  grid-area: adulto;
+ion-icon {
+  color: white;
 }
 
-.informacion {
-  grid-area: informacion;
-  height: 180px;
-  margin-top: -10px;
+.invisible {
+  visibility: hidden; /* La tarjeta no es visible pero mantiene su espacio reservado */
+
+}
+
+.fondo-cartas {
+  background-color: white; /* Establece el fondo blanco */
+  padding: 16px;           /* Agrega un poco de espacio interno */
+  border-radius: 12px;      /* Bordes redondeados para un mejor diseño */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Opcional: Añade sombra para destacar */
 }
