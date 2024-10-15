@@ -188,5 +188,4 @@ export class TriviaPage implements  OnInit, OnDestroy {
     this.enviarRespuestas(); // Guarda las respuestas, pero no redirige
   }
 
-
 }
