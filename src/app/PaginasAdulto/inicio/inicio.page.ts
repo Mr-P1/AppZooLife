@@ -9,8 +9,9 @@ import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { star,personCircle, chevronUpCircle, document, colorPalette, globe,qrCodeOutline,earthOutline,mapOutline } from 'ionicons/icons';
+import { leafOutline,pawOutline,star,personCircle, chevronUpCircle, document, colorPalette, globe,qrCodeOutline,earthOutline,mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Planta } from 'src/app/common/models/plantas.model';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class InicioPage implements OnInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
 
   animales: Animal[] = [];
+  plantas: Planta[] = [];
   animalesOriginal: Animal[] = []; // Guardar el orden original
   userId: string = '';
   searchTerm: string = ''; // Para almacenar el término de búsqueda
@@ -32,13 +34,15 @@ export class InicioPage implements OnInit {
   allowedFormats = [BarcodeFormat.QR_CODE];
   isSortedByMap: boolean = false; // Controla si está ordenado por posición
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
+  mostrarPlantas: boolean = false;
+
 
   constructor(
     private animalsService: FirestoreService,
     private authService: AuthService,
     private router: Router
   ) {
-    addIcons({ earthOutline, mapOutline, chevronUpCircle, document, colorPalette, globe, star, personCircle, qrCodeOutline });
+    addIcons({ leafOutline,earthOutline, mapOutline, chevronUpCircle, document, colorPalette, globe, star, personCircle, qrCodeOutline, pawOutline});
   }
 
   imagenes = [
@@ -52,6 +56,11 @@ export class InicioPage implements OnInit {
     this.animalsService.getAnimales().subscribe((data: Animal[]) => {
       this.animales = data;
       this.animalesOriginal = [...data]; // Guarda el orden original
+    });
+
+    this.animalsService.getPlantas().subscribe((data: Planta[]) => {
+      this.plantas = data;
+      console.log(this.plantas)
     });
 
     this.authService.authState$.subscribe(user => {
@@ -181,6 +190,10 @@ export class InicioPage implements OnInit {
     this.router.navigate(['/animal-info', animalId]);
     this.searchTerm = '';
     this.filteredAnimals = [];
+  }
+
+  toggleMostrarPlantas() {
+    this.mostrarPlantas = !this.mostrarPlantas;
   }
 
 

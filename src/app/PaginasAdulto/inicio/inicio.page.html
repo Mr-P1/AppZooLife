@@ -46,17 +46,17 @@
 
       <div class="buttons-container">
         <div class="button-item">
-          <ion-button fill="solid" class="custom-button" (click)="toggleOrdenRuta()" >
+          <ion-button fill="clear" class="custom-button" (click)="toggleOrdenRuta()" >
             <img src="../../../assets/icon/rutaIcon.png" alt="Huella Icon" />
           </ion-button>
           <p class="button-text">Ruta sugerida</p>
         </div>
 
         <div class="button-item">
-          <ion-button fill="solid" class="custom-button">
-            <ion-icon class="icono" name="earth-outline"></ion-icon>
+          <ion-button fill="clear" class="custom-button" (click)="toggleMostrarPlantas()">
+            <ion-icon class="icono" [name]="mostrarPlantas ? 'paw-outline' : 'leaf-outline'"></ion-icon>
           </ion-button>
-          <p class="button-text">Bioparque</p>
+          <p class="button-text">{{ mostrarPlantas ? 'Fauna' : 'Flora' }}</p>
         </div>
 
         <div class="separator-text">
@@ -64,14 +64,14 @@
         </div>
 
         <div class="button-item">
-          <ion-button fill="solid" class="custom-button">
+          <ion-button fill="clear" class="custom-button">
             <img src="../../../assets/icon/huellaIcon.png" alt="Huella Icon" />
           </ion-button>
           <p class="button-text">Especie</p>
         </div>
 
         <div class="button-item">
-          <ion-button fill="solid" class="custom-button">
+          <ion-button fill="clear" class="custom-button">
             <ion-icon class="icono" name="map-outline"></ion-icon>
           </ion-button>
           <p class="button-text">Area</p>
@@ -83,54 +83,86 @@
 
 
 
-<div class="listado-animales">
-  <div class="header-container">
-    <h2>Lista de animales</h2>
-  </div>
-
-
-  <ion-card *ngFor="let animal of animales" class="animal-card">
-    <div class="image-container">
-      <img
-        alt="{{animal.nombre_comun}}"
-        src="{{animal.imagen}}"
-        [routerLink]="['/animal-info', animal.id]"
-      />
-      <div class="icono-numero">{{ animal.posicion_mapa }}</div>
-    </div>
-    <ion-card-header class="card-header">
-      <div class="header-content">
-        <ion-button fill="clear" (click)="like(animal.id)">
-          <img
-            [src]="animal.reaccion === true ? '../../../assets/icon/likeVerde.png' : '../../../assets/icon/likeNegro.png'"
-            alt="Me gusta"
-          />
-        </ion-button>
-
-        <div class="title-container">
-          <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
-          <ion-card-subtitle
-            class="estado"
-            [ngClass]="{
-              'estado-disponible': animal.disponibilidad === 'Disponible',
-              'estado-no-disponible': animal.disponibilidad === 'Tratamiento',
-              'estado-proximamente': animal.disponibilidad === 'Proximamente'
-            }"
-            >{{ animal.disponibilidad }}</ion-card-subtitle
-          >
-        </div>
-
-        <ion-button fill="clear" (click)="dontLike(animal.id)">
-          <img
-            [src]="animal.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'"
-            alt="No me gusta"
-          />
-        </ion-button>
+  <ion-content>
+    <div class="listado-animales" *ngIf="!mostrarPlantas">
+      <div class="header-container">
+        <h2>Fauna</h2>
       </div>
-    </ion-card-header>
-  </ion-card>
 
-</div>
+      <ion-card *ngFor="let animal of animales" class="animal-card">
+        <div class="image-container">
+          <img
+            alt="{{ animal.nombre_comun }}"
+            src="{{ animal.imagen }}"
+            [routerLink]="['/animal-info', animal.id]"
+          />
+          <div class="icono-numero">{{ animal.posicion_mapa }}</div>
+        </div>
+        <ion-card-header class="card-header">
+          <div class="header-content">
+            <ion-button fill="clear" (click)="like(animal.id)">
+              <img
+                [src]="animal.reaccion === true
+                        ? '../../../assets/icon/likeVerde.png'
+                        : '../../../assets/icon/likeNegro.png'"
+                alt="Me gusta"
+              />
+            </ion-button>
+
+            <div class="title-container">
+              <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
+              <ion-card-subtitle
+                class="estado"
+                [ngClass]="{
+                  'estado-disponible': animal.disponibilidad === 'Disponible',
+                  'estado-no-disponible': animal.disponibilidad === 'Tratamiento',
+                  'estado-proximamente': animal.disponibilidad === 'Proximamente'
+                }"
+              >
+                {{ animal.disponibilidad }}
+              </ion-card-subtitle>
+            </div>
+
+            <ion-button fill="clear" (click)="dontLike(animal.id)">
+              <img
+                [src]="animal.reaccion === false
+                        ? '../../../assets/icon/dislikeRojo.png'
+                        : '../../../assets/icon/dislikeNegro.png'"
+                alt="No me gusta"
+              />
+            </ion-button>
+          </div>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div class="listado-animales" *ngIf="mostrarPlantas">
+      <div class="header-container">
+        <h2>Flora</h2>
+      </div>
+
+      <ion-card *ngFor="let planta of plantas" class="animal-card">
+        <div class="image-container">
+          <img
+            alt="{{ planta.nombre_comun}}"
+            src="{{ planta.imagen }}"
+            [routerLink]="['/planta-info', planta.id]"
+          />
+          <div class="icono-numero">{{ planta.posicion_mapa }}</div>
+        </div>
+        <ion-card-header class="card-header">
+          <div class="header-content">
+            <div class="title-container">
+              <ion-card-title>{{ planta.nombre_comun }}</ion-card-title>
+              <ion-card-subtitle>
+                {{ planta.familia }}
+              </ion-card-subtitle>
+            </div>
+          </div>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </ion-content>
 
 
 
