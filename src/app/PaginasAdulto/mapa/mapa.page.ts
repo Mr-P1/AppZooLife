@@ -28,7 +28,7 @@ export class MapaPage implements OnInit , AfterViewInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    const imagePath = 'gs://appzoolife.appspot.com/mapas/MAPA-BZ_2024.jpg';
+    const imagePath = 'gs://appzoolife.appspot.com/mapas/MAPA-BP-BZ_2024-.jpg';
 
     this.storageService.getImageUrl(imagePath).then((url) => {
       this.imageUrl = url;

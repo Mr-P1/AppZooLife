@@ -31,6 +31,7 @@ const PATH_USUARIOS = 'Usuarios';
 const PATH_ANIMALES_VISTOS = 'AnimalesVistos';
 const PATH_PREGUNTAS_TRIVIA = 'Preguntas';
 const PATH_RESPUESTAS_TRIVIA = 'RespuestasTrivia';
+const PATH_PLANTAS_VISTAS = 'PlantasVistas';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,7 @@ export class FirestoreService {
   private _rutaReacciones = collection(this._firestore, PATH_REACCIONES);
   private _rutaUsuarios = collection(this._firestore, PATH_USUARIOS);
   private _rutaAnimalesVistos = collection(this._firestore, PATH_ANIMALES_VISTOS);
+  private _rutaPlantasVistas = collection(this._firestore, PATH_PLANTAS_VISTAS);
   private _preguntasTrivia = collection(this._firestore, PATH_PREGUNTAS_TRIVIA);
   private _respuestasTrivia = collection(this._firestore, PATH_RESPUESTAS_TRIVIA);
 
@@ -131,6 +133,22 @@ export class FirestoreService {
     const q = query(this._rutaAnimalesVistos, where('userId', '==', userId), where('animalId', '==', animalId));
     return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
   }
+
+    // Método para guardar la planta vista
+    guardarPlantaVista(userId: string, plantaId: string): Observable<void> {
+      const plantaVista = {
+        userId,
+        plantaId,
+        vistoEn: new Date().toISOString(),
+      };
+      return from(addDoc(this._rutaPlantasVistas, plantaVista)).pipe(map(() => {}));
+    }
+  
+    // Método para verificar si el usuario ya ha visto la planta
+    usuarioHaVistoPlanta(userId: string, plantaId: string): Observable<boolean> {
+      const q = query(this._rutaPlantasVistas, where('userId', '==', userId), where('plantaId', '==', plantaId));
+      return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
+    }
 
   // Método para obtener preguntas de trivia basadas en los animales vistos por el usuario
   getPreguntasTriviaPorAnimalesVistos(userId: string): Observable<PreguntaTrivia[]> {

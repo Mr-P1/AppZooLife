@@ -64,6 +64,10 @@ export const routes: Routes = [
     path: 'eventos-info/:id',
     loadComponent: () => import('./PaginasAdulto/eventos-info/eventos-info.page').then( m => m.EventosInfoPage)
   },
+  {
+    path: 'planta-info/:id',
+    loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
+  },
 
 
 
@@ -95,6 +99,11 @@ export const routes: Routes = [
     path: 'animal-info-nino/:id',
     loadComponent: () => import('./PaginasNiño/info-animal/info-animal.page').then( m => m.InfoAnimalPage)
   },
+  {
+    path: 'planta-info',
+    loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
+  },
+
 
 
 
