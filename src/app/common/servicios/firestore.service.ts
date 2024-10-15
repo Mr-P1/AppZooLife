@@ -174,6 +174,11 @@ export class FirestoreService {
     return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => {}));
   }
 
+  // Método para guardar las respuestas de trivia
+  guardarRespuestaTrivia2(respuesta: { resultado: boolean; user_id: string; pregunta_id: string; fecha : Date, genero_usuario:string, tipo:string}): Observable<void> {
+    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => {}));
+  }
+
 
   //Ranking 5 usuarios con mas nivel
   getTopUsuarios(): Observable<Usuario[]> {
