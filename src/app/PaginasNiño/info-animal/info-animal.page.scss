@@ -3,6 +3,10 @@
   justify-content: space-between;
   align-items: center;
 }
+ion-toolbar {
+  --background: #103116; /* Fondo del toolbar */
+  --color: #fff; /* Texto del toolbar */
+}
 
 .title-container {
   text-align: center;
@@ -55,3 +59,32 @@ div img {
   object-fit: cover; /* Escala la imagen para que llene el contenedor sin distorsionarse */
 }
 
+.custom-card {
+  border-radius: 15px;
+  font-family: 'Chewy', cursive;
+  font-weight: 20;
+  background-image: url(./../../../assets/fondos/fondoNiñoinfoAnimal.png);
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+ion-card-title {
+  font-size: 1.4rem;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+ion-card-subtitle {
+  font-size: 1rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.904);
+  padding-bottom: 5px;
+}
+
+ion-card-content {
+  font-size: 1rem;
+  padding: 15px;
+  color: rgb(255, 255, 255);
+}

@@ -9,7 +9,7 @@
 
 <ion-content class="contenidoPrincipal">
   <ng-container *ngIf="animal$ | async as animal; else loading">
-    <ion-card>
+    <ion-card class="custom-card">
       <div>
         <img alt="Silhouette of mountains" src="{{animal.imagen}}" />
         <div class="icono-numero">{{animal.posicion_mapa}}</div>
@@ -94,9 +94,10 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
+    <ion-card class="custom-card">
+      <ion-card-title>Ficha técnica</ion-card-title>
       <ion-card-content>
-        <ion-card-title>Ficha técnica</ion-card-title><br>
+        
         <p><strong>Descripción: </strong>{{ animal.descripcion_1 }}</p>
         <p><strong>Mas acerca del {{animal.nombre_comun}}: </strong>{{ animal.descripcion_2 }}</p>
         <p><strong></strong>{{ animal.descripcion_3 }}</p>
