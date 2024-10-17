@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="messages-container">
+    <div *ngFor="let message of messages$ | async" [ngClass]="{'sent': message.sender === 'visitor', 'received': message.sender !== 'visitor'}">
+      <p>{{ message.message }}</p>
+      <span>{{ message.timestamp.toDate() | date: 'shortTime' }}</span>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <ion-input [value]="newMessage" (ionInput)="onInputChange($event)" placeholder="Escribe un mensaje..."></ion-input>
+    <ion-button (click)="sendMessage()">Enviar</ion-button>
+  </div>
+</ion-content>

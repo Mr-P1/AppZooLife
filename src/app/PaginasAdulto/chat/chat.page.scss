@@ -1,0 +1,31 @@
+.messages-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .sent {
+    align-self: flex-end;
+    background-color: #d4f3ef;
+    padding: 5px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+  }
+
+  .received {
+    align-self: flex-start;
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+  }
+
+  .chat-input {
+    display: flex;
+    padding: 10px;
+  }
+
+  .chat-input ion-input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
