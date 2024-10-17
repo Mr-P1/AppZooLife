@@ -2,7 +2,7 @@
 
 ion-content {
   --background: none;
-  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-image: url(./../../../assets/fondos/perfil-nino.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -98,7 +98,10 @@ ion-card-content p {
 
 /* Estilo para la card de puntos */
 .points-card {
-  background: linear-gradient(45deg, #ff9800, #ff5722);
+  background-image: url(./../../../assets/fondos/ranksmall3.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Estilo para la card de nivel */
@@ -145,6 +148,7 @@ ion-card-content p {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-image: url(./../../../assets/fondos/fondopizarra.png);
 
   // background:  linear-gradient(45deg, #015234, #01521c);
   background-color: #4caf50; /* Fondo verde */
