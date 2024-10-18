@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 .titulo-pregunta {
   text-align: center; /* Centra el título de la pregunta */
   font-size: 1.4rem;
@@ -50,17 +51,29 @@ ion-button {
 
 ion-content {
   --background: none;
-  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-image: url(./../../../assets/fondos/ninohomefondo.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  font-family: 'Work Sans', sans-serif;
   height: 100%;
 }
 
+ion-card {
+  --background: none;
+  background-image: url(./../../../assets/fondos/ranksmall3.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Work Sans', sans-serif;
+  color: rgb(73, 23, 0);
+}
+
 ion-card-title {
-  color: #80a522;
+  color: #004129;
   font-weight: bold;
   text-transform: uppercase;
+  font-family: 'Work Sans', sans-serif;
   font-size: 1.2rem; /* Aumenta un poco el tamaño del título */
 }
 
@@ -68,4 +81,6 @@ ion-button {
   --background: #ff8800; /* Color de fondo del botón */
   --color: #ffffff; /* Color del texto */
   --border-radius: 5px; /* Opción para redondear bordes */
+  font-family: 'Work Sans', sans-serif;
 }
+

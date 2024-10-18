@@ -12,6 +12,8 @@ import { addIcons } from 'ionicons';
 import { leafOutline,pawOutline,star,personCircle, chevronUpCircle, document, colorPalette, globe,qrCodeOutline,earthOutline,mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Planta } from 'src/app/common/models/plantas.model';
+import { NotificacionesService } from 'src/app/common/servicios/notificaciones.service';
+
 
 
 @Component({
@@ -40,7 +42,8 @@ export class InicioPage implements OnInit {
   constructor(
     private animalsService: FirestoreService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notificacionesService: NotificacionesService
   ) {
     addIcons({ leafOutline,earthOutline, mapOutline, chevronUpCircle, document, colorPalette, globe, star, personCircle, qrCodeOutline, pawOutline});
   }
@@ -67,6 +70,24 @@ export class InicioPage implements OnInit {
       if (user) {
         this.userId = user.uid;
         this.loadAnimalsWithReactions();
+
+        // Verificar cuántos animales ha visto el usuario
+        this.animalsService.getAnimalesVistosPorUsuario(this.userId).subscribe((animalesVistos) => {
+          const animalesVistosCount = animalesVistos.length;
+
+          // Verificar si ya se ha mostrado la notificación anteriormente
+          const notificacionMostrada = localStorage.getItem('notificacionMostrada');
+
+          if (animalesVistosCount == 5 && !notificacionMostrada) {
+            this.notificacionesService.mostrarNotificacion(
+              '¡Felicidades!',
+              'Has visto 5 animales. Ahora puedes participar en la trivia.'
+            );
+
+            // Guardar en localStorage que la notificación ya fue mostrada
+            localStorage.setItem('notificacionMostrada', 'true');
+          }
+        });
       }
     });
   }

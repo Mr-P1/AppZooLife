@@ -68,6 +68,10 @@ export const routes: Routes = [
     path: 'planta-info/:id',
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
   },
+  {
+    path: 'chat/:id',
+    loadComponent: () => import('./PaginasAdulto/chat/chat.page').then( m => m.ChatPage)
+  },
 
 
 
@@ -103,6 +107,8 @@ export const routes: Routes = [
     path: 'planta-info',
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
   },
+
+
 
 
 
