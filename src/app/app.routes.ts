@@ -107,6 +107,10 @@ export const routes: Routes = [
     path: 'planta-info',
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
   },
+  {
+    path: 'oirs',
+    loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then(m => m.OirsPage)
+  },
 
 
 

@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Formulario OIRS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (submit)="submitForm()" [formGroup]="oirsForm">
+    <!-- Tipo de Solicitud -->
+    <ion-item>
+      <ion-label>Tipo de Solicitud</ion-label>
+      <ion-select formControlName="tipoSolicitud" placeholder="Seleccione un tipo">
+        <ion-select-option value="consulta">Consulta</ion-select-option>
+        <ion-select-option value="felicitacion">Felicitación</ion-select-option>
+        <ion-select-option value="reclamo">Reclamo</ion-select-option>
+        <ion-select-option value="sugerencia">Sugerencia</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Nombre -->
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre" placeholder="Tu nombre"></ion-input>
+    </ion-item>
+
+    <!-- Apellidos -->
+    <ion-item>
+      <ion-label position="floating">Apellidos</ion-label>
+      <ion-input type="text" formControlName="apellidos" placeholder="Tus apellidos"></ion-input>
+    </ion-item>
+
+    <!-- Fecha de Nacimiento -->
+    <ion-item>
+      <ion-label position="floating">Fecha de Nacimiento</ion-label>
+      <ion-datetime formControlName="fechaNacimiento" placeholder="Selecciona tu fecha"></ion-datetime>
+    </ion-item>
+
+    <!-- Sexo -->
+    <ion-item>
+      <ion-label>Sexo</ion-label>
+      <ion-select formControlName="sexo" placeholder="Seleccione sexo">
+        <ion-select-option value="masculino">Masculino</ion-select-option>
+        <ion-select-option value="femenino">Femenino</ion-select-option>
+        <ion-select-option value="otro">Otro</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Comuna -->
+    <ion-item>
+      <ion-label position="floating">Comuna</ion-label>
+      <ion-input type="text" formControlName="comuna" placeholder="Tu comuna"></ion-input>
+    </ion-item>
+
+    <!-- Región -->
+    <ion-item>
+      <ion-label position="floating">Región</ion-label>
+      <ion-input type="text" formControlName="region" placeholder="Tu región"></ion-input>
+    </ion-item>
+
+    <!-- Teléfono -->
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input type="tel" formControlName="telefono" placeholder="Tu número de teléfono"></ion-input>
+    </ion-item>
+
+    <!-- Es el afectado -->
+    <ion-item>
+      <ion-label>¿Es usted el afectado?</ion-label>
+      <ion-toggle formControlName="esAfectado"></ion-toggle>
+    </ion-item>
+
+    <!-- Detalles -->
+    <ion-item>
+      <ion-label position="floating">Detalles</ion-label>
+      <ion-textarea formControlName="detalles" placeholder="Describe los detalles de tu solicitud" auto-grow="true"></ion-textarea>
+    </ion-item>
+
+    <!-- Subir Archivo (Evidencia) -->
+    <ion-item>
+      <ion-label>Subir Evidencia</ion-label>
+      <input type="file" (change)="onFileChange($event)" accept="image/*" />
+    </ion-item>
+
+    <!-- Botón de Enviar -->
+    <ion-button expand="block" type="submit" [disabled]="oirsForm.invalid">
+      Enviar Solicitud
+    </ion-button>
+  </form>
+</ion-content>
+
