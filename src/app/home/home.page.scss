@@ -3,6 +3,8 @@
 .content-bg {
   --background: none;
   background-image: url(./../../assets/fondos/fondo_paginas.jpg);
+  display: flex;
+  align-items: center;
 }
 
 .full-width-card {
@@ -11,8 +13,6 @@
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.1);
 }
-
-
 
 .custom-card img {
   width: 100%;
