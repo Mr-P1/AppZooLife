@@ -81,7 +81,7 @@ export class AuthService {
 
 
 
-  async registrarse(email: string, password: string, nombre: string, telefono: string, genero: string, patente:string) {
+  async registrarse(email: string, password: string, nombre: string, telefono: string, genero: string, patente:string,fechaNacimiento:Date) {
     try {
       // Intentar crear el usuario en Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(this._auth, email, password);
@@ -96,6 +96,7 @@ export class AuthService {
         puntos: 0,
         nivel: 0,
         patente:patente,
+        fechaNacimiento:fechaNacimiento,
         auth_id: user.uid,
       };
 

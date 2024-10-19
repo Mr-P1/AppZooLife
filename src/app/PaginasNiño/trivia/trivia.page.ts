@@ -43,6 +43,7 @@ export class TriviaPage implements  OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log( localStorage.getItem('tipo'))
     this.tipo = localStorage.getItem('tipo')!;
     this.authService.authState$.subscribe((user) => {
       if (user) {
@@ -129,7 +130,7 @@ export class TriviaPage implements  OnInit, OnDestroy {
   rellenarPreguntasRandom(tipoUsuario: string) {
     const tipoUsuarioLowerCase = tipoUsuario.toLowerCase();
     const preguntasFiltradas = this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase);
-    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, tipoUsuarioLowerCase === 'adulto' ? 10 : 8);
+    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, tipoUsuarioLowerCase === 'adulto' ? 10 : 10);
   }
 
   shuffleArray(array: PreguntaTrivia[]): PreguntaTrivia[] {
@@ -166,8 +167,8 @@ export class TriviaPage implements  OnInit, OnDestroy {
       });
 
       if (respuestaCorrecta) {
-        nivelGanado += 3; // 3 puntos de nivel por respuesta correcta
-        puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 5;
+        nivelGanado +=  this.tipo.toLowerCase() === 'adulto' ? 3 : 1; ; // 3 niveles si es adulto, 1 nivel si es niño por respuesta correcta
+        puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 3; // 10 puntos si es adulto, 3 puntos si es niño
       }
     }
 

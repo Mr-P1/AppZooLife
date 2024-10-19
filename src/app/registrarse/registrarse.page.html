@@ -1,20 +1,16 @@
 <ion-content [fullscreen]="true">
   <!-- Tarjeta contenedora del formulario de inicio de sesión -->
   <ion-card class="container-login">
-
     <!-- Formulario que se enlaza con FormBuilder y ejecuta la función 'submit' al enviarse -->
     <form [formGroup]="form" (ngSubmit)="submit()">
-
       <!-- Icono de candado centrado en la parte superior -->
       <div class="ion-text-center ion-margin-vertical lock">
-        <img src=".././../assets/icon/logoBioparque.png" alt="">
+        <img src=".././../assets/icon/logoBioparque.png" alt="" />
       </div>
 
-      <h1>
-        ZooLife
-      </h1>
+      <h1>ZooLife</h1>
 
-<!-- Campo de entrada para el nombre -->
+      <!-- Campo de entrada para el nombre -->
       <ion-item class="ion-margin" lines="none">
         <ion-input
           type="text"
@@ -28,9 +24,7 @@
       </ion-item>
 
       <!-- Campo de entrada para el correo electrónico -->
-      <ion-item
-        lines="none"
-        class="ion-margin-horizontal ion-margin-top">
+      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
         <ion-input
           type="email"
           fill="solid"
@@ -39,8 +33,8 @@
           helperText="Enter a valid email"
           placeholder="Ingresa tu correo"
           errorText="* Ingresa un correo inválido"
-          formControlName="email">
-
+          formControlName="email"
+        >
           <!-- Etiqueta personalizada para el campo del correo -->
           <div slot="label">Correo <ion-text color="red">*</ion-text></div>
         </ion-input>
@@ -58,24 +52,41 @@
           errorText="Contraseña inválida"
           [counter]="true"
           minlength="5"
-          formControlName="password">
+          formControlName="password"
+        >
           <!-- Etiqueta personalizada para el campo de contraseña -->
           <div slot="label">Contraseña</div>
         </ion-input>
       </ion-item>
 
- <!-- Campo de entrada para el teléfono -->
+      <!-- Campo de entrada para el teléfono -->
       <ion-item class="ion-margin" lines="none">
         <ion-input
-          type="number"
+          type="tel"
           fill="solid"
           label="Teléfono (Obligatorio)"
-          [counter]="true"
-          maxlength="9"
           labelPlacement="floating"
-          helperText="Ingresa un número de teléfono (Obligatorio)"
+          placeholder="+56 9 1234 5678"
+          helperText="Ingresa un número de teléfono con código de país (Obligatorio)"
           errorText="Teléfono inválido"
+          maxlength="12"
+          minlength="8"
           formControlName="telefono"
+          [counter]="true"
+          inputmode="tel"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Campo de entrada fecha de nacimiento -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-input
+          type="date"
+          fill="solid"
+          label="Fecha de Nacimiento (Obligatorio)"
+          labelPlacement="floating"
+          helperText="Ingresa tu fecha de nacimiento"
+          errorText="Fecha de nacimiento inválida"
+          formControlName="fechaNacimiento"
         ></ion-input>
       </ion-item>
 
@@ -92,7 +103,7 @@
         </ion-input>
       </ion-item>
 
-      <ion-item class="ion-margin" lines="none">
+      <ion-item class="ion-margin" >
         <ion-select
           formControlName="genero"
           label="Genero (Obligatorio)"
@@ -101,22 +112,34 @@
         >
           <ion-select-option value="masculino">Masculino</ion-select-option>
           <ion-select-option value="femenino">Femenino</ion-select-option>
-          <ion-select-option value="Sin definir">Prefiero no decirlo</ion-select-option>
+          <ion-select-option value="Sin definir"
+            >Prefiero no decirlo</ion-select-option
+          >
         </ion-select>
       </ion-item>
 
-
       <!-- Botón de envío del formulario para iniciar sesión -->
-      <div class="ion-margin ">
-        <ion-button type="submit" expand="block" size="large" class="qr-button" [strong]="true">
-          <ion-text style="text-transform: none;">Crear cuenta</ion-text>
+      <div class="ion-margin">
+        <ion-button
+          type="submit"
+          expand="block"
+          size="large"
+          class="qr-button"
+          [strong]="true"
+        >
+          <ion-text style="text-transform: none">Crear cuenta</ion-text>
         </ion-button>
 
-        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/']">
-          <ion-text style="text-transform: none;">Volver</ion-text>
+        <ion-button
+          expand="block"
+          size="large"
+          [strong]="true"
+          class="qr-button"
+          [routerLink]="['/']"
+        >
+          <ion-text style="text-transform: none">Volver</ion-text>
         </ion-button>
       </div>
-
     </form>
   </ion-card>
 </ion-content>

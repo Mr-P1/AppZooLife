@@ -40,7 +40,7 @@ export class InfoAnimalPage implements OnInit {
                 next: () => console.log('Animal visto guardado exitosamente'),
                 error: (error) => console.error('Error al guardar el animal visto', error)
               });
-            }, 5000);
+            }, 20000);
           }
         });
       }

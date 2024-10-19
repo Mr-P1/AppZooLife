@@ -52,8 +52,8 @@
   </div> -->
 
   <!-- Mapa -->
-  <div>
-    <img src="./../../../assets/fondos/mapanuevo.jpg" alt="" />
+  <div *ngIf="mapa.length > 0">
+    <img [src]="mapa[0].imagen" alt="" />
   </div>
 
   <!-- Listado de animales -->
