@@ -1,0 +1,60 @@
+ion-content {
+  --background: url(./../../../assets/fondos/fondoLogin.jpg) no-repeat center center;
+  --background-size: cover;
+}
+
+ion-card {
+  box-shadow: none;
+  border-radius: 20px;
+  transform: translateY(10%);
+  background-color: #0041299f;
+  backdrop-filter: blur(5px);
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+}
+
+.container-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px; /* Aumenta el padding del contenedor para que no quede tan pegado */
+}
+
+
+ion-item {
+  border-radius: 15px; /* Borde redondeado para los ion-item */
+  margin: 15px 0; /* Espacio vertical entre cada ion-item */
+  --padding-start: 16px; /* Ajusta el padding inicial para que el contenido no quede pegado al borde */
+  --inner-padding: 8px; /* Ajusta el padding interno para dar más espacio al contenido */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para resaltar los items */
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente para resaltar sobre el fondo */
+}
+
+ion-input, ion-select, ion-datetime, ion-textarea {
+  --padding-start: 16px; /* Asegura que el contenido esté alineado correctamente */
+  --border-radius: 15px; /* Borde redondeado consistente con los ion-item */
+}
+
+.qr-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+  padding: 10px;
+  transition: transform 0.2s;
+  --background: linear-gradient(45deg,#ff8800, #ff5722);
+  text-transform: none;
+}
+
+.qr-button:hover {
+  transform: scale(1.05);
+}

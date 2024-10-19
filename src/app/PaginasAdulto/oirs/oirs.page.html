@@ -1,90 +1,158 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Formulario OIRS</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-card class="container-login">
+    <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
+      <div class="ion-text-center ion-margin-vertical lock">
+        <img src=".././../assets/icon/logoBioparque.png" alt="">
+      </div>
 
-<ion-content class="ion-padding">
-  <form (submit)="submitForm()" [formGroup]="oirsForm">
-    <!-- Tipo de Solicitud -->
-    <ion-item>
-      <ion-label>Tipo de Solicitud</ion-label>
-      <ion-select formControlName="tipoSolicitud" placeholder="Seleccione un tipo">
-        <ion-select-option value="consulta">Consulta</ion-select-option>
-        <ion-select-option value="felicitacion">Felicitación</ion-select-option>
-        <ion-select-option value="reclamo">Reclamo</ion-select-option>
-        <ion-select-option value="sugerencia">Sugerencia</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <h1>ZooLife - OIRS</h1>
 
-    <!-- Nombre -->
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" formControlName="nombre" placeholder="Tu nombre"></ion-input>
-    </ion-item>
+      <!-- Tipo de Solicitud -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="tipoSolicitud"
+          label="Tipo de Solicitud"
+          labelPlacement="floating"
+          fill="solid"
+          placeholder="Seleccionar tipo"
+          errorText="Debe seleccionar un tipo de solicitud"
+        >
+          <ion-select-option value="consulta">Consulta</ion-select-option>
+          <ion-select-option value="felicitacion">Felicitación</ion-select-option>
+          <ion-select-option value="reclamo">Reclamo</ion-select-option>
+          <ion-select-option value="sugerencia">Sugerencia</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <!-- Apellidos -->
-    <ion-item>
-      <ion-label position="floating">Apellidos</ion-label>
-      <ion-input type="text" formControlName="apellidos" placeholder="Tus apellidos"></ion-input>
-    </ion-item>
+      <!-- Nombre -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-input
+          type="text"
+          fill="solid"
+          label="Nombre (Obligatorio)"
+          labelPlacement="floating"
+          helperText="Ingrese su nombre"
+          errorText="Nombre Inválido"
+          formControlName="nombre"
+        ></ion-input>
+      </ion-item>
 
-    <!-- Fecha de Nacimiento -->
-    <ion-item>
-      <ion-label position="floating">Fecha de Nacimiento</ion-label>
-      <ion-datetime formControlName="fechaNacimiento" placeholder="Selecciona tu fecha"></ion-datetime>
-    </ion-item>
+      <!-- Apellidos -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-input
+          type="text"
+          fill="solid"
+          label="Apellidos (Obligatorio)"
+          labelPlacement="floating"
+          helperText="Ingrese sus apellidos"
+          errorText="Apellidos Inválidos"
+          formControlName="apellidos"
+        ></ion-input>
+      </ion-item>
 
-    <!-- Sexo -->
-    <ion-item>
-      <ion-label>Sexo</ion-label>
-      <ion-select formControlName="sexo" placeholder="Seleccione sexo">
-        <ion-select-option value="masculino">Masculino</ion-select-option>
-        <ion-select-option value="femenino">Femenino</ion-select-option>
-        <ion-select-option value="otro">Otro</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <!-- Fecha de Nacimiento -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-datetime
+          formControlName="fechaNacimiento"
+          fill="solid"
+          label="Fecha de Nacimiento (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Seleccionar fecha"
+        ></ion-datetime>
+      </ion-item>
 
-    <!-- Comuna -->
-    <ion-item>
-      <ion-label position="floating">Comuna</ion-label>
-      <ion-input type="text" formControlName="comuna" placeholder="Tu comuna"></ion-input>
-    </ion-item>
+      <!-- Sexo -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="sexo"
+          fill="solid"
+          label="Sexo (Obligatorio)"
+          placeholder="Seleccionar sexo"
+          errorText="Seleccione un sexo"
+        >
+          <ion-select-option value="masculino">Masculino</ion-select-option>
+          <ion-select-option value="femenino">Femenino</ion-select-option>
+          <ion-select-option value="otro">Otro</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <!-- Región -->
-    <ion-item>
-      <ion-label position="floating">Región</ion-label>
-      <ion-input type="text" formControlName="region" placeholder="Tu región"></ion-input>
-    </ion-item>
+      <!-- Región -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="region"
+          fill="solid"
+          label="Región (Obligatorio)"
+          placeholder="Seleccionar región"
+          errorText="Debe seleccionar una región"
+        >
+          <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">
+            {{ region.nombre }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <!-- Teléfono -->
-    <ion-item>
-      <ion-label position="floating">Teléfono</ion-label>
-      <ion-input type="tel" formControlName="telefono" placeholder="Tu número de teléfono"></ion-input>
-    </ion-item>
+      <!-- Comuna -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="comuna"
+          fill="solid"
+          label="Comuna (Obligatorio)"
+          placeholder="Seleccionar comuna"
+          errorText="Debe seleccionar una comuna"
+        >
+          <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
+            {{ comuna }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <!-- Es el afectado -->
-    <ion-item>
-      <ion-label>¿Es usted el afectado?</ion-label>
-      <ion-toggle formControlName="esAfectado"></ion-toggle>
-    </ion-item>
+      <!-- Teléfono -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-input
+          type="tel"
+          fill="solid"
+          label="Teléfono (Obligatorio)"
+          labelPlacement="floating"
+          helperText="Ingrese su número de teléfono"
+          errorText="Teléfono inválido"
+          formControlName="telefono"
+        ></ion-input>
+      </ion-item>
 
-    <!-- Detalles -->
-    <ion-item>
-      <ion-label position="floating">Detalles</ion-label>
-      <ion-textarea formControlName="detalles" placeholder="Describe los detalles de tu solicitud" auto-grow="true"></ion-textarea>
-    </ion-item>
+      <!-- Es el afectado -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-label>¿Es usted el afectado?</ion-label>
+        <ion-toggle formControlName="esAfectado"></ion-toggle>
+      </ion-item>
 
-    <!-- Subir Archivo (Evidencia) -->
-    <ion-item>
-      <ion-label>Subir Evidencia</ion-label>
-      <input type="file" (change)="onFileChange($event)" accept="image/*" />
-    </ion-item>
+      <!-- Detalles -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-textarea
+          formControlName="detalles"
+          fill="solid"
+          label="Detalles (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Describe los detalles de tu solicitud"
+          errorText="Debe ingresar al menos 10 caracteres"
+        ></ion-textarea>
+      </ion-item>
 
-    <!-- Botón de Enviar -->
-    <ion-button expand="block" type="submit" [disabled]="oirsForm.invalid">
-      Enviar Solicitud
-    </ion-button>
-  </form>
+      <!-- Subir Archivo (Evidencia) -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-label>Subir Evidencia (Opcional)</ion-label>
+        <input type="file" (change)="onFileChange($event)" accept="image/*" />
+      </ion-item>
+
+      <!-- Botón de Enviar -->
+      <div class="ion-margin">
+        <ion-button type="submit" expand="block" size="large" class="qr-button" [strong]="true">
+          <ion-text style="text-transform: none;">Enviar Solicitud</ion-text>
+        </ion-button>
+
+        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/adulto/inicio']">
+          <ion-text style="text-transform: none;">Volver</ion-text>
+        </ion-button>
+      </div>
+    </form>
+  </ion-card>
 </ion-content>
-
