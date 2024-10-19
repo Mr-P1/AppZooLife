@@ -10,12 +10,15 @@
       [value]="searchTerm"
     ></ion-searchbar>
     <ion-button fill="clear" (click)="toggleQrScan()">
-      <img src="../../../assets/icon/qrIcon.png" alt="Escanear QR" />
+      <img src="../../../assets/icon/qrIcon.png" alt="Escanear QR"/>
     </ion-button>
   </div>
 
   <div *ngIf="isScanning">
-    <zxing-scanner [formats]="allowedFormats"></zxing-scanner>
+    <zxing-scanner
+      (scanSuccess)="onCodeResult($event)"
+      [formats]="allowedFormats"
+    ></zxing-scanner>
   </div>
 
   <ion-list *ngIf="filteredAnimals.length > 0">
