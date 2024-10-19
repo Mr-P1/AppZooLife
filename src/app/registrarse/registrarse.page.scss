@@ -1,120 +1,77 @@
-/* Estilo para el elemento span, que usualmente es utilizado para textos */
-span{
-  color: red; /* El color del texto en span será rojo */
-  text-align: center; /* El texto estará centrado horizontalmente */
-}
-
-/* Estilo para el componente ion-content, que es el contenedor principal */
-ion-content{
+/* Estilo para el componente ion-content */
+ion-content {
   --background: url(./../../assets/fondos/fondoLogin.jpg) no-repeat center center;
-  /* Establece una imagen de fondo para todo el contenido,
-     utilizando una ruta relativa. "no-repeat" evita que la imagen se repita
-     y "center center" centra la imagen tanto vertical como horizontalmente. */
-  --background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+  --background-size: cover;
+  display: flex;
+  flex-direction: column; /* Alinea los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  padding: 20px; /* Añade padding para evitar que toque los bordes */
+  box-sizing: border-box; /* Incluye el padding en el cálculo total */
+  height: 100%; /* Asegura que el ion-content ocupe toda la altura disponible */
 }
 
+/* Estilo para ion-card */
 ion-card {
-  box-shadow: none;
+  width: 100%;
+  max-width: 400px; /* Limita el ancho máximo del card */
   border-radius: 20px;
-  transform: translateY(10%);
+  box-shadow: none;
   background-color: #0041299f;
   backdrop-filter: blur(5px);
-  div.lock{
-    font-size: 3rem;
-    ion-icon {
-      color: #F77C30;
-    }
-  }
-  ion-item {
-    --border-radius: 10px;
-  }
-  ion-input, .fwd {
-    font-size: 0.9rem;
-  }
-  .submit {
-    ion-button {
-      --background: #F77C30;
-      border-radius: 50px;
-    }
-    ion-text {
-      font-size: 1.2rem;
-    }
-  }
-  .fwd {
-    color: white;
-    display: center;
-  }
-
+  padding: 20px; /* Padding interno para que los elementos no queden pegados */
+  box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+  margin: 0 auto; /* Centra horizontalmente */
 }
 
-/* Estilo para los títulos h1 */
-h1{
-  color: white; /* El color del texto en los títulos h1 será blanco */
-  text-align: center; /* El texto del h1 estará centrado horizontalmente */
+h1 {
+  color: white;
+  text-align: center;
   font-size: 50px;
   font-family: 'Work Sans', sans-serif;
-  font-weight: 700;  /* 700 es para negrita */
+  font-weight: 700;
 }
 
 /* Estilos para el contenedor del login */
 .container-login {
-  display: flex; /* Utiliza el modelo de cajas flexibles para alinear los elementos */
-  flex-direction: column; /* Asegura que los elementos dentro del contenedor se coloquen en columna */
-  justify-content: flex-start; /* Coloca el contenido en la parte superior del contenedor */
-  align-items: center; /* Centra horizontalmente el contenido dentro del contenedor */
-  margin-top: 0px; /* Deja un margen superior de 0px */
-  padding: 10px; /* Aplica un relleno interior de 10px */
-  // background: rgba(23, 83, 6, 0.5); /* Aplica un color de fondo con transparencia (verde) */
-
-  /* Añade una sombra alrededor del contenedor */
-  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75); /* Sombra en navegadores WebKit (Safari, Chrome) */
-  -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75); /* Sombra en navegadores Mozilla */
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75); /* Sombra en el resto de navegadores */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Asegura que ocupe todo el ancho del card */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
 }
 
-/* Estilo para los iconos dentro del contenido */
-ion-icon {
-  margin-right: 15px; /* Deja un margen derecho de 15px entre el icono y otros elementos */
-}
-
+/* Ajustes para ion-item */
 ion-item {
-  border-radius: 50px;
-  height: 55px;
-  box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.88);
-  --highlight-height: 0px;
+  border-radius: 15px;
+  margin: 15px 0;
+  --padding-start: 16px;
+  --inner-padding: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
-
-
-/* Estilo para los slides (deslizadores) en ion-slide */
-ion-slide {
-  width: 100%; /* Establece el ancho al 100% del contenedor padre */
-  height: 100%; /* Establece la altura al 100% del contenedor padre */
-  position: absolute !important; /* Coloca los slides en posición absoluta (ignora su ubicación en el flujo del documento) */
-  top: 0px !important; /* Establece que el inicio de la posición esté en la parte superior del contenedor */
+/* Estilo para los campos dentro de ion-item */
+ion-input, ion-select, ion-datetime, ion-textarea {
+  --padding-start: 16px;
+  --border-radius: 15px;
 }
 
-
-
+/* Estilo para los botones QR */
 .qr-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px; /* Espacio entre el icono y el texto */
+  gap: 10px;
   color: white;
   border-radius: 20px;
   font-size: 18px;
   padding: 10px;
   transition: transform 0.2s;
-  border-radius: 20px;
-  --background: linear-gradient(45deg,#ff8800, #ff5722);
+  --background: linear-gradient(45deg, #ff8800, #ff5722);
   text-transform: none;
+}
 
-  ion-icon {
-    font-size: 24px;
-  }
-
-  &:hover {
-    transform: scale(1.05); /* Efecto al pasar el ratón */
-  }
+.qr-button:hover {
+  transform: scale(1.05);
 }
