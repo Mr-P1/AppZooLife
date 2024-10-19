@@ -1,0 +1,155 @@
+<ion-content [fullscreen]="true">
+  <ion-card class="container-login">
+    <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
+      <!-- Logo del bioparque centrado -->
+      <div class="ion-text-center ion-margin-vertical lock">
+        <img src=".././../assets/icon/logoBioparque.png" alt="Logo Bioparque">
+      </div>
+
+      <!-- Título del formulario -->
+      <h1>ZooLife - OIRS</h1>
+
+      <!-- Tipo de Solicitud -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="tipoSolicitud"
+          label="Tipo de Solicitud (Obligatorio)"
+          fill="solid"
+          labelPlacement="floating"
+          placeholder="Seleccionar tipo"
+          errorText="Seleccione un tipo de solicitud"
+        >
+          <ion-select-option value="consulta">Consulta</ion-select-option>
+          <ion-select-option value="felicitacion">Felicitación</ion-select-option>
+          <ion-select-option value="reclamo">Reclamo</ion-select-option>
+          <ion-select-option value="sugerencia">Sugerencia</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Nombre -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-input
+          type="text"
+          fill="solid"
+          label="Nombre (Obligatorio)"
+          labelPlacement="floating"
+          helperText="Ingrese su nombre"
+          errorText="Nombre Inválido"
+          formControlName="nombre"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Apellidos -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-input
+          type="text"
+          fill="solid"
+          label="Apellidos (Obligatorio)"
+          labelPlacement="floating"
+          helperText="Ingrese sus apellidos"
+          errorText="Apellidos Inválidos"
+          formControlName="apellidos"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Fecha de Nacimiento -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-datetime
+          formControlName="fechaNacimiento"
+          label="Fecha de Nacimiento (Obligatorio)"
+          presentation="date"
+          placeholder="Seleccione fecha"
+        ></ion-datetime>
+      </ion-item>
+
+      <!-- Sexo -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="sexo"
+          label="Sexo (Obligatorio)"
+          fill="solid"
+          placeholder="Seleccionar sexo"
+          errorText="Seleccione un sexo"
+        >
+          <ion-select-option value="masculino">Masculino</ion-select-option>
+          <ion-select-option value="femenino">Femenino</ion-select-option>
+          <ion-select-option value="otro">Otro</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Región -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="region"
+          label="Región (Obligatorio)"
+          fill="solid"
+          placeholder="Seleccionar región"
+          errorText="Seleccione una región"
+        >
+          <!-- Agregar opciones de región aquí -->
+          <ion-select-option value="Region Metropolitana">Región Metropolitana</ion-select-option>
+          <!-- Otras regiones se añadirán aquí... -->
+        </ion-select>
+      </ion-item>
+
+      <!-- Comuna -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="comuna"
+          label="Comuna (Obligatorio)"
+          fill="solid"
+          placeholder="Seleccionar comuna"
+          errorText="Seleccione una comuna"
+        >
+          <!-- Agregar opciones de comuna aquí, relacionadas con la región seleccionada -->
+        </ion-select>
+      </ion-item>
+
+      <!-- Teléfono -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-input
+          type="tel"
+          fill="solid"
+          label="Teléfono (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Ingrese su teléfono"
+          helperText="Formato: 87654321"
+          errorText="Teléfono inválido"
+          formControlName="telefono"
+        ></ion-input>
+      </ion-item>
+
+      <!-- ¿Es usted el afectado? -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-label>¿Es usted el afectado?</ion-label>
+        <ion-toggle formControlName="esAfectado"></ion-toggle>
+      </ion-item>
+
+      <!-- Detalles -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-textarea
+          formControlName="detalles"
+          fill="solid"
+          label="Detalles (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Describe los detalles de tu solicitud"
+          errorText="Debe ingresar un mínimo de 10 caracteres"
+        ></ion-textarea>
+      </ion-item>
+
+      <!-- Subir Archivo (Evidencia) -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-label>Subir Evidencia</ion-label>
+        <input type="file" (change)="onFileChange($event)" accept="image/*" />
+      </ion-item>
+
+      <!-- Botones de Enviar y Volver -->
+      <div class="ion-margin">
+        <ion-button type="submit" expand="block" size="large" class="qr-button" [strong]="true">
+          <ion-text style="text-transform: none;">Enviar Solicitud</ion-text>
+        </ion-button>
+
+      </div>
+    </form>
+  </ion-card>
+</ion-content>
