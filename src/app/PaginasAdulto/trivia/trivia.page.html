@@ -7,8 +7,12 @@
       <ion-card-title>Lo sentimos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      Para realizar la trivia debes visitar al menos 5 animales. <br> Has visto {{ animalesVistosCount }} animal/es.
-      <br />
+      <p *ngIf="animalesVistosCount < 5">
+        Para realizar la trivia debes visitar al menos 5 animales. <br> Has visto {{ animalesVistosCount }} animal/es.
+      </p>
+      <p *ngIf="animalesVistosCount >= 5">
+        Ya has completado la trivia de hoy. Vuelve mañana para participar nuevamente.
+      </p>
       <ion-button expand="full" [routerLink]="['/adulto/inicio']">
         Volver al inicio
       </ion-button>
