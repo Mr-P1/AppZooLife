@@ -23,6 +23,7 @@ export class PerfilPage implements OnInit {
   email: string = '';  // Inicialización de email por defecto
   tipo = "";
   topUsuarios: Usuario[] = []; // Almacena los 5 usuarios con más nivel
+  edad = "";
 
   constructor(
     private authService: AuthService,
@@ -33,6 +34,7 @@ export class PerfilPage implements OnInit {
     // El ngOnInit se llama solo una vez cuando la página se crea por primera vez.
     this.loadUserData();
     this.tipo = localStorage.getItem('tipo')!;
+    this.edad = localStorage.getItem('edad')!;
     this.loadTopUsuarios();
 
   }

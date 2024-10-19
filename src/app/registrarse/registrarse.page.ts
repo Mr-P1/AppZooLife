@@ -6,7 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { AuthService } from './../common/servicios/auth.service';
 import { addIcons } from 'ionicons';
 import { mailOutline, keyOutline, personOutline, callOutline, carOutline, eyeOutline, eyeOffOutline, lockClosed } from 'ionicons/icons';
-import { IonHeader, IonRow, IonContent, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonText, IonLabel ,IonSelectOption, IonSelect, IonIcon, IonNote } from "@ionic/angular/standalone";
+import { IonHeader, IonRow, IonContent, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonText, IonLabel ,IonSelectOption, IonSelect, IonIcon, IonNote, IonDatetime } from "@ionic/angular/standalone";
 import { IonCard } from '@ionic/angular/standalone';
 
 
@@ -15,7 +15,7 @@ import { IonCard } from '@ionic/angular/standalone';
   templateUrl: './registrarse.page.html',
   styleUrls: ['./registrarse.page.scss'],
   standalone: true,
-  imports: [IonNote, IonLabel, IonCard ,IonSelect, IonText, IonButton, IonInput, IonItem, IonList, IonCol, IonGrid, IonContent, IonRow, IonHeader,  CommonModule, RouterLink, ReactiveFormsModule,IonSelectOption, IonIcon]
+  imports: [IonDatetime, IonNote, IonLabel, IonCard ,IonSelect, IonText, IonButton, IonInput, IonItem, IonList, IonCol, IonGrid, IonContent, IonRow, IonHeader,  CommonModule, RouterLink, ReactiveFormsModule,IonSelectOption, IonIcon]
 })
 export class RegistrarsePage  {
 
@@ -36,6 +36,7 @@ export class RegistrarsePage  {
     password: this._formBuilder.control('', [Validators.required, Validators.minLength(5)]),
     nombre: this._formBuilder.control('', [Validators.required]),
     telefono: this._formBuilder.control('', [Validators.required]),
+    fechaNacimiento:this._formBuilder.control('',[Validators.required]),
     genero: this._formBuilder.control('', [Validators.required]),
     patente: this._formBuilder.control(''),
   });
@@ -48,11 +49,13 @@ export class RegistrarsePage  {
 
     try {
       const { email, password, telefono, nombre, genero, patente } = this.form.value;
+      const fechaNacimientoString = this.form.get('fechaNacimiento')?.value; // Obtén el valor de fecha como string
+      const fechaNacimiento = fechaNacimientoString ? new Date(fechaNacimientoString) : null;
 
       if (!email || !password) return;
 
       // Intentar registrar al usuario
-      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(genero), String(patente));
+      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(genero), String(patente) ,fechaNacimiento! );
 
       // Restablecer el formulario después del registro exitoso
       this.form.reset();

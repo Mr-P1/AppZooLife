@@ -1,14 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { FirestoreService } from '../../common/servicios/firestore.service';
-// import { Animal } from '../../common/models/animal.model';
-// import { Reaction } from 'src/app/common/models/reaction.model';
-// import { CommonModule } from '@angular/common';
-// import { Router, RouterLink } from '@angular/router';
-// import { AuthService } from './../../common/servicios/auth.service';
-// import { IonContent, IonSearchbar, IonList, IonItem, IonLabel, IonCardHeader, IonButton, IonCardTitle, IonCard} from "@ionic/angular/standalone";
-// import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import Swiper from 'swiper';
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
@@ -22,6 +11,8 @@ import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardH
 import { addIcons } from 'ionicons';
 import { star, personCircle, chevronUpCircle, document, colorPalette, globe, qrCodeOutline, earthOutline, mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Mapa, MapaService } from '../../common/servicios/mapa.service';
+
 
 @Component({
   selector: 'app-inicio-nino',
@@ -38,7 +29,7 @@ export class InicioPage implements OnInit {
   userId: string = '';
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
   searchTerm: string = ''; // Para almacenar el término de búsqueda
-
+  mapa: Mapa[] = [];
 
 
   animalesOriginal: Animal[] = []; // Guardar el orden original
@@ -59,11 +50,16 @@ export class InicioPage implements OnInit {
   constructor(
     private animalsService: FirestoreService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private _mapaService: MapaService,
 
   ) { }
 
   ngOnInit(): void {
+
+    this._mapaService.getMapa().subscribe((data: Mapa[]) => {
+      this.mapa = data;
+    });
 
     this.animalsService.getAnimales().subscribe((data: Animal[]) => {
       this.animales = data;

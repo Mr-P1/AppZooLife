@@ -7,6 +7,7 @@ export interface Usuario {
   puntos:number,
   nivel:number,
   patente?:string,
+  fechaNacimiento:Date,
   auth_id:string,
 }
 
