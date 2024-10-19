@@ -1,7 +1,8 @@
 export interface Reaction {
-    id?: string;
-    userId?: string;
-    animalId: string;
-    reaction: boolean;
-    fecha:Date,
-  }
+  id?: string;
+  animalId: string;
+  userId: string;
+  reaction: boolean;
+  fecha: Date;
+  tipo?: string; // Añadimos esta propiedad opcional
+}

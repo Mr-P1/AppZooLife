@@ -128,13 +128,21 @@ export class InicioPage implements OnInit {
     const animal = this.animales.find(a => a.id === animalId);
     if (animal) {
       animal.reaccion = true;
+      const tipo = localStorage.getItem('tipo') || 'desconocido'; // Obtenemos el tipo de usuario
+
       this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
         if (existingReaction && existingReaction.id) {
-          this.animalsService.updateReaction(existingReaction.id, { reaction: true }).subscribe(() => {
+          this.animalsService.updateReaction(existingReaction.id, { reaction: true, tipo }).subscribe(() => {
             console.log('Reacción actualizada a Like');
           });
         } else {
-          const reaction: Reaction = { animalId, userId: this.userId, reaction: true, fecha:new Date(), };
+          const reaction: Reaction = {
+            animalId,
+            userId: this.userId,
+            reaction: true,
+            fecha: new Date(),
+            tipo // Incluimos el tipo de usuario en la nueva reacción
+          };
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como Like');
           });
@@ -147,13 +155,21 @@ export class InicioPage implements OnInit {
     const animal = this.animales.find(a => a.id === animalId);
     if (animal) {
       animal.reaccion = false;
+      const tipo = localStorage.getItem('tipo') || 'desconocido'; // Obtenemos el tipo de usuario
+
       this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
         if (existingReaction && existingReaction.id) {
-          this.animalsService.updateReaction(existingReaction.id, { reaction: false }).subscribe(() => {
+          this.animalsService.updateReaction(existingReaction.id, { reaction: false, tipo }).subscribe(() => {
             console.log('Reacción actualizada a No me gusta');
           });
         } else {
-          const reaction: Reaction = { animalId, userId: this.userId, reaction: false,fecha:new Date(),};
+          const reaction: Reaction = {
+            animalId,
+            userId: this.userId,
+            reaction: false,
+            fecha: new Date(),
+            tipo // Incluimos el tipo de usuario en la nueva reacción
+          };
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como No me gusta');
           });
