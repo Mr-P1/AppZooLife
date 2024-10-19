@@ -16,7 +16,7 @@
 
   <div *ngIf="isScanning">
     <zxing-scanner
-      (scanSuccess)="onCodeResult($event)"
+
       [formats]="allowedFormats"
     ></zxing-scanner>
   </div>
