@@ -1,21 +1,23 @@
 <ion-content [fullscreen]="true">
   <ion-card class="container-login">
     <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
+      <!-- Logo del bioparque centrado -->
       <div class="ion-text-center ion-margin-vertical lock">
-        <img src=".././../assets/icon/logoBioparque.png" alt="">
+        <img src=".././../assets/icon/logoBioparque.png" alt="Logo Bioparque">
       </div>
 
+      <!-- Título del formulario -->
       <h1>ZooLife - OIRS</h1>
 
       <!-- Tipo de Solicitud -->
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="tipoSolicitud"
-          label="Tipo de Solicitud"
-          labelPlacement="floating"
+          label="Tipo de Solicitud (Obligatorio)"
           fill="solid"
+          labelPlacement="floating"
           placeholder="Seleccionar tipo"
-          errorText="Debe seleccionar un tipo de solicitud"
+          errorText="Seleccione un tipo de solicitud"
         >
           <ion-select-option value="consulta">Consulta</ion-select-option>
           <ion-select-option value="felicitacion">Felicitación</ion-select-option>
@@ -54,10 +56,9 @@
       <ion-item class="ion-margin" lines="none">
         <ion-datetime
           formControlName="fechaNacimiento"
-          fill="solid"
           label="Fecha de Nacimiento (Obligatorio)"
-          labelPlacement="floating"
-          placeholder="Seleccionar fecha"
+          presentation="date"
+          placeholder="Seleccione fecha"
         ></ion-datetime>
       </ion-item>
 
@@ -65,8 +66,8 @@
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="sexo"
-          fill="solid"
           label="Sexo (Obligatorio)"
+          fill="solid"
           placeholder="Seleccionar sexo"
           errorText="Seleccione un sexo"
         >
@@ -80,10 +81,11 @@
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="region"
-          fill="solid"
           label="Región (Obligatorio)"
+          fill="solid"
           placeholder="Seleccionar región"
-          errorText="Debe seleccionar una región"
+          (ionChange)="actualizarComunas($event.detail.value)"
+          errorText="Seleccione una región"
         >
           <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">
             {{ region.nombre }}
@@ -95,10 +97,10 @@
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="comuna"
-          fill="solid"
           label="Comuna (Obligatorio)"
+          fill="solid"
           placeholder="Seleccionar comuna"
-          errorText="Debe seleccionar una comuna"
+          errorText="Seleccione una comuna"
         >
           <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
             {{ comuna }}
@@ -113,13 +115,14 @@
           fill="solid"
           label="Teléfono (Obligatorio)"
           labelPlacement="floating"
-          helperText="Ingrese su número de teléfono"
+          placeholder="Ingrese su teléfono"
+          helperText="Formato: 87654321"
           errorText="Teléfono inválido"
           formControlName="telefono"
         ></ion-input>
       </ion-item>
 
-      <!-- Es el afectado -->
+      <!-- ¿Es usted el afectado? -->
       <ion-item class="ion-margin" lines="none">
         <ion-label>¿Es usted el afectado?</ion-label>
         <ion-toggle formControlName="esAfectado"></ion-toggle>
@@ -133,23 +136,23 @@
           label="Detalles (Obligatorio)"
           labelPlacement="floating"
           placeholder="Describe los detalles de tu solicitud"
-          errorText="Debe ingresar al menos 10 caracteres"
+          errorText="Debe ingresar un mínimo de 10 caracteres"
         ></ion-textarea>
       </ion-item>
 
       <!-- Subir Archivo (Evidencia) -->
       <ion-item class="ion-margin" lines="none">
-        <ion-label>Subir Evidencia (Opcional)</ion-label>
+        <ion-label>Subir Evidencia</ion-label>
         <input type="file" (change)="onFileChange($event)" accept="image/*" />
       </ion-item>
 
-      <!-- Botón de Enviar -->
+      <!-- Botones de Enviar y Volver -->
       <div class="ion-margin">
         <ion-button type="submit" expand="block" size="large" class="qr-button" [strong]="true">
           <ion-text style="text-transform: none;">Enviar Solicitud</ion-text>
         </ion-button>
 
-        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/adulto/inicio']">
+        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/']">
           <ion-text style="text-transform: none;">Volver</ion-text>
         </ion-button>
       </div>

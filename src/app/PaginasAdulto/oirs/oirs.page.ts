@@ -21,7 +21,6 @@ export class OirsFormPage {
   oirsForm: FormGroup;
   selectedFile: File | null = null;
 
-  // Estructura con todas las regiones y comunas de Chile
   regiones = [
     {
       nombre: 'Región de Arica y Parinacota (XV)',
@@ -83,7 +82,10 @@ export class OirsFormPage {
       nombre: 'Región de Aysén del General Carlos Ibáñez del Campo (XI)',
       comunas: ['Aysén', 'Chile Chico', 'Cisnes', 'Cochrane', 'Coyhaique', 'Guaitecas', 'Lago Verde', 'O’Higgins', 'Río Ibáñez', 'Tortel'],
     },
-    // Continúa añadiendo más regiones según sea necesario
+    {
+      nombre: 'Región de Magallanes y de la Antártica Chilena (XII)',
+      comunas: ['Antártica', 'Cabo de Hornos', 'Laguna Blanca', 'Natales', 'Porvenir', 'Primavera', 'Punta Arenas', 'Río Verde', 'San Gregorio', 'Timaukel', 'Torres del Paine'],
+    },
   ];
 
   comunasFiltradas: string[] = [];
@@ -102,7 +104,6 @@ export class OirsFormPage {
       detalles: ['', [Validators.required, Validators.minLength(10)]],
     });
 
-    // Escuchar cambios en la selección de la región
     this.oirsForm.get('region')?.valueChanges.subscribe((regionSeleccionada) => {
       this.actualizarComunas(regionSeleccionada);
     });
@@ -111,14 +112,13 @@ export class OirsFormPage {
   actualizarComunas(regionSeleccionada: string) {
     const region = this.regiones.find((r) => r.nombre === regionSeleccionada);
     this.comunasFiltradas = region ? region.comunas : [];
-    this.oirsForm.get('comuna')?.setValue(''); // Limpiar la comuna seleccionada
+    this.oirsForm.get('comuna')?.reset();
   }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      console.log('Archivo seleccionado:', this.selectedFile);
     }
   }
 
@@ -127,7 +127,6 @@ export class OirsFormPage {
       const formData = this.oirsForm.value;
       formData.archivoEvidencia = this.selectedFile;
       console.log('Formulario enviado:', formData);
-      // Aquí puedes agregar la lógica para enviar el formulario a tu backend o base de datos.
     } else {
       console.log('Formulario no válido');
     }
