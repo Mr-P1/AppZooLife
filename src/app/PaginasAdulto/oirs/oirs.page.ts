@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/common/servicios/auth.service'; // Importa tu servicio de autenticación
 
 @Component({
   selector: 'app-oirs-form',
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router';
 export class OirsFormPage {
   oirsForm: FormGroup;
   selectedFile: File | null = null;
+  userId: string | null = null; // Variable para almacenar el ID del usuario
 
   regiones = [
     {
@@ -90,7 +92,7 @@ export class OirsFormPage {
 
   comunasFiltradas: string[] = [];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.oirsForm = this.formBuilder.group({
       tipoSolicitud: ['', Validators.required],
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -104,6 +106,14 @@ export class OirsFormPage {
       detalles: ['', [Validators.required, Validators.minLength(10)]],
     });
 
+    // Capturar el ID del usuario autenticado
+    this.authService.authState$.subscribe((user) => {
+      if (user) {
+        this.userId = user.uid; // Asigna el ID del usuario
+      }
+    });
+
+    // Escuchar cambios en la selección de la región
     this.oirsForm.get('region')?.valueChanges.subscribe((regionSeleccionada) => {
       this.actualizarComunas(regionSeleccionada);
     });
@@ -112,13 +122,14 @@ export class OirsFormPage {
   actualizarComunas(regionSeleccionada: string) {
     const region = this.regiones.find((r) => r.nombre === regionSeleccionada);
     this.comunasFiltradas = region ? region.comunas : [];
-    this.oirsForm.get('comuna')?.reset();
+    this.oirsForm.get('comuna')?.setValue(''); // Limpiar la comuna seleccionada
   }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
+      console.log('Archivo seleccionado:', this.selectedFile);
     }
   }
 
@@ -126,7 +137,11 @@ export class OirsFormPage {
     if (this.oirsForm.valid) {
       const formData = this.oirsForm.value;
       formData.archivoEvidencia = this.selectedFile;
+      formData.userId = this.userId; // Agregar el ID del usuario al formulario
+      formData.fechaEnvio = new Date().toISOString(); // Agregar la fecha y hora actual
+
       console.log('Formulario enviado:', formData);
+      // Aquí puedes agregar la lógica para enviar el formulario a tu backend o base de datos.
     } else {
       console.log('Formulario no válido');
     }

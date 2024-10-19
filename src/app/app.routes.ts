@@ -110,7 +110,11 @@ export const routes: Routes = [
   {
     path: 'oirs',
     loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then(m => m.OirsFormPage)
+  },  {
+    path: 'noticias',
+    loadComponent: () => import('./PaginasAdulto/noticias/noticias.page').then( m => m.NoticiasPage)
   },
+
 
 
 
