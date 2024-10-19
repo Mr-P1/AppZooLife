@@ -55,10 +55,18 @@ export class TriviaPage implements OnInit, OnDestroy {
               this.puedeHacerTrivia = this.animalesVistosCount >= 5;
 
               if (this.puedeHacerTrivia) {
-                this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe((preguntas: PreguntaTrivia[]) => {
-                  this.preguntas = preguntas;
-                  this.rellenarPreguntasRandom(this.tipo);
-                  this.loading = false; // Datos cargados, desactiva la carga
+                // Verificar si ya hizo trivia hoy
+                this.verificarTriviaDelDia().then((puedeHacerTriviaHoy) => {
+                  if (puedeHacerTriviaHoy) {
+                    this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe((preguntas: PreguntaTrivia[]) => {
+                      this.preguntas = preguntas;
+                      this.rellenarPreguntasRandom(this.tipo);
+                      this.loading = false; // Datos cargados, desactiva la carga
+                    });
+                  } else {
+                    this.puedeHacerTrivia = false; // No puede hacer trivia hoy
+                    this.loading = false;
+                  }
                 });
               } else {
                 this.loading = false; // No puede hacer trivia, pero los datos han cargado
@@ -72,6 +80,18 @@ export class TriviaPage implements OnInit, OnDestroy {
         this.loading = false; // No puede hacer trivia, pero los datos han cargado
       }
     });
+  }
+
+  // Verificar si el usuario ya hizo trivia hoy
+  async verificarTriviaDelDia(): Promise<boolean> {
+    const triviaFecha = localStorage.getItem(`triviaFecha-${this.userId}`);
+    const hoy = new Date().toISOString().split('T')[0]; // Solo la fecha en formato YYYY-MM-DD
+
+    if (triviaFecha === hoy) {
+      return false; // Ya hizo trivia hoy
+    } else {
+      return true; // No ha hecho trivia hoy
+    }
   }
 
   comenzarTrivia() {
@@ -186,6 +206,10 @@ export class TriviaPage implements OnInit, OnDestroy {
     this.preguntaActual = null; // Oculta la tarjeta de preguntas
     this.triviaFinalizada = true; // Muestra la tarjeta de resultados
     this.enviarRespuestas(); // Guarda las respuestas, pero no redirige
+
+    // Guardar la fecha de la trivia en localStorage
+    const hoy = new Date().toISOString().split('T')[0];
+    localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
   }
 
 }
