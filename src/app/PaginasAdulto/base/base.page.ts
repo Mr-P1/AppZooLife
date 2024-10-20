@@ -55,24 +55,32 @@ export class BasePage implements OnInit {
 
   // Método para actualizar el título basado en la URL
   private updateTitle(url: string) {
-    if (url.includes('inicio')) {
-      this.pageTitle = 'Menú Principal';
-    } else if (url.includes('perfil')) {
+    // Quitar prefijos conocidos para simplificar la comparación
+    const cleanedUrl = url.replace('/adulto/', '').replace('/nino/', '');
+
+    if (cleanedUrl.includes('inicio')) {
+      this.pageTitle = 'Inicio';
+    } else if (cleanedUrl.includes('perfil')) {
       this.pageTitle = 'Perfil';
-    } else if (url.includes('trivia')) {
+    }  else if (cleanedUrl.includes('recompensas-trivia')) {
+      this.pageTitle = 'Recompensas';
+    } else if (cleanedUrl.includes('trivia')) {
       this.pageTitle = 'Trivia';
-    } else if (url.includes('eventos')) {
+    } else if (cleanedUrl.includes('eventos')) {
       this.pageTitle = 'Eventos';
-    } else if (url.includes('mapa')) {
+    } else if (cleanedUrl.includes('oirs')) {
+      this.pageTitle = 'OIRS';
+    } else if (cleanedUrl.includes('mapa')) {
       this.pageTitle = 'Mapa';
-    } else if (url.includes('animal-info')) {
+    } else if (cleanedUrl.includes('animal-info')) {
       this.pageTitle = 'Atracción';
-    } else if (url.includes('informacion')) {
+    } else if (cleanedUrl.includes('informacion')) {
       this.pageTitle = 'Información';
-    } else {
+    }else {
       this.pageTitle = 'Menú';  // Título por defecto
     }
   }
+
 
 
 
