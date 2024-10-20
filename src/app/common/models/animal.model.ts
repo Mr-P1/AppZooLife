@@ -23,5 +23,7 @@ export interface Animal {
     zona: string;
     video:  string,
     audio:  string,
+    audioAnimal?:string,
     reaccion:boolean|null;
+    mostrarVideo?: boolean; // Agrega esta propiedad
     }

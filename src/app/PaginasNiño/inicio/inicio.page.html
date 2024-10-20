@@ -16,7 +16,6 @@
 
   <div *ngIf="isScanning">
     <zxing-scanner
-
       [formats]="allowedFormats"
     ></zxing-scanner>
   </div>
@@ -31,26 +30,6 @@
     <ion-label>No se encontraron resultados</ion-label>
   </ion-item>
 
-  <!-- Carrusel de imágenes -->
-  <!-- <swiper-container [pagination]="true" [loop]="true" [autoplay]="{ delay: 3000 }" effect="cards">
-    <swiper-slide *ngFor="let imagen of imagenes">
-      <img [src]="imagen" alt="Imagen de animal" />
-    </swiper-slide>
-  </swiper-container> -->
-
-  <!-- Botones debajo del carrusel -->
-  <!-- <div class="buttons-container">
-    <ion-button fill="solid" class="custom-button one" color="primary">
-      <img src="./../../../assets/icon/especieninoicon.png" alt="" />
-    </ion-button>
-    <ion-button fill="solid" class="custom-button two" color="primary">
-      <img src="./../../../assets/icon/rutasugeridanino.png" alt="" />
-    </ion-button>
-    <ion-button fill="solid" class="custom-button three" color="primary">
-      <img src="./../../../assets/icon/areaninoicon.png" alt="" />
-    </ion-button>
-  </div> -->
-  <!-- Nada -->
   <!-- Mapa -->
   <div *ngIf="mapa.length > 0">
     <img [src]="mapa[0].imagen" alt="" />
@@ -69,11 +48,28 @@
 
   <ion-card *ngFor="let animal of animales" class="animal-card">
     <div class="image-container">
+      <!-- Mostrar la imagen si el video no está visible -->
       <img
+        *ngIf="!animal.mostrarVideo"
         alt="{{ animal.nombre_comun }}"
         src="{{ animal.imagen }}"
-        [routerLink]="['/animal-info-nino', animal.id]"
+        (click)="toggleVideo(animal)"
       />
+
+      <!-- Mostrar el video si el video está visible -->
+      <video
+        *ngIf="animal.mostrarVideo"
+        width="100%"
+        height="auto"
+        controls
+        autoplay
+        (click)="toggleVideo(animal)"
+        (ended)="videoEnded(animal)"
+      >
+        <source [src]="animal.video" type="video/mp4" />
+        Tu navegador no soporta la reproducción de video.
+      </video>
+
       <div class="icono-numero">{{ animal.posicion_mapa }}</div>
     </div>
     <ion-card-header class="card-header">
@@ -101,6 +97,20 @@
         </ion-button>
       </div>
     </ion-card-header>
-  </ion-card>
 
+    <div class="audio-container" *ngIf="animal.audio">
+      <ion-card-subtitle>Audio Explicativo</ion-card-subtitle>
+      <audio controls>
+        <source [src]="animal.audio" type="audio/mp3" />
+        Tu navegador no soporta la reproducción de audio.
+      </audio>
+    </div>
+    <div class="audio-container" *ngIf="animal.audioAnimal">
+      <ion-card-subtitle>Audio Animal</ion-card-subtitle>
+      <audio controls>
+        <source [src]="animal.audio" type="audio/mp3" />
+        Tu navegador no soporta la reproducción de audio.
+      </audio>
+    </div>
+  </ion-card>
 </ion-content>

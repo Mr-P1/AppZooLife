@@ -26,56 +26,6 @@
         </ion-select>
       </ion-item>
 
-      <!-- Nombre -->
-      <ion-item class="ion-margin" lines="none">
-        <ion-input
-          type="text"
-          fill="solid"
-          label="Nombre (Obligatorio)"
-          labelPlacement="floating"
-          helperText="Ingrese su nombre"
-          errorText="Nombre Inválido"
-          formControlName="nombre"
-        ></ion-input>
-      </ion-item>
-
-      <!-- Apellidos -->
-      <ion-item class="ion-margin" lines="none">
-        <ion-input
-          type="text"
-          fill="solid"
-          label="Apellidos (Obligatorio)"
-          labelPlacement="floating"
-          helperText="Ingrese sus apellidos"
-          errorText="Apellidos Inválidos"
-          formControlName="apellidos"
-        ></ion-input>
-      </ion-item>
-
-      <!-- Fecha de Nacimiento -->
-      <ion-item class="ion-margin" lines="none">
-        <ion-datetime
-          formControlName="fechaNacimiento"
-          label="Fecha de Nacimiento (Obligatorio)"
-          presentation="date"
-          placeholder="Seleccione fecha"
-        ></ion-datetime>
-      </ion-item>
-
-      <!-- Sexo -->
-      <ion-item class="ion-margin" lines="none">
-        <ion-select
-          formControlName="sexo"
-          label="Sexo (Obligatorio)"
-          fill="solid"
-          placeholder="Seleccionar sexo"
-          errorText="Seleccione un sexo"
-        >
-          <ion-select-option value="masculino">Masculino</ion-select-option>
-          <ion-select-option value="femenino">Femenino</ion-select-option>
-          <ion-select-option value="otro">Otro</ion-select-option>
-        </ion-select>
-      </ion-item>
 
       <!-- Región -->
       <ion-item class="ion-margin" lines="none">
@@ -84,11 +34,12 @@
           label="Región (Obligatorio)"
           fill="solid"
           placeholder="Seleccionar región"
+          (ionChange)="actualizarComunas($event.detail.value)"
           errorText="Seleccione una región"
         >
-          <!-- Agregar opciones de región aquí -->
-          <ion-select-option value="Region Metropolitana">Región Metropolitana</ion-select-option>
-          <!-- Otras regiones se añadirán aquí... -->
+          <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">
+            {{ region.nombre }}
+          </ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -101,12 +52,14 @@
           placeholder="Seleccionar comuna"
           errorText="Seleccione una comuna"
         >
-          <!-- Agregar opciones de comuna aquí, relacionadas con la región seleccionada -->
+          <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
+            {{ comuna }}
+          </ion-select-option>
         </ion-select>
       </ion-item>
 
       <!-- Teléfono -->
-      <ion-item class="ion-margin" lines="none">
+      <!-- <ion-item class="ion-margin" lines="none">
         <ion-input
           type="tel"
           fill="solid"
@@ -117,7 +70,7 @@
           errorText="Teléfono inválido"
           formControlName="telefono"
         ></ion-input>
-      </ion-item>
+      </ion-item> -->
 
       <!-- ¿Es usted el afectado? -->
       <ion-item class="ion-margin" lines="none">
@@ -149,6 +102,9 @@
           <ion-text style="text-transform: none;">Enviar Solicitud</ion-text>
         </ion-button>
 
+        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/adulto/inicio']">
+          <ion-text style="text-transform: none;">Volver</ion-text>
+        </ion-button>
       </div>
     </form>
   </ion-card>
