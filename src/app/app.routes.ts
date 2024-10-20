@@ -57,6 +57,10 @@ export const routes: Routes = [
         loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
       },
       {
+        path: 'recompensas-trivia',
+        loadComponent: () => import('./recompensas-trivia/recompensas-trivia.page').then( m => m.RecompensasTriviaPage)
+      },
+      {
         path: 'noticias',
         loadComponent: () => import('./PaginasAdulto/noticias/noticias.page').then( m => m.NoticiasPage)
       },
@@ -104,6 +108,10 @@ export const routes: Routes = [
         path: 'trivia-nino',
         loadComponent: () => import('./PaginasNiño/trivia/trivia.page').then( m => m.TriviaPage)
       },
+      {
+        path: 'recompensas-trivia',
+        loadComponent: () => import('./recompensas-trivia/recompensas-trivia.page').then( m => m.RecompensasTriviaPage)
+      },
 
     ]
   },
@@ -115,6 +123,9 @@ export const routes: Routes = [
     path: 'planta-info',
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
   },
+
+
+
 
 
 

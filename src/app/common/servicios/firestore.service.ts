@@ -5,6 +5,7 @@ import {
   collection,
   collectionData,
   doc,
+  docData,
   DocumentReference,
   Firestore,
   getDoc,
@@ -21,8 +22,9 @@ import { orderBy, limit } from '@angular/fire/firestore';
 import { Animal } from '../models/animal.model';
 import { Reaction } from '../models/reaction.model';
 import { Usuario } from '../models/usuario.model';
-import { PreguntaTrivia } from '../models/trivia.models';
+import { PreguntaTrivia, Premio } from '../models/trivia.models';
 import { Planta } from './../models/plantas.model';
+import { PremioUsuario } from '../models/trivia.models';
 
 const PATH_ANIMALES = 'Animales';
 const PATH_PLANTAS = 'Plantas';
@@ -32,6 +34,7 @@ const PATH_ANIMALES_VISTOS = 'AnimalesVistos';
 const PATH_PREGUNTAS_TRIVIA = 'Preguntas';
 const PATH_RESPUESTAS_TRIVIA = 'RespuestasTrivia';
 const PATH_PLANTAS_VISTAS = 'PlantasVistas';
+const PATH_PREMIOS_USUARIOS = 'PremiosUsuarios';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +49,7 @@ export class FirestoreService {
   private _rutaPlantasVistas = collection(this._firestore, PATH_PLANTAS_VISTAS);
   private _preguntasTrivia = collection(this._firestore, PATH_PREGUNTAS_TRIVIA);
   private _respuestasTrivia = collection(this._firestore, PATH_RESPUESTAS_TRIVIA);
+  private _rutaPremiosUsuarios = collection(this._firestore, PATH_PREMIOS_USUARIOS);
 
   constructor() {}
 
@@ -143,7 +147,7 @@ export class FirestoreService {
       };
       return from(addDoc(this._rutaPlantasVistas, plantaVista)).pipe(map(() => {}));
     }
-  
+
     // Método para verificar si el usuario ya ha visto la planta
     usuarioHaVistoPlanta(userId: string, plantaId: string): Observable<boolean> {
       const q = query(this._rutaPlantasVistas, where('userId', '==', userId), where('plantaId', '==', plantaId));
@@ -220,6 +224,26 @@ export class FirestoreService {
       map((doc) => (doc.exists() ? { id: doc.id, ...doc.data() } as Planta : null))
     );
   }
+
+  obtenerPremiosUsuario(usuarioId: string): Observable<PremioUsuario[]> {
+    const premiosQuery = query(this._rutaPremiosUsuarios, where('usuarioId', '==', usuarioId));
+    return collectionData(premiosQuery, { idField: 'id' }) as Observable<PremioUsuario[]>;
+  }
+
+// Método para obtener la información de un premio específico
+obtenerPremioPorId(premioId: string): Observable<Premio> {
+  const premioDocRef = doc(this._firestore, `Premios_trivia/${premioId}`);
+  return from(getDoc(premioDocRef)).pipe(
+    map((doc) => {
+      if (doc.exists()) {
+        return { id: doc.id, ...doc.data() } as unknown as Premio; // Agregamos manualmente el 'id'
+      } else {
+        throw new Error('Premio no encontrado');
+      }
+    })
+  );
+}
+
 
 
 }
