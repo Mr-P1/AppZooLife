@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar  class="nav">
 
     <ion-buttons slot="start">
       <ion-back-button default-href="/adulto/inicio" text=""></ion-back-button>
@@ -99,6 +99,14 @@
         <ng-template #noAudio>
           <p>No hay audio disponible para este animal.</p>
         </ng-template>
+
+        <ng-container *ngIf="animal.audioAnimal">
+          <ion-card-subtitle>Audio animal</ion-card-subtitle>
+          <audio controls>
+            <source [src]="animal.audioAnimal" type="audio/mp3" />
+            Tu navegador no soporta la reproducción de audio.
+          </audio>
+        </ng-container>
 
         <ng-container *ngIf="animal.video; else noVideo">
           <ion-card-subtitle>Video</ion-card-subtitle>

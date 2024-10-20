@@ -10,13 +10,13 @@ import { RouterLink, Router, RouterModule } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonButton, IonCardContent, IonSpinner } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-trivia-nino',
+  selector: 'app-trivia',
   templateUrl: './trivia.page.html',
   styleUrls: ['./trivia.page.scss'],
   standalone: true,
   imports: [IonSpinner, IonCardContent, IonButton, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,RouterModule]
 })
-export class TriviaPage implements  OnInit, OnDestroy {
+export class TriviaPage implements OnInit, OnDestroy {
 
   preguntas: PreguntaTrivia[] = [];
   preguntasRandom: PreguntaTrivia[] = [];
@@ -43,7 +43,6 @@ export class TriviaPage implements  OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log( localStorage.getItem('tipo'))
     this.tipo = localStorage.getItem('tipo')!;
     this.authService.authState$.subscribe((user) => {
       if (user) {
@@ -56,10 +55,18 @@ export class TriviaPage implements  OnInit, OnDestroy {
               this.puedeHacerTrivia = this.animalesVistosCount >= 5;
 
               if (this.puedeHacerTrivia) {
-                this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe((preguntas: PreguntaTrivia[]) => {
-                  this.preguntas = preguntas;
-                  this.rellenarPreguntasRandom(this.tipo);
-                  this.loading = false; // Datos cargados, desactiva la carga
+                // Verificar si ya hizo trivia hoy
+                this.verificarTriviaDelDia().then((puedeHacerTriviaHoy) => {
+                  if (puedeHacerTriviaHoy) {
+                    this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe((preguntas: PreguntaTrivia[]) => {
+                      this.preguntas = preguntas;
+                      this.rellenarPreguntasRandom(this.tipo);
+                      this.loading = false; // Datos cargados, desactiva la carga
+                    });
+                  } else {
+                    this.puedeHacerTrivia = false; // No puede hacer trivia hoy
+                    this.loading = false;
+                  }
                 });
               } else {
                 this.loading = false; // No puede hacer trivia, pero los datos han cargado
@@ -73,6 +80,18 @@ export class TriviaPage implements  OnInit, OnDestroy {
         this.loading = false; // No puede hacer trivia, pero los datos han cargado
       }
     });
+  }
+
+  // Verificar si el usuario ya hizo trivia hoy
+  async verificarTriviaDelDia(): Promise<boolean> {
+    const triviaFecha = localStorage.getItem(`triviaFecha-${this.userId}`);
+    const hoy = new Date().toISOString().split('T')[0]; // Solo la fecha en formato YYYY-MM-DD
+
+    if (triviaFecha === hoy) {
+      return false; // Ya hizo trivia hoy
+    } else {
+      return true; // No ha hecho trivia hoy
+    }
   }
 
   comenzarTrivia() {
@@ -130,7 +149,7 @@ export class TriviaPage implements  OnInit, OnDestroy {
   rellenarPreguntasRandom(tipoUsuario: string) {
     const tipoUsuarioLowerCase = tipoUsuario.toLowerCase();
     const preguntasFiltradas = this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase);
-    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, tipoUsuarioLowerCase === 'adulto' ? 10 : 10);
+    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, tipoUsuarioLowerCase === 'adulto' ? 10 : 8);
   }
 
   shuffleArray(array: PreguntaTrivia[]): PreguntaTrivia[] {
@@ -167,8 +186,8 @@ export class TriviaPage implements  OnInit, OnDestroy {
       });
 
       if (respuestaCorrecta) {
-        nivelGanado +=  this.tipo.toLowerCase() === 'adulto' ? 3 : 1; ; // 3 niveles si es adulto, 1 nivel si es niño por respuesta correcta
-        puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 3; // 10 puntos si es adulto, 3 puntos si es niño
+        nivelGanado += 3; // 3 puntos de nivel por respuesta correcta
+        puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 5;
       }
     }
 
@@ -187,6 +206,10 @@ export class TriviaPage implements  OnInit, OnDestroy {
     this.preguntaActual = null; // Oculta la tarjeta de preguntas
     this.triviaFinalizada = true; // Muestra la tarjeta de resultados
     this.enviarRespuestas(); // Guarda las respuestas, pero no redirige
+
+    // Guardar la fecha de la trivia en localStorage
+    const hoy = new Date().toISOString().split('T')[0];
+    localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
   }
 
 }

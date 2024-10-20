@@ -63,7 +63,7 @@ export class InicioPage implements OnInit {
 
     this.animalsService.getPlantas().subscribe((data: Planta[]) => {
       this.plantas = data;
-      console.log(this.plantas)
+
     });
 
     this.authService.authState$.subscribe(user => {

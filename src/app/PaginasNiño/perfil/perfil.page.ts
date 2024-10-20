@@ -46,11 +46,10 @@ export class PerfilPage implements OnInit {
     try {
       // Obtener el UID del usuario actual
       this.uid = this.authService.currentUserId;
-      console.log('UID del usuario actual:', this.uid);
+
 
       if (this.uid) {
         this.usuario = await this.authService.getUsuarioFirestore(this.uid);
-        console.log('Datos del usuario:', this.usuario);
       } else {
         console.error('No se encontró el UID del usuario');
       }

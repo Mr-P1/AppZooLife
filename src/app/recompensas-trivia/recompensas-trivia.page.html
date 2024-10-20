@@ -12,7 +12,7 @@
         {{ premio.descripcion }}
       </ion-card-content>
       <div class="button-container">
-        <ion-button fill="clear" >
+        <ion-button (click)="mostrarCodigo(premio)" fill="clear">
           Reclamar Premio
         </ion-button>
       </div>
@@ -29,7 +29,7 @@
       </ion-card-header>
 
       <ion-card-content>
-        Parece que todavía no has ganado ningún premio. Responde las trivias disponibles para acumular puntos y desbloquear recompensas exclusivas. ¡Comienza ahora y demuestra cuánto sabes!
+        Parece que todavía no has ganado ningún premio. Responde las trivias disponibles para acumular puntos e intercambiarlas por recompensas exclusivas. ¡Comienza ahora y demuestra cuánto sabes!
       </ion-card-content>
     </ion-card>
   </ng-template>

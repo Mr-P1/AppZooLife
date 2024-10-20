@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
+.nav {
+  --background: none;
+  background-image: url(../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Cambiar el color del texto y el ícono del botón de retroceso */
+  --color: white;
+  --ion-color-base: white;
+}
+
+
+
 ion-content {
   font-family: 'Work Sans', sans-serif;
 }
