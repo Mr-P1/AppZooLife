@@ -8,7 +8,7 @@ import { FirestoreService } from '../../common/servicios/firestore.service';
 import PinchZoom from 'pinch-zoom-js';
 import { Animal } from 'src/app/common/models/animal.model';
 import { Router } from '@angular/router';
-
+import {MapaService,Mapa} from '../../common/servicios/mapa.service'
 
 @Component({
   selector: 'app-mapa',
@@ -21,13 +21,18 @@ export class MapaPage implements OnInit , AfterViewInit {
 
   animales: Animal[] = [];
   imageUrl: string | undefined;
+  mapa :Mapa[] = []
+  rutaMapa:string  =""
 
   constructor(
     private storageService: StorageService,
     private animalsService: FirestoreService,
-    private router: Router) { }
+    private router: Router,
+    private _mapaService:MapaService,
+  ) { }
 
   ngOnInit(): void {
+
     const imagePath = 'gs://appzoolife.appspot.com/mapas/MAPA-BP-BZ_2024-.jpg';
 
     this.storageService.getImageUrl(imagePath).then((url) => {

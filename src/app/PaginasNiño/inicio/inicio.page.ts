@@ -103,25 +103,22 @@ export class InicioPage implements OnInit {
   like(animalId: string) {
     const animal = this.animales.find(a => a.id === animalId);
     if (animal) {
-      // Actualiza el estado de la UI inmediatamente
       animal.reaccion = true;
+      const tipo = localStorage.getItem('tipo') || 'desconocido'; // Obtenemos el tipo de usuario
 
-      // Luego realiza la operación en Firestore
       this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
         if (existingReaction && existingReaction.id) {
-          // Actualiza la reacción en Firestore
-          this.animalsService.updateReaction(existingReaction.id, { reaction: true }).subscribe(() => {
+          this.animalsService.updateReaction(existingReaction.id, { reaction: true, tipo }).subscribe(() => {
             console.log('Reacción actualizada a Like');
           });
         } else {
-          // Crea una nueva reacción en Firestore
           const reaction: Reaction = {
-            animalId: animalId,
+            animalId,
             userId: this.userId,
+            reaction: true,
             fecha: new Date(),
-            reaction: true
+            tipo // Incluimos el tipo de usuario en la nueva reacción
           };
-
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como Like');
           });
@@ -133,25 +130,22 @@ export class InicioPage implements OnInit {
   dontLike(animalId: string) {
     const animal = this.animales.find(a => a.id === animalId);
     if (animal) {
-      // Actualiza el estado de la UI inmediatamente
       animal.reaccion = false;
+      const tipo = localStorage.getItem('tipo') || 'desconocido'; // Obtenemos el tipo de usuario
 
-      // Luego realiza la operación en Firestore
       this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
         if (existingReaction && existingReaction.id) {
-          // Actualiza la reacción en Firestore
-          this.animalsService.updateReaction(existingReaction.id, { reaction: false }).subscribe(() => {
+          this.animalsService.updateReaction(existingReaction.id, { reaction: false, tipo }).subscribe(() => {
             console.log('Reacción actualizada a No me gusta');
           });
         } else {
-          // Crea una nueva reacción en Firestore
           const reaction: Reaction = {
-            animalId: animalId,
+            animalId,
             userId: this.userId,
+            reaction: false,
             fecha: new Date(),
-            reaction: false
+            tipo // Incluimos el tipo de usuario en la nueva reacción
           };
-
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como No me gusta');
           });

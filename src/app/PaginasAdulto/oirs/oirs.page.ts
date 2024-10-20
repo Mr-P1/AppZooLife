@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/common/servicios/auth.service'; // Importa tu servicio de autenticación
+import {OirsService, CrearOirs} from '../../common/servicios/oirs.service'
 
 @Component({
   selector: 'app-oirs-form',
@@ -92,7 +93,11 @@ export class OirsFormPage {
 
   comunasFiltradas: string[] = [];
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private _oirsService:OirsService ,
+    private _router:Router
+  ) {
     this.oirsForm = this.formBuilder.group({
       tipoSolicitud: ['', Validators.required],
       region: ['', Validators.required],
@@ -124,23 +129,50 @@ export class OirsFormPage {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      console.log('Archivo seleccionado:', this.selectedFile);
+
     }
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.oirsForm.valid) {
       const formData = this.oirsForm.value;
-      formData.archivoEvidencia = this.selectedFile;
       formData.userId = this.userId; // Agregar el ID del usuario al formulario
-      formData.fechaEnvio = new Date().toISOString(); // Agregar la fecha y hora actual
+      formData.fechaEnvio = new Date(); // Agregar la fecha y hora actual
 
-      console.log('Formulario enviado:', formData);
-      // Aquí puedes agregar la lógica para enviar el formulario a tu backend o base de datos.
+      // Crear el objeto 'oirs' con los valores del formulario
+      const oirs: CrearOirs = {
+        tipoSolicitud: formData.tipoSolicitud,
+        region: formData.region,
+        comuna: formData.comuna,
+        esAfectado: formData.esAfectado,
+        detalles: formData.detalles,
+        userId: this.userId!,
+        fechaEnvio: formData.fechaEnvio,
+      };
+
+      try {
+        // Si hay un archivo seleccionado, subirlo y agregar la URL al objeto 'oirs'
+        if (this.selectedFile) {
+          const imageUrl = await this._oirsService.uploadImage(this.selectedFile);
+          oirs.archivoEvidencia = imageUrl;
+        }
+
+        // Llamar al servicio para crear el OIRS
+        await this._oirsService.createOirs(oirs);
+        console.log('OIRS enviado:', oirs);
+
+        // Redirigir a la página de inicio después de enviar el formulario
+        this._router.navigate(['/adulto/inicio']);
+      } catch (error) {
+        console.error('Ha ocurrido un problema, revisa los datos ingresados:', error);
+        alert('Ha ocurrido un problema, revisa los datos ingresados');
+      }
     } else {
       console.log('Formulario no válido');
+      this.oirsForm.markAllAsTouched(); // Marcar todos los campos como tocados para mostrar errores
     }
   }
+
 
 
 }

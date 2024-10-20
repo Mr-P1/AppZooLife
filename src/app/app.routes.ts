@@ -126,6 +126,10 @@ export const routes: Routes = [
     path: 'noticias-info',
     loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
   },
+  {
+    path: 'recompensas',
+    loadComponent: () => import('./recompensas/recompensas.page').then( m => m.RecompensasPage)
+  },
 
 
 

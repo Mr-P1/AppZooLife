@@ -1,0 +1,87 @@
+.nav {
+  --background: none;
+  background-image: url(./../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Cambiar el color del texto y el ícono del botón de retroceso */
+  --color: white;
+  --ion-color-base: white;
+}
+
+
+
+ion-content{
+  --background: none; /* Elimina el background por defecto si es necesario */
+  background-image: url(./../../assets/fondos/fondo-premios.jpg);
+  background-size: cover; /* Ajusta la imagen para cubrir completamente el modal */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 100%; /* Asegura que el fondo cubra toda la altura */
+}
+
+ion-card {
+  /* Tamaño y estilo estándar de la card */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-size: cover; /* Para la imagen de fondo */
+  background-position: center;
+  margin-bottom: 16px;
+  background-image: url('../../assets/fondos/fondoMapa.jpg');
+
+  /* Estilo de la imagen para que ocupe el ancho completo */
+  img {
+    width: 100%;
+    height: 200px; /* Tamaño fijo para las imágenes */
+    object-fit: cover; /* Asegura que la imagen se recorte para llenar el espacio */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center; /* Centra el botón horizontalmente */
+    margin-top: 12px; /* Espacio superior para separar el botón del contenido */
+  }
+
+
+  /* Estilo para el botón */
+  ion-button {
+    --background: linear-gradient(45deg,#ff8800, #ff5722) !important; /* Color de fondo personalizado */
+    color: white !important; /* Color del texto */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 0 16px; /* Espaciado horizontal */
+    font-weight: bold; /* Texto en negrita */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para el botón */
+    margin-bottom: 10px;
+    margin-top: -15px;
+  }
+
+  /* Estilo del botón al ser presionado */
+  ion-button:active {
+    background-color: #205300 !important; /* Color cuando se presiona el botón */
+  }
+}
+
+/* Estilo del mensaje de card sin premios */
+ion-card.no-premios {
+  background-image: url('../../assets/fondos/fondoMapa.jpg');
+  background-size: cover;
+  background-position: center;
+
+}
+
+
+ion-card-title,
+ion-card-subtitle,
+ion-card-content {
+  color: white; /* Cambia el color del texto a blanco */
+}
+
+.no-premios ion-card-title,
+.no-premios ion-card-subtitle,
+.no-premios ion-card-content {
+  color: white; /* Asegúrate de que el texto en el mensaje de "no premios" también sea blanco */
+}
