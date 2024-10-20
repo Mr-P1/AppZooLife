@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/common/servicios/auth.service'; // Importa tu servicio de autenticación
 
 @Component({
   selector: 'app-oirs-form',
@@ -20,8 +21,8 @@ import { RouterModule } from '@angular/router';
 export class OirsFormPage {
   oirsForm: FormGroup;
   selectedFile: File | null = null;
+  userId: string | null = null; // Variable para almacenar el ID del usuario
 
-  // Estructura con todas las regiones y comunas de Chile
   regiones = [
     {
       nombre: 'Región de Arica y Parinacota (XV)',
@@ -83,23 +84,28 @@ export class OirsFormPage {
       nombre: 'Región de Aysén del General Carlos Ibáñez del Campo (XI)',
       comunas: ['Aysén', 'Chile Chico', 'Cisnes', 'Cochrane', 'Coyhaique', 'Guaitecas', 'Lago Verde', 'O’Higgins', 'Río Ibáñez', 'Tortel'],
     },
-    // Continúa añadiendo más regiones según sea necesario
+    {
+      nombre: 'Región de Magallanes y de la Antártica Chilena (XII)',
+      comunas: ['Antártica', 'Cabo de Hornos', 'Laguna Blanca', 'Natales', 'Porvenir', 'Primavera', 'Punta Arenas', 'Río Verde', 'San Gregorio', 'Timaukel', 'Torres del Paine'],
+    },
   ];
 
   comunasFiltradas: string[] = [];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.oirsForm = this.formBuilder.group({
       tipoSolicitud: ['', Validators.required],
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      apellidos: ['', [Validators.required, Validators.minLength(3)]],
-      fechaNacimiento: ['', Validators.required],
-      sexo: ['', Validators.required],
       region: ['', Validators.required],
       comuna: ['', Validators.required],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{9,15}$')]],
-      esAfectado: [false],
+      esAfectado: [false,[Validators.required]],
       detalles: ['', [Validators.required, Validators.minLength(10)]],
+    });
+
+    // Capturar el ID del usuario autenticado
+    this.authService.authState$.subscribe((user) => {
+      if (user) {
+        this.userId = user.uid; // Asigna el ID del usuario
+      }
     });
 
     // Escuchar cambios en la selección de la región
@@ -126,13 +132,15 @@ export class OirsFormPage {
     if (this.oirsForm.valid) {
       const formData = this.oirsForm.value;
       formData.archivoEvidencia = this.selectedFile;
+      formData.userId = this.userId; // Agregar el ID del usuario al formulario
+      formData.fechaEnvio = new Date().toISOString(); // Agregar la fecha y hora actual
+
       console.log('Formulario enviado:', formData);
       // Aquí puedes agregar la lógica para enviar el formulario a tu backend o base de datos.
     } else {
       console.log('Formulario no válido');
     }
   }
-
 
 
 }

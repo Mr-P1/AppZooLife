@@ -4,6 +4,7 @@ import { from, map, Observable } from 'rxjs';
 import { addDoc, collectionData, doc, DocumentReference, Firestore, getDoc, getDocs, query, setDoc, where,collection, deleteDoc } from '@angular/fire/firestore';
 import {CrearUsuario, Usuario} from '../models/usuario.model'
 import {Boleta, BoletaUsada, CrearBoletaUsada} from '../models/boleta.model'
+import { registerVersion } from '@angular/fire/app';
 
 
 
@@ -81,7 +82,7 @@ export class AuthService {
 
 
 
-  async registrarse(email: string, password: string, nombre: string, telefono: string, genero: string, patente:string,fechaNacimiento:Date) {
+  async registrarse(email: string, password: string, nombre: string, telefono: string, genero: string, patente:string,fechaNacimiento:Date,region:string , comuna:string) {
     try {
       // Intentar crear el usuario en Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(this._auth, email, password);
@@ -97,6 +98,8 @@ export class AuthService {
         nivel: 0,
         patente:patente,
         fechaNacimiento:fechaNacimiento,
+        region:region,
+        comuna:comuna,
         auth_id: user.uid,
       };
 

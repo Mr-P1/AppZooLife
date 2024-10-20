@@ -8,6 +8,8 @@ export interface Usuario {
   nivel:number,
   patente?:string,
   fechaNacimiento:Date,
+  region:string,
+  comuna:string,
   auth_id:string,
 }
 

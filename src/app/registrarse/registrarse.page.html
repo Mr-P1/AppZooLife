@@ -90,6 +90,31 @@
         ></ion-input>
       </ion-item>
 
+
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="region"
+          label="Región (Obligatorio)"
+          placeholder="Seleccionar región"
+          errorText="Seleccione una región">
+          <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">
+            {{ region.nombre }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="ion-margin" lines="none">
+        <ion-select
+          formControlName="comuna"
+          label="Comuna (Obligatorio)"
+          placeholder="Seleccionar comuna"
+          errorText="Seleccione una comuna">
+          <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
+            {{ comuna }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
       <ion-item class="ion-margin" lines="none">
         <ion-input
           type="text"

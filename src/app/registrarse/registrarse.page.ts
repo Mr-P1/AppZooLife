@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
@@ -17,13 +17,22 @@ import { IonCard } from '@ionic/angular/standalone';
   standalone: true,
   imports: [IonDatetime, IonNote, IonLabel, IonCard ,IonSelect, IonText, IonButton, IonInput, IonItem, IonList, IonCol, IonGrid, IonContent, IonRow, IonHeader,  CommonModule, RouterLink, ReactiveFormsModule,IonSelectOption, IonIcon]
 })
-export class RegistrarsePage  {
+export class RegistrarsePage implements OnInit {
 
   constructor(
     private alertController: AlertController
   ) {
     addIcons({ mailOutline, keyOutline, personOutline, callOutline, carOutline, eyeOutline, eyeOffOutline, lockClosed });
   }
+
+
+
+  actualizarComunas(regionSeleccionada: string) {
+    const region = this.regiones.find((r) => r.nombre === regionSeleccionada);
+    this.comunasFiltradas = region ? region.comunas : [];
+    this.form.get('comuna')?.setValue(''); // Limpiar la comuna seleccionada
+  }
+
 
 
   regiones = [
@@ -104,7 +113,22 @@ export class RegistrarsePage  {
     fechaNacimiento:this._formBuilder.control('',[Validators.required]),
     genero: this._formBuilder.control('', [Validators.required]),
     patente: this._formBuilder.control(''),
+    region: this._formBuilder.control('', [Validators.required]),
+    comuna: this._formBuilder.control('', [Validators.required])
   });
+
+  comunasFiltradas: string[] = [];
+
+  ngOnInit() {
+    this.form.get('region')?.valueChanges.subscribe((regionSeleccionada) => {
+      if (regionSeleccionada) {
+        this.actualizarComunas(regionSeleccionada);
+      } else {
+        this.comunasFiltradas = []; // Si no hay región seleccionada, limpiamos las comunas
+      }
+    });
+  }
+
 
   async submit() {
     if (this.form.invalid) {
@@ -113,14 +137,14 @@ export class RegistrarsePage  {
     }
 
     try {
-      const { email, password, telefono, nombre, genero, patente } = this.form.value;
+      const { email, password, telefono, nombre, genero, patente, region ,comuna } = this.form.value;
       const fechaNacimientoString = this.form.get('fechaNacimiento')?.value; // Obtén el valor de fecha como string
       const fechaNacimiento = fechaNacimientoString ? new Date(fechaNacimientoString) : null;
 
       if (!email || !password) return;
 
       // Intentar registrar al usuario
-      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(genero), String(patente) ,fechaNacimiento! );
+      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(genero), String(patente) ,fechaNacimiento!, String(region),String(comuna) );
 
       // Restablecer el formulario después del registro exitoso
       this.form.reset();

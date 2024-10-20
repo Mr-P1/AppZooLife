@@ -1,50 +1,61 @@
 ion-content {
-  --background: url(../../../assets/fondos/fondoLogin.jpg) no-repeat center center;
+  --background: url(./../../../assets/fondos/fondoLogin.jpg) no-repeat center center;
   --background-size: cover;
   display: flex;
-  justify-content: center; /* Centra el contenido verticalmente */
-  align-items: center; /* Centra el contenido horizontalmente */
-  padding: 20px; /* Añade algo de padding para que no toque los bordes */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del contenedor */
 }
 
 ion-card {
-  box-shadow: none;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
   border-radius: 20px;
-  transform: translateY(10%);
-  background-color: #0041299f;
-  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 65, 41, 0.8);
+  backdrop-filter: blur(8px);
+  overflow: hidden; /* Asegura que los bordes redondeados sean visibles */
+  margin: 0 auto;
 }
 
 h1 {
   color: white;
   text-align: center;
-  font-size: 50px;
+  font-size: 36px;
   font-family: 'Work Sans', sans-serif;
   font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .container-login {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px; /* Aumenta el padding del contenedor para que no quede tan pegado */
+  padding: 20px;
+  margin-top: 10px;
+  padding-top: 10px;
 }
 
-
 ion-item {
-  border-radius: 15px; /* Borde redondeado para los ion-item */
-  margin: 15px 0; /* Espacio vertical entre cada ion-item */
-  --padding-start: 16px; /* Ajusta el padding inicial para que el contenido no quede pegado al borde */
-  --inner-padding: 8px; /* Ajusta el padding interno para dar más espacio al contenido */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para resaltar los items */
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente para resaltar sobre el fondo */
-  margin-left: 15px;
-  margin-right: 15px;
+  border-radius: 15px;
+  margin: 15px 0;
+  --padding-start: 16px;
+  --inner-padding: 8px;
+  --highlight-background: transparent;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Asegura que el contenido respete el borde redondeado */
 }
 
 ion-input, ion-select, ion-datetime, ion-textarea {
-  --padding-start: 16px; /* Asegura que el contenido esté alineado correctamente */
-  --border-radius: 15px; /* Borde redondeado consistente con los ion-item */
+  --padding-start: 16px;
+  --border-radius: 15px;
+  --background: transparent;
+  --placeholder-color: rgba(0, 0, 0, 0.5);
+  width: 100%; /* Asegura que el contenido ocupe todo el espacio del ion-item */
 }
 
 .qr-button {
@@ -57,8 +68,9 @@ ion-input, ion-select, ion-datetime, ion-textarea {
   font-size: 18px;
   padding: 10px;
   transition: transform 0.2s;
-  --background: linear-gradient(45deg,#ff8800, #ff5722);
+  --background: linear-gradient(45deg, #ff8800, #ff5722);
   text-transform: none;
+  margin-top: 10px;
 }
 
 .qr-button:hover {
@@ -67,11 +79,13 @@ ion-input, ion-select, ion-datetime, ion-textarea {
 
 ion-card.container-login {
   width: 100%;
-  max-width: 400px; /* Limita el ancho máximo para que no se expanda demasiado */
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: none;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo con transparencia */
+  background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
+  box-shadow: none;
+  overflow: hidden; /* Asegura que los bordes redondeados se respeten */
+  align-items: stretch;
 }
