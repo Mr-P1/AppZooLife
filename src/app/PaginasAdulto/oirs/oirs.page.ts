@@ -148,6 +148,7 @@ export class OirsFormPage {
         detalles: formData.detalles,
         userId: this.userId!,
         fechaEnvio: formData.fechaEnvio,
+        respondido:false
       };
 
       try {

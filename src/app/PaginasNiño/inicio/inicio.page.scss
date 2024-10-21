@@ -136,6 +136,7 @@ ion-content {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed; /* Fija el fondo para que no cambie al interactuar con otros elementos */
   height: 100%;
 }
 

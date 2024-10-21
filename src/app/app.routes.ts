@@ -52,10 +52,7 @@ export const routes: Routes = [
         path: 'eventos',
         loadComponent: () => import('./PaginasAdulto/eventos/eventos.page').then(m => m.EventosPage)
       },
-      {
-        path: 'oirs',
-        loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
-      },
+
       {
         path: 'recompensas-trivia',
         loadComponent: () => import('./recompensas-trivia/recompensas-trivia.page').then( m => m.RecompensasTriviaPage)
@@ -122,7 +119,8 @@ export const routes: Routes = [
   {
     path: 'planta-info',
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
-  },  {
+  },
+  {
     path: 'noticias-info',
     loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
   },
@@ -130,7 +128,14 @@ export const routes: Routes = [
     path: 'recompensas',
     loadComponent: () => import('./recompensas/recompensas.page').then( m => m.RecompensasPage)
   },
-
+  {
+    path: 'historial-oirs',
+    loadComponent: () => import('./PaginasAdulto/historial-oirs/historial-oirs.page').then( m => m.HistorialOirsPage)
+  },
+  {
+    path: 'oirs',
+    loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
+  },
 
 
 

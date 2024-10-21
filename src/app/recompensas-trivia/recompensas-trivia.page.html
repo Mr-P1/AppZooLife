@@ -12,9 +12,12 @@
         {{ premio.descripcion }}
       </ion-card-content>
       <div class="button-container">
-        <ion-button (click)="mostrarCodigo(premio)" fill="clear">
-          Reclamar Premio
-        </ion-button>
+        <ion-button
+        (click)="mostrarCodigo(premio)"
+        fill="clear"
+        [disabled]="!premio.estado">
+        {{ premio.estado ? 'Reclamar Premio' : 'Reclamado' }}
+      </ion-button>
       </div>
     </ion-card>
   </ng-container>
