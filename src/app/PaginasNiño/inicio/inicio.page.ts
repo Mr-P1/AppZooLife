@@ -9,9 +9,9 @@ import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { star, personCircle, chevronUpCircle, document, colorPalette, globe, qrCodeOutline, earthOutline, mapOutline } from 'ionicons/icons';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { leafOutline,pawOutline} from 'ionicons/icons';import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Mapa, MapaService } from '../../common/servicios/mapa.service';
+import { Planta } from 'src/app/common/models/plantas.model';
 
 
 @Component({
@@ -20,16 +20,18 @@ import { Mapa, MapaService } from '../../common/servicios/mapa.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styleUrls: ['./inicio.page.scss'],
   standalone: true,
-  imports: [IonCard, IonCardTitle, IonButton, IonCardHeader, IonLabel, IonItem, IonList, IonSearchbar, IonContent, CommonModule, RouterLink,]
+  imports: [ZXingScannerModule,IonCard, IonCardTitle, IonButton, IonCardHeader, IonLabel, IonItem, IonList, IonSearchbar, IonContent, CommonModule, RouterLink,]
 })
 export class InicioPage implements OnInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
 
   animales: Animal[] = [];
+  plantas: Planta[] = [];
   userId: string = '';
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
   searchTerm: string = ''; // Para almacenar el término de búsqueda
   mapa: Mapa[] = [];
+  mostrarPlantas: boolean = false;
 
 
   animalesOriginal: Animal[] = []; // Guardar el orden original
@@ -46,7 +48,9 @@ export class InicioPage implements OnInit {
     private router: Router,
     private _mapaService: MapaService,
 
-  ) { }
+  ) {
+    addIcons({ leafOutline,pawOutline});
+  }
 
   ngOnInit(): void {
 
@@ -65,6 +69,12 @@ export class InicioPage implements OnInit {
         this.loadAnimalsWithReactions();
       }
     });
+
+    this.animalsService.getPlantas().subscribe((data: Planta[]) => {
+      this.plantas = data;
+
+    });
+
 
   }
 
@@ -178,7 +188,6 @@ export class InicioPage implements OnInit {
     }
   }
 
-
   extractAnimalId(result: string): string | null {
     console.log('Procesando URL:', result);
     const regex = /animal-info\/(\w+)/;
@@ -194,6 +203,7 @@ export class InicioPage implements OnInit {
   }
 
 
+
   toggleVideo(animal: Animal) {
     // Alternar el estado de mostrarVideo
     animal.mostrarVideo = !animal.mostrarVideo;
@@ -202,5 +212,9 @@ export class InicioPage implements OnInit {
   videoEnded(animal: Animal) {
     // Cambiar mostrarVideo a false cuando el video termine
     animal.mostrarVideo = false;
+  }
+
+  toggleMostrarPlantas() {
+    this.mostrarPlantas = !this.mostrarPlantas;
   }
 }

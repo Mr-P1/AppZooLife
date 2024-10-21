@@ -39,24 +39,29 @@
 }
 
 
-
 .image-container {
-  position: relative;
+  padding: 0; /* Asegúrate de que no haya padding */
+  margin: 0; /* Elimina cualquier margen innecesario */
+  border: none;
 }
+
 
 .audio-container, .video-container {
   text-align: center;
   font-family: 'Chewy';
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
 
 .image-container img {
   width: 100%;
-  height: auto;
+  height: 200px;
   object-fit: cover;
+  border: none; /* Elimina cualquier borde */
+  outline: none; /* Elimina cualquier contorno */
+  display: block; /* Evita que las imágenes se comporten como elementos inline */
 }
+
 .icono-numero {
   position: absolute;
   top: 10px;
@@ -111,20 +116,19 @@
 ion-card-title {
   margin-top: 0.5rem;
   margin-bottom: 0.25rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
+  color: rgb(85, 62, 41); /* Cambia el color del texto a blanco */
 }
 
 ion-card-subtitle {
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  color: rgb(85, 55, 28); /* Cambia el color del subtítulo a blanco */
 }
 
-ion-button img {
-  width: 24px;
-  height: 24px;
-}
+
 
 ion-content {
   --background: none;
@@ -229,6 +233,65 @@ h2 {
   color: white; /* Color del texto */
   --background: #145dbd; /* Para asegurarte de que se aplique */
   --color: white; /* Color del texto en el botón */
+}
+
+
+
+.icono{
+  color: white;
+}
+
+.button-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.custom-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%; /* Extiende el ancho del botón */
+  height: 60px; /* Ajusta la altura del botón */
+  border-radius: 8px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  font-family: 'Work Sans', sans-serif;
+}
+
+.flora-button::part(native) {
+  background: url('https://img.freepik.com/fotos-premium/fondo-fauna-varios-animales-bosque_744040-2326.jpg') center/cover no-repeat !important;
+  --background: none !important;
+}
+
+.fauna-button::part(native) {
+  background: url('https://img.freepik.com/fotos-premium/accidentes-geograficos-majestuosos-tierra-exploracion-fotorrealista-maravillas-naturales_767466-12109.jpg') center/cover no-repeat !important;
+  --background: none !important;
+}
+
+.custom-button ion-icon {
+  color: white; /* Asegura que el ícono sea visible */
+  margin-right: 8px; /* Espaciado entre el ícono y el texto */
+}
+
+
+.button-text {
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.233);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.custom-background-container {
+  background-image: url('https://img.freepik.com/fotos-premium/fondo-fauna-varios-animales-bosque_744040-2320.jpg'); /* Cambia por la URL de tu imagen */
+  background-size: cover; /* Ajusta la imagen para que cubra todo el área */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Centra la imagen */
+  padding: 20px; /* Añade un padding si es necesario */
+  border-radius: 4px; /* Opcional: bordes redondeados */
 }
 
 

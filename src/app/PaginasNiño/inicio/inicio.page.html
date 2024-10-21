@@ -1,6 +1,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
 
 <ion-content>
+  <div class="custom-background-container">
   <!-- Barra de búsqueda -->
   <div class="search-container">
     <ion-searchbar
@@ -14,11 +15,13 @@
     </ion-button>
   </div>
 
-  <div *ngIf="isScanning">
-    <zxing-scanner
-      [formats]="allowedFormats"
-    ></zxing-scanner>
-  </div>
+
+<div *ngIf="isScanning">
+  <zxing-scanner
+    (scanSuccess)="onCodeResult($event)"
+    [formats]="allowedFormats"
+  ></zxing-scanner>
+</div>
 
   <ion-list *ngIf="filteredAnimals.length > 0">
     <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
@@ -34,83 +37,118 @@
   <div *ngIf="mapa.length > 0">
     <img [src]="mapa[0].imagen" alt="" />
   </div>
+</div><br>
 
-  <!-- Listado de animales -->
-  <ion-list *ngIf="filteredAnimals.length > 0">
-    <ion-item *ngFor="let animal of filteredAnimals" (click)="goToAnimal(animal.id)">
-      {{ animal.nombre_comun }}
-    </ion-item>
-  </ion-list>
+  <div class="button-item">
+    <ion-button
+      fill="clear"
+      class="custom-button"
+      [ngClass]="mostrarPlantas ? 'flora-button' : 'fauna-button'"
+      (click)="toggleMostrarPlantas()"
+    >
+      <span class="button-text">{{ mostrarPlantas ? 'Ver Fauna' : 'Ver Flora' }}</span>
+    </ion-button>
+  </div>
 
-  <ion-item *ngIf="filteredAnimals.length === 0 && searchTerm">
-    <ion-label>No se encontraron resultados</ion-label>
-  </ion-item>
-
-  <ion-card *ngFor="let animal of animales" class="animal-card">
-    <div class="image-container">
-      <!-- Mostrar la imagen si el video no está visible -->
-      <img
-        *ngIf="!animal.mostrarVideo"
-        alt="{{ animal.nombre_comun }}"
-        src="{{ animal.imagen }}"
-        (click)="toggleVideo(animal)"
-      />
-
-      <!-- Mostrar el video si el video está visible -->
-      <video
-        *ngIf="animal.mostrarVideo"
-        width="100%"
-        height="auto"
-        controls
-        autoplay
-        (click)="toggleVideo(animal)"
-        (ended)="videoEnded(animal)"
-      >
-        <source [src]="animal.video" type="video/mp4" />
-        Tu navegador no soporta la reproducción de video.
-      </video>
-
-      <div class="icono-numero">{{ animal.posicion_mapa }}</div>
+  <div class="listado-animales" *ngIf="!mostrarPlantas">
+    <div class="header-container">
+      <h2>FAUNA</h2>
     </div>
-    <ion-card-header class="card-header">
-      <div class="header-content">
-        <ion-button fill="clear" (click)="like(animal.id)">
-          <img
-            [src]="animal.reaccion === true
-                    ? '../../../assets/icon/likeVerde.png'
-                    : '../../../assets/icon/likeNegro.png'"
-            alt="Me gusta"
-          />
-        </ion-button>
 
-        <div class="title-container">
-          <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
-        </div>
+    <ion-card *ngFor="let animal of animales" class="animal-card">
+      <div class="image-container">
+        <!-- Mostrar la imagen si el video no está visible -->
+        <img
+          *ngIf="!animal.mostrarVideo"
+          alt="{{ animal.nombre_comun }}"
+          src="{{ animal.imagen }}"
+          (click)="toggleVideo(animal)"
+        />
 
-        <ion-button fill="clear" (click)="dontLike(animal.id)">
-          <img
-            [src]="animal.reaccion === false
-                    ? '../../../assets/icon/dislikeRojo.png'
-                    : '../../../assets/icon/dislikeNegro.png'"
-            alt="No me gusta"
-          />
-        </ion-button>
+        <!-- Mostrar el video si el video está visible -->
+        <video
+          *ngIf="animal.mostrarVideo"
+          width="100%"
+          height="auto"
+          controls
+          autoplay
+          (click)="toggleVideo(animal)"
+          (ended)="videoEnded(animal)"
+        >
+          <source [src]="animal.video" type="video/mp4" />
+          Tu navegador no soporta la reproducción de video.
+        </video>
+
+        <div class="icono-numero">{{ animal.posicion_mapa }}</div>
       </div>
-    </ion-card-header>
+      <ion-card-header class="card-header">
+        <div class="header-content">
+          <ion-button fill="clear" (click)="like(animal.id)">
+            <img
+              [src]="animal.reaccion === true
+                      ? '../../../assets/icon/likeVerde.png'
+                      : '../../../assets/icon/likeNegro.png'"
+              alt="Me gusta"
+            />
+          </ion-button>
 
-    <div class="audio-container" *ngIf="animal.audio">
-      <ion-card-subtitle>Audio Explicativo</ion-card-subtitle>
-      <audio controls>
-        <source [src]="animal.audio" type="audio/mp3" />
-        Tu navegador no soporta la reproducción de audio.
-      </audio>
+          <div class="title-container">
+            <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
+          </div>
+
+          <ion-button fill="clear" (click)="dontLike(animal.id)">
+            <img
+              [src]="animal.reaccion === false
+                      ? '../../../assets/icon/dislikeRojo.png'
+                      : '../../../assets/icon/dislikeNegro.png'"
+              alt="No me gusta"
+            />
+          </ion-button>
+        </div>
+      </ion-card-header>
+
+      <div class="audio-container" *ngIf="animal.audio">
+        <ion-card-subtitle>Audio Explicativo</ion-card-subtitle>
+        <audio controls>
+          <source [src]="animal.audio" type="audio/mp3" />
+          Tu navegador no soporta la reproducción de audio.
+        </audio>
+      </div>
+      <div class="audio-container" *ngIf="animal.audioAnimal">
+        <ion-card-subtitle>Audio Animal</ion-card-subtitle>
+        <audio controls>
+          <source [src]="animal.audioAnimal" type="audio/mp3" />
+          Tu navegador no soporta la reproducción de audio.
+        </audio>
+      </div>
+    </ion-card>
+  </div>
+
+  <div class="listado-animales" *ngIf="mostrarPlantas">
+    <div class="header-container">
+      <h2>FLORA</h2>
     </div>
-    <div class="audio-container" *ngIf="animal.audioAnimal">
-      <ion-card-subtitle>Audio Animal</ion-card-subtitle>
-      <audio controls>
-        <source [src]="animal.audioAnimal" type="audio/mp3" />
-        Tu navegador no soporta la reproducción de audio.
-      </audio>
-    </div>
-  </ion-card>
+
+    <ion-card *ngFor="let planta of plantas" class="animal-card">
+      <div class="image-container">
+        <img
+          alt="{{ planta.nombre_comun}}"
+          src="{{ planta.imagen }}"
+          [routerLink]="['/planta-info', planta.id]"
+        />
+        <div class="icono-numero">{{ planta.posicion_mapa }}</div>
+      </div>
+      <ion-card-header class="card-header">
+        <div class="header-content">
+          <div class="title-container">
+            <ion-card-title>{{ planta.nombre_comun }}</ion-card-title>
+            <ion-card-subtitle>
+              {{ planta.familia }}
+            </ion-card-subtitle>
+          </div>
+        </div>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
 </ion-content>

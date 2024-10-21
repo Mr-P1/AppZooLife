@@ -15,7 +15,7 @@ ion-card {
   background-size: cover; /* Para la imagen de fondo */
   background-position: center;
   margin-bottom: 16px;
-  background-image: url('../../assets/fondos/fondo-card.jpg');
+  background-image: url('../../assets/fondos/fondoMapa.jpg');
 
   /* Estilo de la imagen para que ocupe el ancho completo */
   img {
@@ -53,8 +53,15 @@ ion-card {
 
 /* Estilo del mensaje de card sin premios */
 ion-card.no-premios {
-  background-image: url('../../assets/fondos/fondo-card.jpg');
+  background-image: url('../../assets/fondos/fondoMapa.jpg');
   background-size: cover;
   background-position: center;
 
+
+}
+
+ion-card-title,
+ion-card-subtitle,
+ion-card-content {
+  color: white; /* Cambia el color del texto a blanco */
 }
