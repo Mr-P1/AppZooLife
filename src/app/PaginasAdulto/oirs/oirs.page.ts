@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
-import { AuthService } from 'src/app/common/servicios/auth.service'; // Importa tu servicio de autenticación
+import { IonicModule, ToastController } from '@ionic/angular';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/common/servicios/auth.service';
+import { OirsService, CrearOirs } from '../../common/servicios/oirs.service';
 
 @Component({
   selector: 'app-oirs-form',
@@ -92,28 +93,27 @@ export class OirsFormPage {
 
   comunasFiltradas: string[] = [];
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private _oirsService: OirsService,
+    private _router: Router,
+    private toastController: ToastController // Agregado para los mensajes tipo toast
+  ) {
     this.oirsForm = this.formBuilder.group({
       tipoSolicitud: ['', Validators.required],
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      apellidos: ['', [Validators.required, Validators.minLength(3)]],
-      fechaNacimiento: ['', Validators.required],
-      sexo: ['', Validators.required],
       region: ['', Validators.required],
       comuna: ['', Validators.required],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{9,15}$')]],
-      esAfectado: [false],
+      esAfectado: [false, [Validators.required]],
       detalles: ['', [Validators.required, Validators.minLength(10)]],
     });
 
-    // Capturar el ID del usuario autenticado
     this.authService.authState$.subscribe((user) => {
       if (user) {
-        this.userId = user.uid; // Asigna el ID del usuario
+        this.userId = user.uid;
       }
     });
 
-    // Escuchar cambios en la selección de la región
     this.oirsForm.get('region')?.valueChanges.subscribe((regionSeleccionada) => {
       this.actualizarComunas(regionSeleccionada);
     });
@@ -122,28 +122,58 @@ export class OirsFormPage {
   actualizarComunas(regionSeleccionada: string) {
     const region = this.regiones.find((r) => r.nombre === regionSeleccionada);
     this.comunasFiltradas = region ? region.comunas : [];
-    this.oirsForm.get('comuna')?.setValue(''); // Limpiar la comuna seleccionada
+    this.oirsForm.get('comuna')?.setValue('');
   }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      console.log('Archivo seleccionado:', this.selectedFile);
     }
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.oirsForm.valid) {
       const formData = this.oirsForm.value;
-      formData.archivoEvidencia = this.selectedFile;
-      formData.userId = this.userId; // Agregar el ID del usuario al formulario
-      formData.fechaEnvio = new Date().toISOString(); // Agregar la fecha y hora actual
+      formData.userId = this.userId;
+      formData.fechaEnvio = new Date();
 
-      console.log('Formulario enviado:', formData);
-      // Aquí puedes agregar la lógica para enviar el formulario a tu backend o base de datos.
+      const oirs: CrearOirs = {
+        tipoSolicitud: formData.tipoSolicitud,
+        region: formData.region,
+        comuna: formData.comuna,
+        esAfectado: formData.esAfectado,
+        detalles: formData.detalles,
+        userId: this.userId!,
+        fechaEnvio: formData.fechaEnvio,
+      };
+
+      try {
+        if (this.selectedFile) {
+          const imageUrl = await this._oirsService.uploadImage(this.selectedFile);
+          oirs.archivoEvidencia = imageUrl;
+        }
+
+        await this._oirsService.createOirs(oirs);
+        this.showToast('Solicitud enviada con éxito', 'success');
+        this._router.navigate(['/adulto/inicio']);
+      } catch (error) {
+        console.error('Ha ocurrido un problema:', error);
+        this.showToast('Error al enviar la solicitud', 'danger');
+      }
     } else {
       console.log('Formulario no válido');
+      this.oirsForm.markAllAsTouched();
     }
+  }
+
+  async showToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      position: 'bottom',
+      color: color
+    });
+    await toast.present();
   }
 }

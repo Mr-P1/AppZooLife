@@ -114,5 +114,9 @@ export const routes: Routes = [
   {
     path: 'noticias',
     loadComponent: () => import('./PaginasAdulto/noticias/noticias.page').then( m => m.NoticiasPage)
+  },  {
+    path: 'historial-oirs',
+    loadComponent: () => import('./PaginasAdulto/historial-oirs/historial-oirs.page').then( m => m.HistorialOirsPage)
   },
+
 ];
