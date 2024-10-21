@@ -1,6 +1,5 @@
 <ion-header>
   <ion-toolbar>
-
     <ion-buttons slot="start">
       <ion-back-button default-href="/adulto/inicio" text=""></ion-back-button>
     </ion-buttons>
@@ -9,15 +8,14 @@
 
 <ion-content class="contenidoPrincipal">
   <ng-container *ngIf="planta$ | async as planta; else loading">
-    <ion-card>
+    <ion-card class="custom-card">
       <div>
-        <img alt="Silhouette of mountains" src="{{planta.imagen}}" />
+        <img alt="Imagen de la planta" src="{{planta.imagen}}" />
         <div class="icono-numero">{{planta.posicion_mapa}}</div>
       </div>
 
       <ion-card-header>
         <div class="header-content">
-
           <!-- Botón para curiosidad -->
           <ion-button id="curiosidad-trigger" fill="clear">
             <img src="../../../assets/icon/ampolleta.png" alt="Curiosidad" />
@@ -25,8 +23,8 @@
           <ion-popover trigger="curiosidad-trigger" triggerAction="click">
             <ng-template>
               <ion-content class="ion-padding">
-                        {{ planta.curiosidad }}
-            </ion-content>
+                {{ planta.curiosidad }}
+              </ion-content>
             </ng-template>
           </ion-popover>
 
@@ -44,12 +42,10 @@
               <ion-content class="ion-padding">
                 <ion-list>
                   <ion-item>
-                      <ion-label>
-                        {{ planta.precaucion }}
-                      </ion-label>
+                    <ion-label>{{ planta.precaucion }}</ion-label>
                   </ion-item>
                 </ion-list>
-            </ion-content>
+              </ion-content>
             </ng-template>
           </ion-popover>
         </div>
@@ -57,18 +53,17 @@
 
       <ion-card-content>
         <p><strong>Familia:</strong> {{ planta.familia }}</p>
-        <p><strong>Descripción: </strong>{{ planta.descripcion_1 }}
-          {{ planta.descripcion_2 }}
-          {{planta.descripcion_3}}
-        </p>
-        <p><strong>Floración: </strong>{{ planta.floracion }}</p>
-        <p><strong>Importancia:</strong> {{ planta.importancia}}</p>
+        <p><strong>Descripción:</strong> {{ planta.descripcion_1 }}</p>
+        <p>{{ planta.descripcion_2 }}</p>
+        <p>{{planta.descripcion_3}}</p>
+        <p><strong>Floración:</strong> {{ planta.floracion }}</p>
+        <p><strong>Importancia:</strong> {{ planta.importancia }}</p>
         <p><strong>Usos:</strong> {{ planta.usos }}</p>
         <p><strong>Zonas:</strong> {{ planta.zonas }}</p>
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
+    <ion-card class="custom-card">
       <ion-card-header>
         <ion-card-title>Contenido multimedia</ion-card-title>
       </ion-card-header>
@@ -82,7 +77,7 @@
           </audio>
         </ng-container>
         <ng-template #noAudio>
-          <p>No hay audio disponible para este animal.</p>
+          <p>No hay audio disponible para esta planta.</p>
         </ng-template>
 
         <ng-container *ngIf="planta.video; else noVideo">
@@ -93,7 +88,7 @@
           </video>
         </ng-container>
         <ng-template #noVideo>
-          <p>No hay video disponible para esta planta.</p>
+          <p>No hay vídeo disponible para esta planta.</p>
         </ng-template>
       </ion-card-content>
     </ion-card>
@@ -106,4 +101,29 @@
       </ion-card-content>
     </ion-card>
   </ng-template>
+
+  <!-- Foro de preguntas y respuestas -->
+  <ion-card class="foro-container">
+    <ion-card-header>
+      <ion-card-title>Preguntas y Respuestas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="addComment()">
+        <ion-item>
+          <ion-textarea [(ngModel)]="newComment" placeholder="Escribe tu pregunta o comentario..." autoGrow name="commentText"></ion-textarea>
+        </ion-item>
+        <ion-button expand="block" type="submit">Enviar</ion-button>
+      </form>
+
+      <ion-list>
+        <ion-item *ngFor="let comment of comments">
+          <ion-label>
+            <h2>{{ comment.user }}</h2>
+            <p>{{ comment.text }}</p>
+            <p class="fecha">{{ comment.date | date:'short' }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

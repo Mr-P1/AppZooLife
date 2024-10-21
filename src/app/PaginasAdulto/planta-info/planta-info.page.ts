@@ -8,6 +8,12 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../common/servicios/auth.service';
 
+interface Comment {
+  user: string;
+  text: string;
+  date: Date;
+}
+
 @Component({
   selector: 'app-planta-info',
   templateUrl: './planta-info.page.html',
@@ -17,6 +23,8 @@ import { AuthService } from '../../common/servicios/auth.service';
 })
 export class PlantaInfoPage implements OnInit {
   planta$: Observable<Planta | null> | undefined;
+  newComment: string = ''; // Almacena el comentario nuevo
+  comments: Comment[] = []; // Almacena la lista de comentarios
 
   constructor(
     private animalService: FirestoreService,
@@ -44,7 +52,19 @@ export class PlantaInfoPage implements OnInit {
         });
       }
     }
-
   }
 
+  // Método para agregar un nuevo comentario
+  addComment() {
+    if (this.newComment.trim()) {
+      const userId = this.authService.currentUserId;
+      const comment: Comment = {
+        user: userId ? userId : 'Anónimo', // Usa el ID del usuario o 'Anónimo' si no hay usuario autenticado
+        text: this.newComment,
+        date: new Date()
+      };
+      this.comments.push(comment); // Agrega el comentario a la lista
+      this.newComment = ''; // Limpia el campo de comentario
+    }
+  }
 }

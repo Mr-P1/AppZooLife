@@ -1,58 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+
+/* General */
+.contenidoPrincipal {
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  font-family: 'Work Sans', sans-serif;
+}
+
 .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .title-container {
-    text-align: center;
-  }
-  
-  .icono-numero {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #ff8800;
-    color: white;
-    border-radius: 50%;
-    width: 40px; /* Asegura que el ancho del círculo sea suficiente para dos dígitos */
-    height: 40px; /* Hace el contenedor circular */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
-  ion-card-title {
-    margin-top: 0.5rem;
-    margin-bottom: 0.25rem;
-  }
-  
-  ion-card-subtitle {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-  }
-  
-  ion-button img {
-    width: 30px;
-    height: 30px;
-  }
-  
-  .contenidoPrincipal {
-    --background: none; /* Elimina el background por defecto si es necesario */
-    background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
-    background-size: cover; /* Ajusta la imagen para cubrir completamente el modal */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    height: 100%; /* Asegura que el fondo cubra toda la altura */
-  }
-  
-  
-  div img {
-    width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
-    height: 100%; /* Hace que la imagen ocupe el 100% de la altura */
-    object-fit: cover; /* Escala la imagen para que llene el contenedor sin distorsionarse */
-  }
-  
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-container {
+  text-align: center;
+}
+
+.icono-numero {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff8800;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+ion-card-title,
+ion-card-subtitle {
+  margin: 0.5rem 0;
+  text-align: center;
+  font-family: 'Work Sans', sans-serif;
+}
+
+ion-button img {
+  width: 30px;
+  height: 30px;
+}
+
+.custom-card {
+  border-radius: 15px;
+  font-family: 'Work Sans', sans-serif;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(./../../../assets/fondos/fondocardinfo.png);
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+ion-card-content {
+  font-size: 1rem;
+  font-family: 'Work Sans', sans-serif;
+  padding: 15px;
+  color: rgb(73, 23, 0);
+}
+
+/* Estilos específicos para el foro */
+.foro-container {
+  font-family: 'Work Sans', sans-serif;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  align-self: center;
+}
+
+.foro-container ion-card-title {
+  font-size: 1.4rem;
+  text-align: center;
+  color: #103116;
+  font-weight: bold;
+}
+
+.foro-container ion-item {
+  border-radius: 8px;
+  --padding-start: 12px;
+  margin: 10px 0;
+  --inner-padding: 8px;
+  --highlight-background: transparent;
+  background-color: rgba(245, 245, 245, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.foro-container .fecha {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.foro-container ion-textarea {
+  width: 100%;
+  --padding-start: 10px;
+  --background: rgba(255, 255, 255, 0.8);
+  --border-radius: 10px;
+}
+
+.foro-container ion-button {
+  margin-top: 10px;
+  --background: #ff8800;
+  border-radius: 15px;
+  color: white;
+}

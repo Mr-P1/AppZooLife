@@ -7,6 +7,7 @@ import { Animal } from '../../common/models/animal.model';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../common/servicios/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-animal-info',
@@ -18,6 +19,10 @@ import { AuthService } from '../../common/servicios/auth.service';
 export class AnimalInfoPage implements OnInit {
 
   animal$: Observable<Animal | null> | undefined;
+
+  // Agrega las nuevas propiedades para el foro
+  comments: { user: string, text: string, date: Date }[] = [];
+  newComment: string = '';
 
   constructor(
     private animalService: FirestoreService,
@@ -47,4 +52,16 @@ export class AnimalInfoPage implements OnInit {
     }
   }
 
+  // Nuevo método para agregar un comentario
+  addComment() {
+    if (this.newComment.trim() !== '') {
+      const comment = {
+        user: 'Usuario Anónimo', // Puedes reemplazar con el nombre del usuario autenticado si lo deseas
+        text: this.newComment,
+        date: new Date()
+      };
+      this.comments.push(comment);
+      this.newComment = ''; // Limpiar el campo de comentario
+    }
+  }
 }
