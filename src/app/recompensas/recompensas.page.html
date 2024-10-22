@@ -1,12 +1,16 @@
-<ion-header>
-  <ion-toolbar class="nav">
-    <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="backButtonHref" text=""></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
+  <div class="segment-container">
+    <ion-segment value="default" (ionChange)="onSegmentChange($event)">
+      <ion-segment-button value="default">
+        <ion-label>Por reclamar</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="segment">
+        <ion-label>Disponibles</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+<ng-container *ngIf="segmentValue === 'segment'">
   <ng-container *ngIf="recompensas.length > 0; else noPremios">
     <ion-card *ngFor="let premio of recompensas">
       <img
@@ -50,6 +54,7 @@
       </div>
     </ion-card>
   </ng-container>
+</ng-container>
 
   <ng-template #noPremios>
     <ion-card class="no-premios">
@@ -64,4 +69,39 @@
       </ion-card-content>
     </ion-card>
   </ng-template>
+
+
+  <ng-container *ngIf="segmentValue === 'default'">
+    <ng-container *ngIf="premiosDetallados.length > 0; else noPremios">
+      <ion-card *ngFor="let premio of premiosDetallados">
+        <img [alt]="premio.nombre" [src]="premio.imagen || 'https://ionicframework.com/docs/img/demos/card-media.png'" />
+        <ion-card-header>
+          <ion-card-title>{{ premio.nombre }}</ion-card-title>
+          <ion-card-subtitle>¡Felicidades! Alcanzaste los {{ premio.puntos_necesarios }} puntos.</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          {{ premio.descripcion }}
+        </ion-card-content>
+        <div class="button-container">
+          <ion-button (click)="mostrarCodigo(premio)" fill="clear">
+            Reclamar Premio
+          </ion-button>
+        </div>
+      </ion-card>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noPremios>
+    <ion-card class="no-premios">
+      <img alt="panda rojo" src="../../assets/fondos/imagenSinPremios.jpg" />
+      <ion-card-header>
+        <ion-card-title>¡Aún no tienes premios!</ion-card-title>
+        <ion-card-subtitle>Participa en las trivias</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Parece que todavía no has ganado ningún premio. Responde las trivias disponibles para acumular puntos e intercambiarlas por recompensas exclusivas. ¡Comienza ahora y demuestra cuánto sabes!
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
+

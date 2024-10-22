@@ -57,12 +57,12 @@ export const routes: Routes = [
         loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
       },
       {
-        path: 'recompensas-trivia',
-        loadComponent: () => import('./recompensas-trivia/recompensas-trivia.page').then( m => m.RecompensasTriviaPage)
-      },
-      {
         path: 'noticias',
         loadComponent: () => import('./PaginasAdulto/noticias/noticias.page').then( m => m.NoticiasPage)
+      },
+      {
+        path: 'recompensas',
+        loadComponent: () => import('./recompensas/recompensas.page').then( m => m.RecompensasPage)
       },
 
 
@@ -109,9 +109,10 @@ export const routes: Routes = [
         loadComponent: () => import('./PaginasNiño/trivia/trivia.page').then( m => m.TriviaPage)
       },
       {
-        path: 'recompensas-trivia',
-        loadComponent: () => import('./recompensas-trivia/recompensas-trivia.page').then( m => m.RecompensasTriviaPage)
+        path: 'recompensas',
+        loadComponent: () => import('./recompensas/recompensas.page').then( m => m.RecompensasPage)
       },
+
 
     ]
   },
@@ -122,13 +123,10 @@ export const routes: Routes = [
   {
     path: 'planta-info',
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
-  },  {
-    path: 'noticias-info',
-    loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
   },
   {
-    path: 'recompensas',
-    loadComponent: () => import('./recompensas/recompensas.page').then( m => m.RecompensasPage)
+    path: 'noticias-info',
+    loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
   },
 
 

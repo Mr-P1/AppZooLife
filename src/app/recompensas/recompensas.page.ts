@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonButtons, IonBackButton, IonSegment, IonSegmentButton, IonLabel, SegmentChangeEventDetail } from '@ionic/angular/standalone';
 import {RecompensasService,Premios} from '../common/servicios/recompensas.service'
 import { AuthService } from '../common/servicios/auth.service';
 import { Usuario } from '../common/models/usuario.model';
+import { FirestoreService } from '../common/servicios/firestore.service';
+import { forkJoin, of, switchMap } from 'rxjs';
+import { Premio, PremioUsuario } from '../common/models/trivia.models';
 
 @Component({
   selector: 'app-recompensas',
   templateUrl: './recompensas.page.html',
   styleUrls: ['./recompensas.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonButton, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonLabel, IonSegmentButton, IonSegment, IonBackButton, IonButtons, IonButton, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class RecompensasPage implements OnInit {
 
@@ -20,11 +23,15 @@ export class RecompensasPage implements OnInit {
   uid: string | null = null;
   usuario: Usuario | null = null;  // Variable para almacenar los datos del usuario
   backButtonHref: string = '/home'; // Ruta por defecto
+  segmentValue: string = 'default';
+  premiosDetallados: (PremioUsuario & Premio)[] = [];
+  premiosDisponibles: Premio[] =[];
 
 
   constructor(
     private _recompensasService:RecompensasService,
     private authService: AuthService,
+    private firestoreService: FirestoreService,
   ) { }
 
   ngOnInit() {
@@ -41,6 +48,41 @@ export class RecompensasPage implements OnInit {
     } else if (tipo === 'niño') {
       this.backButtonHref = '/nino/inicio';
     }
+
+    this.authService.authState$.subscribe(user => {
+      if (user) {
+        this.uid = user.uid;
+        console.log("Id del usuario:", this.uid);
+
+        this.firestoreService.obtenerPremiosUsuario(this.uid!).pipe(
+          switchMap((premiosUsuario: PremioUsuario[]) => {
+            if (premiosUsuario.length === 0) {
+              return of([]); // Si no hay premios, retornamos un array vacío.
+            }
+
+            const detallesPremios$ = premiosUsuario.map((premioUsuario) =>
+              this.firestoreService.obtenerPremioPorId(premioUsuario.premioId).pipe(
+                switchMap((detallePremio) => {
+                  return of({ ...premioUsuario, ...detallePremio });
+                })
+              )
+            );
+
+            return forkJoin(detallesPremios$);
+          })
+        ).subscribe((premiosDetallados) => {
+          this.premiosDetallados = premiosDetallados;
+          console.log(this.premiosDetallados);
+        });
+      } else {
+        console.error('El usuario no está autenticado.');
+      }
+    });
+
+    this.firestoreService.getPremios().subscribe((data) => {
+      this.premiosDisponibles = data;
+      console.log('Premios disponibles:', this.premiosDisponibles);
+    });
 
   }
 
@@ -60,6 +102,10 @@ export class RecompensasPage implements OnInit {
     } catch (error) {
       console.error('Error al obtener los datos del usuario:', error);
     }
+  }
+
+  onSegmentChange(event: CustomEvent<SegmentChangeEventDetail>) {
+    this.segmentValue = String(event.detail.value);
   }
 
 
@@ -83,6 +129,10 @@ export class RecompensasPage implements OnInit {
     } else {
       console.error('Puntos insuficientes o premio agotado.');
     }
+  }
+
+  mostrarCodigo(premio: PremioUsuario & Premio) {
+    alert(`El código asociado al premio es: ${premio.codigo}`);
   }
 
 
