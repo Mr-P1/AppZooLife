@@ -1,7 +1,7 @@
-import { Component, OnInit,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
-import { Reaction } from 'src/app/common/models/reaction.model';
+import { Reaction, ReactionPlanta } from 'src/app/common/models/reaction.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
@@ -9,7 +9,7 @@ import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { leafOutline,pawOutline,star,personCircle, chevronUpCircle, document, colorPalette, globe,qrCodeOutline,earthOutline,mapOutline } from 'ionicons/icons';
+import { leafOutline, pawOutline, star, personCircle, chevronUpCircle, document, colorPalette, globe, qrCodeOutline, earthOutline, mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Planta } from 'src/app/common/models/plantas.model';
 import { NotificacionesService } from 'src/app/common/servicios/notificaciones.service';
@@ -22,22 +22,22 @@ import { NotificacionesService } from 'src/app/common/servicios/notificaciones.s
   styleUrls: ['./inicio.page.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [ZXingScannerModule,IonIcon, IonFabList, IonFabButton, IonFab, IonCardTitle, IonButton, IonCardHeader, IonCard, IonLabel, IonSearchbar, IonItem, IonList, IonContent, CommonModule, RouterLink,]
+  imports: [ZXingScannerModule, IonIcon, IonFabList, IonFabButton, IonFab, IonCardTitle, IonButton, IonCardHeader, IonCard, IonLabel, IonSearchbar, IonItem, IonList, IonContent, CommonModule, RouterLink,]
 })
 export class InicioPage implements OnInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
 
   animales: Animal[] = [];
   plantas: Planta[] = [];
-  animalesOriginal: Animal[] = []; // Guardar el orden original
+  animalesOriginal: Animal[] = [];
+  plantasOriginal: Planta[] = [];
   userId: string = '';
-  searchTerm: string = ''; // Para almacenar el término de búsqueda
+  searchTerm: string = '';
   isScanning: boolean = false;
   allowedFormats = [BarcodeFormat.QR_CODE];
-  isSortedByMap: boolean = false; // Controla si está ordenado por posición
-  filteredAnimals: Animal[] = []; // Lista de animales filtrados
+  isSortedByMap: boolean = false;
+  filteredItems: (Animal | Planta)[] = [];
   mostrarPlantas: boolean = false;
-
 
   constructor(
     private animalsService: FirestoreService,
@@ -45,7 +45,7 @@ export class InicioPage implements OnInit {
     private router: Router,
     private notificacionesService: NotificacionesService
   ) {
-    addIcons({ leafOutline,earthOutline, mapOutline, chevronUpCircle, document, colorPalette, globe, star, personCircle, qrCodeOutline, pawOutline});
+    addIcons({ mapOutline, leafOutline, pawOutline, qrCodeOutline });
   }
 
   imagenes = [
@@ -58,51 +58,50 @@ export class InicioPage implements OnInit {
   ngOnInit(): void {
     this.animalsService.getAnimales().subscribe((data: Animal[]) => {
       this.animales = data;
-      this.animalesOriginal = [...data]; // Guarda el orden original
+      this.animalesOriginal = [...data];
     });
 
     this.animalsService.getPlantas().subscribe((data: Planta[]) => {
       this.plantas = data;
-
+      this.plantasOriginal = [...data];
     });
 
     this.authService.authState$.subscribe(user => {
       if (user) {
         this.userId = user.uid;
         this.loadAnimalsWithReactions();
-
-        // Verificar cuántos animales ha visto el usuario
-        this.animalsService.getAnimalesVistosPorUsuario(this.userId).subscribe((animalesVistos) => {
-          const animalesVistosCount = animalesVistos.length;
-
-          // Verificar si ya se ha mostrado la notificación anteriormente
-          const notificacionMostrada = localStorage.getItem('notificacionMostrada');
-
-          if (animalesVistosCount == 5 && !notificacionMostrada) {
-            this.notificacionesService.mostrarNotificacion(
-              '¡Felicidades!',
-              'Has visto 5 animales. Ahora puedes participar en la trivia.'
-            );
-
-            // Guardar en localStorage que la notificación ya fue mostrada
-            localStorage.setItem('notificacionMostrada', 'true');
-          }
-        });
       }
     });
+
+    console.log(localStorage.getItem("tipo"))
   }
 
-  loadAnimalsWithReactions() {
-    this.animalsService.getAnimales().subscribe((animales: Animal[]) => {
-      this.animales = animales;
-      this.animalesOriginal = [...animales]; // Guarda el orden original
+  filterItems(event: any) {
+    this.searchTerm = event.target.value.toLowerCase();
+    if (this.searchTerm && this.searchTerm.trim() !== '') {
+      const filteredAnimales = this.animales.filter(animal =>
+        animal.nombre_comun.toLowerCase().includes(this.searchTerm)
+      );
+      const filteredPlantas = this.plantas.filter(planta =>
+        planta.nombre_comun.toLowerCase().includes(this.searchTerm)
+      );
 
-      this.animales.forEach(animal => {
-        this.animalsService.getUserReaction(animal.id, this.userId).subscribe(reaction => {
-          animal.reaccion = reaction ? reaction.reaction : null;
-        });
-      });
-    });
+      this.filteredItems = [...filteredAnimales, ...filteredPlantas];
+    } else {
+      this.filteredItems = [];
+    }
+  }
+
+  goToItem(item: Animal | Planta) {
+    // Si el objeto tiene la propiedad 'familia', se asume que es una planta, de lo contrario es un animal
+    const route = 'familia' in item ? '/planta-info' : '/animal-info';
+    this.router.navigate([route, item.id]);
+    this.searchTerm = '';
+    this.filteredItems = [];
+  }
+
+  toggleMostrarPlantas() {
+    this.mostrarPlantas = !this.mostrarPlantas;
   }
 
   // Alterna entre ordenar por posición y restaurar el orden original
@@ -110,9 +109,11 @@ export class InicioPage implements OnInit {
     if (this.isSortedByMap) {
       // Restaurar el orden original
       this.animales = [...this.animalesOriginal];
+      this.plantas = [...this.plantasOriginal];
     } else {
       // Ordenar por 'posicion_mapa'
       this.animales.sort((a, b) => a.posicion_mapa - b.posicion_mapa);
+      this.plantas.sort((a, b) => a.posicion_mapa - b.posicion_mapa);
     }
     this.isSortedByMap = !this.isSortedByMap; // Cambiar el estado
   }
@@ -122,6 +123,77 @@ export class InicioPage implements OnInit {
     if (!this.isScanning && this.scanner) {
       this.scanner.reset();
     }
+  }
+
+  // onCodeResult(result: string) {
+  //   console.log('Contenido escaneado:', result);
+  //   this.isScanning = false;
+
+
+  //   if (result) {
+  //     if (this.scanner) {
+  //       this.scanner.reset();
+  //     }
+  //     this.router.navigate(['/animal-info/', result]);
+  //   } else {
+  //     if (this.scanner) {
+  //       this.scanner.reset();
+  //     }
+  //   }
+  // }
+
+  onCodeResult(result: string) {
+    console.log('Contenido escaneado:', result);
+    this.isScanning = false;
+
+    if (result) {
+      if (this.scanner) {
+        this.scanner.reset();
+      }
+
+      // Verificamos si el ID pertenece a un animal o una planta
+      this.animalsService.getAnimalById(result).subscribe((animal) => {
+        if (animal) {
+          // Si se encuentra un animal con ese ID, redirigir a /animal-info
+          this.router.navigate(['/animal-info', result]);
+        } else {
+          // Si no es un animal, buscamos en plantas
+          this.animalsService.getPlantaById(result).subscribe((planta) => {
+            if (planta) {
+              // Si se encuentra una planta con ese ID, redirigir a /planta-info
+              this.router.navigate(['/planta-info', result]);
+            } else {
+              // Si no se encuentra ni un animal ni una planta, mostrar un mensaje de error o manejo adicional
+              console.error('No se encontró información para el ID escaneado.');
+            }
+          });
+        }
+      });
+    } else {
+      if (this.scanner) {
+        this.scanner.reset();
+      }
+    }
+  }
+
+  // extractAnimalId(result: string): string | null {
+  //   console.log('Procesando URL:', result);
+  //   const regex = /animal-info\/(\w+)/;
+  //   const match = result.match(regex);
+  //   return match ? match[1] : null;
+  // }
+
+  loadAnimalsWithReactions() {
+    this.animalsService.getAnimales().subscribe((animales: Animal[]) => {
+      this.animales = animales;
+      this.animalesOriginal = [...animales];
+
+      this.animales.forEach(animal => {
+        this.animalsService.getUserReaction(animal.id, this.userId).subscribe(reaction => {
+          animal.reaccion = reaction ? reaction.reaction : null;
+        });
+      });
+    });
   }
 
   like(animalId: string) {
@@ -178,59 +250,60 @@ export class InicioPage implements OnInit {
     }
   }
 
-    onCodeResult(result: string) {
-    console.log('Contenido escaneado:', result);
-    this.isScanning = false;
 
-    const animalId = this.extractAnimalId(result);
-    if (animalId) {
-      console.log('Redirigiendo a la página del animal:', animalId);
 
-      // Detén el escáner al redirigir
-      if (this.scanner) {
-        this.scanner.reset();
-      }
+  likePlanta(plantaId: string) {
+    const planta = this.plantas.find(p => p.id === plantaId);
+    if (planta) {
+      planta.reaccion = true;
+      const tipo = localStorage.getItem('tipo') || 'desconocido';
 
-      this.router.navigate(['/animal-info', animalId]);
-    } else {
-      console.log('No se encontró un ID de animal válido en el QR.');
-
-      // Detén el escáner si no se encuentra un ID válido
-      if (this.scanner) {
-        this.scanner.reset();
-      }
+      this.animalsService.getUserReactionPlanta(plantaId, this.userId).subscribe(existingReaction => {
+        if (existingReaction && existingReaction.id) {
+          this.animalsService.updateReactionPlanta(existingReaction.id, { reaction: true, tipo }).subscribe(() => {
+            console.log('Reacción actualizada a Like');
+          });
+        } else {
+          const reaction: ReactionPlanta = {
+            plantaId,
+            userId: this.userId,
+            reaction: true,
+            fecha: new Date(),
+            tipo
+          };
+          this.animalsService.addReactionPlanta(reaction).subscribe(() => {
+            console.log('Reacción guardada como Like');
+          });
+        }
+      });
     }
   }
 
-    extractAnimalId(result: string): string | null {
-    console.log('Procesando URL:', result);
-    const regex = /animal-info\/(\w+)/;
-    const match = result.match(regex);
-    return match ? match[1] : null;
-  }
+  dontLikePlanta(plantaId: string) {
+    const planta = this.plantas.find(p => p.id === plantaId);
+    if (planta) {
+      planta.reaccion = false;
+      const tipo = localStorage.getItem('tipo') || 'desconocido';
 
-
-    // Método para filtrar animales según el término de búsqueda
-  filterAnimals(event: any) {
-    this.searchTerm = event.target.value.toLowerCase();
-    if (this.searchTerm && this.searchTerm.trim() !== '') {
-      this.filteredAnimals = this.animales.filter(animal =>
-        animal.nombre_comun.toLowerCase().includes(this.searchTerm)
-      );
-    } else {
-      this.filteredAnimals = [];
+      this.animalsService.getUserReactionPlanta(plantaId, this.userId).subscribe(existingReaction => {
+        if (existingReaction && existingReaction.id) {
+          this.animalsService.updateReactionPlanta(existingReaction.id, { reaction: false, tipo }).subscribe(() => {
+            console.log('Reacción actualizada a No me gusta');
+          });
+        } else {
+          const reaction: ReactionPlanta = {
+            plantaId,
+            userId: this.userId,
+            reaction: false,
+            fecha: new Date(),
+            tipo
+          };
+          this.animalsService.addReactionPlanta(reaction).subscribe(() => {
+            console.log('Reacción guardada como No me gusta');
+          });
+        }
+      });
     }
-  }
-
-  // Método para redirigir a la página de información del animal
-  goToAnimal(animalId: string) {
-    this.router.navigate(['/animal-info', animalId]);
-    this.searchTerm = '';
-    this.filteredAnimals = [];
-  }
-
-  toggleMostrarPlantas() {
-    this.mostrarPlantas = !this.mostrarPlantas;
   }
 
 

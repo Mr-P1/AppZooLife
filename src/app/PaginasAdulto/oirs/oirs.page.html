@@ -1,15 +1,15 @@
-<ion-content [fullscreen]="true">
+<!-- <ion-content [fullscreen]="true">
   <ion-card class="container-login">
     <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
-      <!-- Logo del bioparque centrado -->
+
       <div class="ion-text-center ion-margin-vertical lock">
         <img src=".././../assets/icon/logoBioparque.png" alt="Logo Bioparque">
       </div>
 
-      <!-- Título del formulario -->
+
       <h1>ZooLife - OIRS</h1>
 
-      <!-- Tipo de Solicitud -->
+
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="tipoSolicitud"
@@ -27,7 +27,6 @@
       </ion-item>
 
 
-      <!-- Región -->
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="region"
@@ -43,7 +42,7 @@
         </ion-select>
       </ion-item>
 
-      <!-- Comuna -->
+
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="comuna"
@@ -60,13 +59,13 @@
 
 
 
-      <!-- ¿Es usted el afectado? -->
+
       <ion-item class="ion-margin" lines="none">
         <ion-label>¿Es usted el afectado?</ion-label>
         <ion-toggle formControlName="esAfectado"></ion-toggle>
       </ion-item>
 
-      <!-- Detalles -->
+
       <ion-item class="ion-margin" lines="none">
         <ion-textarea
           formControlName="detalles"
@@ -78,12 +77,112 @@
         ></ion-textarea>
       </ion-item>
 
-      <!-- Subir Archivo (Evidencia) -->
+
       <ion-item class="ion-margin" lines="none">
         <ion-label>Subir Evidencia</ion-label>
         <input type="file" (change)="onFileChange($event)" accept="image/*" />
       </ion-item>
 
+
+      <div class="ion-margin">
+        <ion-button type="submit" expand="block" size="large" class="qr-button" [strong]="true">
+          <ion-text style="text-transform: none;">Enviar Solicitud</ion-text>
+        </ion-button>
+
+        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/historial-oirs']">
+          <ion-text style="text-transform: none;">Volver</ion-text>
+        </ion-button>
+      </div>
+    </form>
+  </ion-card>
+</ion-content> -->
+
+
+
+<ion-content [fullscreen]="true">
+  <!-- Tarjeta contenedora del formulario OIRS -->
+  <ion-card class="container-login">
+    <!-- Formulario enlazado con FormBuilder y ejecuta 'submitForm' al enviarse -->
+    <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
+      <!-- Logo centrado en la parte superior -->
+      <div class="ion-text-center ion-margin-vertical lock">
+        <img src=".././../assets/icon/logoBioparque.png" alt="Logo Bioparque" />
+      </div>
+
+      <!-- Título del formulario -->
+      <h1>ZooLife - OIRS</h1>
+
+      <!-- Campo para seleccionar el tipo de solicitud -->
+      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
+        <ion-select
+          formControlName="tipoSolicitud"
+          fill="solid"
+          label="Tipo de Solicitud (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Seleccionar tipo"
+        >
+          <ion-select-option value="consulta">Consulta</ion-select-option>
+          <ion-select-option value="felicitacion">Felicitación</ion-select-option>
+          <ion-select-option value="reclamo">Reclamo</ion-select-option>
+          <ion-select-option value="sugerencia">Sugerencia</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Campo para seleccionar la región -->
+      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
+        <ion-select
+          formControlName="region"
+          fill="solid"
+          label="Región (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Seleccionar región"
+          (ionChange)="actualizarComunas($event.detail.value)"
+        >
+          <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">
+            {{ region.nombre }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Campo para seleccionar la comuna -->
+      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
+        <ion-select
+          formControlName="comuna"
+          fill="solid"
+          label="Comuna (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Seleccionar comuna"
+        >
+          <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
+            {{ comuna }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Toggle para indicar si el usuario es el afectado -->
+      <ion-item class="ion-margin" lines="none">
+        <ion-label>¿Es usted el afectado?</ion-label>
+        <ion-toggle formControlName="esAfectado"></ion-toggle>
+      </ion-item>
+
+      <!-- Campo de texto para detalles -->
+      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
+        <ion-textarea
+          formControlName="detalles"
+          fill="solid"
+          label="Detalles (Obligatorio)"
+          labelPlacement="floating"
+          placeholder="Describe los detalles de tu solicitud"
+        ></ion-textarea>
+      </ion-item>
+
+      <!-- Campo para subir archivo de evidencia -->
+      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
+        <ion-label>Subir Evidencia</ion-label>
+        <input type="file" (change)="onFileChange($event)" accept="image/*" />
+      </ion-item>
+
+      <!-- Botones de Enviar y Volver -->
       <!-- Botones de Enviar y Volver -->
       <div class="ion-margin">
         <ion-button type="submit" expand="block" size="large" class="qr-button" [strong]="true">

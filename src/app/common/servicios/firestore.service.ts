@@ -20,7 +20,7 @@ import { catchError, from, map, Observable, of, switchMap, throwError } from 'rx
 import { orderBy, limit } from '@angular/fire/firestore';
 
 import { Animal } from '../models/animal.model';
-import { Reaction } from '../models/reaction.model';
+import { Reaction, ReactionPlanta } from '../models/reaction.model';
 import { Usuario } from '../models/usuario.model';
 import { PreguntaTrivia, Premio } from '../models/trivia.models';
 import { Planta } from './../models/plantas.model';
@@ -29,6 +29,7 @@ import { PremioUsuario } from '../models/trivia.models';
 const PATH_ANIMALES = 'Animales';
 const PATH_PLANTAS = 'Plantas';
 const PATH_REACCIONES = 'Reacciones';
+const PATH_REACCIONES_PLANTAS = 'ReaccionesPlantas';
 const PATH_USUARIOS = 'Usuarios';
 const PATH_ANIMALES_VISTOS = 'AnimalesVistos';
 const PATH_PREGUNTAS_TRIVIA = 'Preguntas';
@@ -44,6 +45,7 @@ export class FirestoreService {
   private _rutaAnimal = collection(this._firestore, PATH_ANIMALES);
   private _rutaPlantas = collection(this._firestore, PATH_PLANTAS);
   private _rutaReacciones = collection(this._firestore, PATH_REACCIONES);
+  private _rutaReaccionesPlantas = collection(this._firestore, PATH_REACCIONES_PLANTAS);
   private _rutaUsuarios = collection(this._firestore, PATH_USUARIOS);
   private _rutaAnimalesVistos = collection(this._firestore, PATH_ANIMALES_VISTOS);
   private _rutaPlantasVistas = collection(this._firestore, PATH_PLANTAS_VISTAS);
@@ -51,7 +53,7 @@ export class FirestoreService {
   private _respuestasTrivia = collection(this._firestore, PATH_RESPUESTAS_TRIVIA);
   private _rutaPremiosUsuarios = collection(this._firestore, PATH_PREMIOS_USUARIOS);
 
-  constructor() {}
+  constructor() { }
 
   // Método para obtener animales
   getAnimales(): Observable<Animal[]> {
@@ -129,7 +131,7 @@ export class FirestoreService {
       animalId,
       vistoEn: new Date().toISOString(),
     };
-    return from(addDoc(this._rutaAnimalesVistos, animalVisto)).pipe(map(() => {}));
+    return from(addDoc(this._rutaAnimalesVistos, animalVisto)).pipe(map(() => { }));
   }
 
   // Método para verificar si el usuario ya ha visto el animal
@@ -138,21 +140,21 @@ export class FirestoreService {
     return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
   }
 
-    // Método para guardar la planta vista
-    guardarPlantaVista(userId: string, plantaId: string): Observable<void> {
-      const plantaVista = {
-        userId,
-        plantaId,
-        vistoEn: new Date().toISOString(),
-      };
-      return from(addDoc(this._rutaPlantasVistas, plantaVista)).pipe(map(() => {}));
-    }
+  // Método para guardar la planta vista
+  guardarPlantaVista(userId: string, plantaId: string): Observable<void> {
+    const plantaVista = {
+      userId,
+      plantaId,
+      vistoEn: new Date().toISOString(),
+    };
+    return from(addDoc(this._rutaPlantasVistas, plantaVista)).pipe(map(() => { }));
+  }
 
-    // Método para verificar si el usuario ya ha visto la planta
-    usuarioHaVistoPlanta(userId: string, plantaId: string): Observable<boolean> {
-      const q = query(this._rutaPlantasVistas, where('userId', '==', userId), where('plantaId', '==', plantaId));
-      return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
-    }
+  // Método para verificar si el usuario ya ha visto la planta
+  usuarioHaVistoPlanta(userId: string, plantaId: string): Observable<boolean> {
+    const q = query(this._rutaPlantasVistas, where('userId', '==', userId), where('plantaId', '==', plantaId));
+    return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
+  }
 
   // Método para obtener preguntas de trivia basadas en los animales vistos por el usuario
   getPreguntasTriviaPorAnimalesVistos(userId: string): Observable<PreguntaTrivia[]> {
@@ -193,12 +195,12 @@ export class FirestoreService {
 
   // Método para guardar las respuestas de trivia
   guardarRespuestaTrivia(respuesta: { resultado: boolean; user_id: string; pregunta_id: string }): Observable<void> {
-    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => {}));
+    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => { }));
   }
 
   // Método para guardar las respuestas de trivia
-  guardarRespuestaTrivia2(respuesta: { resultado: boolean; user_id: string; pregunta_id: string; fecha : Date, genero_usuario:string, tipo:string}): Observable<void> {
-    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => {}));
+  guardarRespuestaTrivia2(respuesta: { resultado: boolean; user_id: string; pregunta_id: string; fecha: Date, genero_usuario: string, tipo: string }): Observable<void> {
+    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => { }));
   }
 
 
@@ -230,19 +232,67 @@ export class FirestoreService {
     return collectionData(premiosQuery, { idField: 'id' }) as Observable<PremioUsuario[]>;
   }
 
-// Método para obtener la información de un premio específico
-obtenerPremioPorId(premioId: string): Observable<Premio> {
-  const premioDocRef = doc(this._firestore, `Premios_trivia/${premioId}`);
-  return from(getDoc(premioDocRef)).pipe(
-    map((doc) => {
-      if (doc.exists()) {
-        return { id: doc.id, ...doc.data() } as unknown as Premio; // Agregamos manualmente el 'id'
-      } else {
-        throw new Error('Premio no encontrado');
-      }
-    })
-  );
-}
+  // Método para obtener la información de un premio específico
+  obtenerPremioPorId(premioId: string): Observable<Premio> {
+    const premioDocRef = doc(this._firestore, `Premios_trivia/${premioId}`);
+    return from(getDoc(premioDocRef)).pipe(
+      map((doc) => {
+        if (doc.exists()) {
+          return { id: doc.id, ...doc.data() } as unknown as Premio; // Agregamos manualmente el 'id'
+        } else {
+          throw new Error('Premio no encontrado');
+        }
+      })
+    );
+  }
+
+
+  // Método para obtener un animal por ID
+  getAnimalById(id: string): Observable<Animal | null> {
+    const docRef = doc(this._firestore, `${PATH_ANIMALES}/${id}`);
+    return from(getDoc(docRef)).pipe(
+      map((doc) => (doc.exists() ? { id: doc.id, ...doc.data() } as Animal : null))
+    );
+  }
+
+  // Método para obtener una planta por ID
+  getPlantaById(id: string): Observable<Planta | null> {
+    const docRef = doc(this._firestore, `${PATH_PLANTAS}/${id}`);
+    return from(getDoc(docRef)).pipe(
+      map((doc) => (doc.exists() ? { id: doc.id, ...doc.data() } as Planta : null))
+    );
+  }
+
+
+
+  // Métodos para Like y Dislike de Plantas usando la nueva ruta
+  getUserReactionPlanta(plantaId: string, userId: string): Observable<Reaction | null> {
+    const reactionsQuery = query(
+      this._rutaReaccionesPlantas,
+      where('plantaId', '==', plantaId),
+      where('userId', '==', userId)
+    );
+    return from(getDocs(reactionsQuery)).pipe(
+      map((snapshot) => {
+        if (!snapshot.empty) {
+          const data = snapshot.docs[0].data() as Reaction;
+          return { id: snapshot.docs[0].id, ...data } as Reaction;
+        }
+        return null;
+      })
+    );
+  }
+
+  addReactionPlanta(reaction: ReactionPlanta): Observable<DocumentReference> {
+    return from(addDoc(this._rutaReaccionesPlantas, reaction));
+  }
+
+
+
+  updateReactionPlanta(id: string, reaction: Partial<Reaction>): Observable<void> {
+    const docRef = doc(this._rutaReaccionesPlantas, id);
+    return from(setDoc(docRef, reaction, { merge: true }));
+  }
 
 
 
