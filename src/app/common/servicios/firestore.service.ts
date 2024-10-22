@@ -35,6 +35,7 @@ const PATH_PREGUNTAS_TRIVIA = 'Preguntas';
 const PATH_RESPUESTAS_TRIVIA = 'RespuestasTrivia';
 const PATH_PLANTAS_VISTAS = 'PlantasVistas';
 const PATH_PREMIOS_USUARIOS = 'PremiosUsuarios';
+const PATH_PREMIOS_TRIVIA = 'Premios_trivia';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,7 @@ export class FirestoreService {
   private _preguntasTrivia = collection(this._firestore, PATH_PREGUNTAS_TRIVIA);
   private _respuestasTrivia = collection(this._firestore, PATH_RESPUESTAS_TRIVIA);
   private _rutaPremiosUsuarios = collection(this._firestore, PATH_PREMIOS_USUARIOS);
+  private _rutaPremiosTrivia = collection(this._firestore, PATH_PREMIOS_TRIVIA);
 
   constructor() {}
 
@@ -225,10 +227,10 @@ export class FirestoreService {
     );
   }
 
-  obtenerPremiosUsuario(usuarioId: string): Observable<PremioUsuario[]> {
-    const premiosQuery = query(this._rutaPremiosUsuarios, where('usuarioId', '==', usuarioId));
-    return collectionData(premiosQuery, { idField: 'id' }) as Observable<PremioUsuario[]>;
-  }
+obtenerPremiosUsuario(usuarioId: string): Observable<PremioUsuario[]> {
+  const premiosQuery = query(this._rutaPremiosUsuarios, where('usuarioId', '==', usuarioId));
+  return collectionData(premiosQuery, { idField: 'id' }) as Observable<PremioUsuario[]>;
+}
 
 // Método para obtener la información de un premio específico
 obtenerPremioPorId(premioId: string): Observable<Premio> {
@@ -242,6 +244,10 @@ obtenerPremioPorId(premioId: string): Observable<Premio> {
       }
     })
   );
+}
+
+getPremios(): Observable<Premio[]> {
+  return collectionData(this._rutaPremiosTrivia, { idField: 'id' }) as Observable<Premio[]>;
 }
 
 
