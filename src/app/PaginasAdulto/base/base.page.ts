@@ -62,7 +62,7 @@ export class BasePage implements OnInit {
       this.pageTitle = 'Inicio';
     } else if (cleanedUrl.includes('perfil')) {
       this.pageTitle = 'Perfil';
-    }  else if (cleanedUrl.includes('recompensas-trivia')) {
+    }  else if (cleanedUrl.includes('recompensas')) {
       this.pageTitle = 'Recompensas';
     } else if (cleanedUrl.includes('trivia')) {
       this.pageTitle = 'Trivia';

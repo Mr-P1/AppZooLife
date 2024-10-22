@@ -85,3 +85,18 @@ ion-card-content {
 .no-premios ion-card-content {
   color: white; /* Asegúrate de que el texto en el mensaje de "no premios" también sea blanco */
 }
+
+/* Estilo para el texto del ion-segment-button cuando no está seleccionado */
+ion-segment-button {
+  --color-checked: black; /* Color del texto cuando el botón está seleccionado */
+  --color: white; /* Color del texto cuando el botón no está seleccionado */
+}
+
+.segment-container {
+  padding-top: 10px; /* Desplazar el segmento un poco hacia abajo */
+}
+
+ion-segment {
+  max-width: 90%; /* Ancho máximo del segmento para que no llegue hasta el borde */
+  margin: 0 auto; /* Centra el ion-segment dentro del contenedor */
+}
