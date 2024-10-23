@@ -1,23 +1,25 @@
 export interface Planta {
-  id: string,
-  altura: string; // Ej: "12 Cm"
-  area: string; // Ej: "area_1"
-  audio: string; // URL del audio
+  id: string;
+  altura: string;
+  audio: string;
   cuidados: string;
   curiosidad: string;
   descripcion_1: string;
   descripcion_2: string;
   descripcion_3: string;
   estado: string;
-  familia: string; // Ej: "Familia 1"
+  familia: string;
   floracion: string;
-  imagen: string; // URL de la imagen
+  imagen: string;
   importancia: string;
-  nombre_cientifico: string; // Ej: "Mejor Planta"
-  nombre_comun: string; // Ej: "Planta"
-  posicion_mapa: number; // Ej: 21
+  nombre_cientifico: string;
+  nombre_comun: string;
+  peso: string;
+  posicion_mapa: number;
   precaucion: string;
   usos: string;
-  video: string; // URL del video
+  video: string;
   zonas: string;
+  reaccion: boolean | null;
+  mostrarVideo?: boolean; // Propiedad opcional para mostrar el video
 }

@@ -20,7 +20,7 @@ import { catchError, from, map, Observable, of, switchMap, throwError } from 'rx
 import { orderBy, limit } from '@angular/fire/firestore';
 
 import { Animal } from '../models/animal.model';
-import { Reaction } from '../models/reaction.model';
+import { Reaction, ReactionPlanta } from '../models/reaction.model';
 import { Usuario } from '../models/usuario.model';
 import { PreguntaTrivia, Premio } from '../models/trivia.models';
 import { Planta } from './../models/plantas.model';
@@ -29,6 +29,7 @@ import { PremioUsuario } from '../models/trivia.models';
 const PATH_ANIMALES = 'Animales';
 const PATH_PLANTAS = 'Plantas';
 const PATH_REACCIONES = 'Reacciones';
+const PATH_REACCIONES_PLANTAS = 'ReaccionesPlantas';
 const PATH_USUARIOS = 'Usuarios';
 const PATH_ANIMALES_VISTOS = 'AnimalesVistos';
 const PATH_PREGUNTAS_TRIVIA = 'Preguntas';
@@ -45,6 +46,7 @@ export class FirestoreService {
   private _rutaAnimal = collection(this._firestore, PATH_ANIMALES);
   private _rutaPlantas = collection(this._firestore, PATH_PLANTAS);
   private _rutaReacciones = collection(this._firestore, PATH_REACCIONES);
+  private _rutaReaccionesPlantas = collection(this._firestore, PATH_REACCIONES_PLANTAS);
   private _rutaUsuarios = collection(this._firestore, PATH_USUARIOS);
   private _rutaAnimalesVistos = collection(this._firestore, PATH_ANIMALES_VISTOS);
   private _rutaPlantasVistas = collection(this._firestore, PATH_PLANTAS_VISTAS);
@@ -248,6 +250,51 @@ obtenerPremioPorId(premioId: string): Observable<Premio> {
 
 getPremios(): Observable<Premio[]> {
   return collectionData(this._rutaPremiosTrivia, { idField: 'id' }) as Observable<Premio[]>;
+}
+
+  // Método para obtener un animal por ID
+  getAnimalById(id: string): Observable<Animal | null> {
+    const docRef = doc(this._firestore, `${PATH_ANIMALES}/${id}`);
+    return from(getDoc(docRef)).pipe(
+      map((doc) => (doc.exists() ? { id: doc.id, ...doc.data() } as Animal : null))
+    );
+  }
+
+  // Método para obtener una planta por ID
+  getPlantaById(id: string): Observable<Planta | null> {
+    const docRef = doc(this._firestore, `${PATH_PLANTAS}/${id}`);
+    return from(getDoc(docRef)).pipe(
+      map((doc) => (doc.exists() ? { id: doc.id, ...doc.data() } as Planta : null))
+    );
+  }
+
+// Métodos para Like y Dislike de Plantas usando la nueva ruta
+getUserReactionPlanta(plantaId: string, userId: string): Observable<Reaction | null> {
+  const reactionsQuery = query(
+    this._rutaReaccionesPlantas,
+    where('plantaId', '==', plantaId),
+    where('userId', '==', userId)
+  );  
+  return from(getDocs(reactionsQuery)).pipe(
+    map((snapshot) => {
+      if (!snapshot.empty) {
+        const data = snapshot.docs[0].data() as Reaction;
+        return { id: snapshot.docs[0].id, ...data } as Reaction;
+      }
+      return null;
+    })
+  );
+}
+
+addReactionPlanta(reaction: ReactionPlanta): Observable<DocumentReference> {
+  return from(addDoc(this._rutaReaccionesPlantas, reaction));
+}
+
+
+
+updateReactionPlanta(id: string, reaction: Partial<Reaction>): Observable<void> {
+  const docRef = doc(this._rutaReaccionesPlantas, id);
+  return from(setDoc(docRef, reaction, { merge: true }));
 }
 
 
