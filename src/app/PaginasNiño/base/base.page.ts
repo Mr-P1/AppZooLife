@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/common/servicios/auth.service';
 import { ContadorService } from './../../common/servicios/contador.service';
 import { PipesModule } from 'src/app/common/servicios/pipe.module';
 import { map } from 'rxjs/operators';
-import { IonHeader, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton, IonButton, IonIcon } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonList, IonContent, IonItem, IonLabel, IonRouterOutlet, IonButtons,IonMenu,IonMenuButton, IonButton, IonIcon, IonBackButton } from "@ionic/angular/standalone";
 
 
 import { addIcons } from 'ionicons';
@@ -16,7 +16,7 @@ import { star,personCircle, homeOutline } from 'ionicons/icons';
   templateUrl: './base.page.html',
   styleUrls: ['./base.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonButton, IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
+  imports: [IonBackButton, IonIcon, IonButton, IonButtons, IonRouterOutlet, IonLabel, IonItem, IonContent, IonList, IonTitle, IonToolbar, IonHeader,IonMenu, IonMenuButton, RouterLink, RouterModule, CommonModule, PipesModule]
 })
 export class BasePage implements OnInit{
 
@@ -27,7 +27,8 @@ export class BasePage implements OnInit{
     map(tiempoRestante => tiempoRestante !== null ? tiempoRestante : 0) // Proporcionar un valor predeterminado
   );
 
-  pageTitle: string = 'Home';  // Título por defecto
+  pageTitle: string = 'Inicio';  // Título por defecto
+  esPaginaDeInicio: boolean = false;  // Nueva propiedad para detectar si estamos en la página de inicio
 
   constructor() {
     addIcons({homeOutline,star,personCircle});
@@ -35,6 +36,7 @@ export class BasePage implements OnInit{
     this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.updateTitle(this._router.url);
+        this.esPaginaDeInicio = this._router.url === '/nino/inicio';
       }
     });
   }
