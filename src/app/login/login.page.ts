@@ -67,6 +67,7 @@ export class LoginPage {
       }
 
       await this._authService.usarBoleta(this.boleta, userId);
+
       this._router.navigate(['/home']);
     } catch (error) {
       console.error('Error durante el proceso de login:', error);

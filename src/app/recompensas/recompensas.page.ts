@@ -26,6 +26,8 @@ export class RecompensasPage implements OnInit {
   segmentValue: string = 'default';
   premiosDetallados: (PremioUsuario & Premio)[] = [];
   premiosDisponibles: Premio[] =[];
+  tipoUsuario!: string|null;
+  fondo!:string;
 
 
   constructor(
@@ -35,11 +37,20 @@ export class RecompensasPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.tipoUsuario = localStorage.getItem("tipo");
+
+    // Asignar el fondo según el tipo de usuario
+    if (this.tipoUsuario === 'adulto') {
+      this.fondo = 'url(./../../assets/fondos/fondo-premios.jpg)';
+    } else if (this.tipoUsuario === 'niño') {
+      this.fondo = 'url(./../../assets/fondos/fondoNiñoinfoAnimal.png)';
+    }
+
     this._recompensasService.getPremios().subscribe((data)=>{
       this.recompensas = data;
     })
 
-    this.loadUserData();
+    this.loadUserData(); 
 
     const tipo = localStorage.getItem("tipo");
     console.log(localStorage.getItem("tipo"))
