@@ -140,12 +140,27 @@
       </div>
       <ion-card-header class="card-header">
         <div class="header-content">
+          <ion-button fill="clear" (click)="likePlanta(planta.id)">
+            <img
+              [src]="planta.reaccion === true
+                      ? '../../../assets/icon/likeVerde.png'
+                      : '../../../assets/icon/likeNegro.png'"
+              alt="Me gusta"
+            />
+          </ion-button>
+
           <div class="title-container">
             <ion-card-title>{{ planta.nombre_comun }}</ion-card-title>
-            <ion-card-subtitle>
-              {{ planta.familia }}
-            </ion-card-subtitle>
           </div>
+
+          <ion-button fill="clear" (click)="dontLikePlanta(planta.id)">
+            <img
+              [src]="planta.reaccion === false
+                      ? '../../../assets/icon/dislikeRojo.png'
+                      : '../../../assets/icon/dislikeNegro.png'"
+              alt="No me gusta"
+            />
+          </ion-button>
         </div>
       </ion-card-header>
     </ion-card>

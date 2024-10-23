@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
-import { Reaction } from 'src/app/common/models/reaction.model';
+import { Reaction, ReactionPlanta } from 'src/app/common/models/reaction.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
@@ -35,6 +35,7 @@ export class InicioPage implements OnInit {
 
 
   animalesOriginal: Animal[] = []; // Guardar el orden original
+  plantasOriginal: Planta[] = [];
 
   isScanning: boolean = false;
   allowedFormats = [BarcodeFormat.QR_CODE];
@@ -67,6 +68,7 @@ export class InicioPage implements OnInit {
         this.userId = user.uid;
         // Cargar los animales y luego las reacciones del usuario
         this.loadAnimalsWithReactions();
+        this.loadPlantsWithReactions();
       }
     });
 
@@ -86,6 +88,19 @@ export class InicioPage implements OnInit {
       this.animales.forEach(animal => {
         this.animalsService.getUserReaction(animal.id, this.userId).subscribe(reaction => {
           animal.reaccion = reaction ? reaction.reaction : null; // true = like, false = don't like, null = sin reacción
+        });
+      });
+    });
+  }
+
+  loadPlantsWithReactions() {
+    this.animalsService.getPlantas().subscribe((plantas: Planta[]) => {
+      this.plantas = plantas;
+      this.plantasOriginal = [...plantas];
+  
+      this.plantas.forEach(planta => {
+        this.animalsService.getUserReactionPlanta(planta.id, this.userId).subscribe(reaction => {
+          planta.reaccion = reaction ? reaction.reaction : null;
         });
       });
     });
@@ -163,6 +178,62 @@ export class InicioPage implements OnInit {
       });
     }
   }
+
+  likePlanta(plantaId: string) {
+    const planta = this.plantas.find(p => p.id === plantaId);
+    if (planta) {
+      planta.reaccion = true;
+      const tipo = localStorage.getItem('tipo') || 'desconocido';
+
+      this.animalsService.getUserReactionPlanta(plantaId, this.userId).subscribe(existingReaction => {
+        if (existingReaction && existingReaction.id) {
+          this.animalsService.updateReactionPlanta(existingReaction.id, { reaction: true, tipo }).subscribe(() => {
+            console.log('Reacción actualizada a Like');
+          });
+        } else {
+          const reaction: ReactionPlanta = {
+            plantaId,
+            userId: this.userId,
+            reaction: true,
+            fecha: new Date(),
+            tipo
+          };
+          this.animalsService.addReactionPlanta(reaction).subscribe(() => {
+            console.log('Reacción guardada como Like');
+          });
+        }
+      });
+    }
+  }
+
+  dontLikePlanta(plantaId: string) {
+    const planta = this.plantas.find(p => p.id === plantaId);
+    if (planta) {
+      planta.reaccion = false;
+      const tipo = localStorage.getItem('tipo') || 'desconocido';
+
+      this.animalsService.getUserReactionPlanta(plantaId, this.userId).subscribe(existingReaction => {
+        if (existingReaction && existingReaction.id) {
+          this.animalsService.updateReactionPlanta(existingReaction.id, { reaction: false, tipo }).subscribe(() => {
+            console.log('Reacción actualizada a No me gusta');
+          });
+        } else {
+          const reaction: ReactionPlanta = {
+            plantaId,
+            userId: this.userId,
+            reaction: false,
+            fecha: new Date(),
+            tipo
+          };
+          this.animalsService.addReactionPlanta(reaction).subscribe(() => {
+            console.log('Reacción guardada como No me gusta');
+          });
+        }
+      });
+    }
+  }
+
+  
 
   onCodeResult(result: string) {
     console.log('Contenido escaneado:', result);
