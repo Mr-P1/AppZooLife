@@ -1,73 +1,69 @@
 import { Injectable, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  Firestore, collection, addDoc, collectionData, doc, getDoc, updateDoc, query,
-  where, deleteDoc, getDocs, orderBy, limit, startAfter, DocumentData,
-  startAt, setDoc,
-  onSnapshot
-} from '@angular/fire/firestore';
-
-import { Storage, ref, uploadBytes, getDownloadURL, deleteObject } from '@angular/fire/storage';
-import { catchError, Observable, tap, throwError, from } from 'rxjs';
+import { Firestore, collection, addDoc, collectionData, query, where, Timestamp } from '@angular/fire/firestore';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+// Definición de la interfaz para OIRS
 export interface oirs {
-  id: string,
-  archivoEvidencia?:string,
-  comuna:string,
-  detalles:string,
-  esAfectado:boolean,
-  fechaEnvio:Date
-  region:string,
-  tipoSolicitud:string,
-  userId:string,
+  id: string;
+  archivoEvidencia?: string;
+  comuna: string;
+  detalles: string;
+  esAfectado: boolean;
+  fechaEnvio: Timestamp;
+  region: string;
+  tipoSolicitud: string;
+  userId: string;
+  respondido: boolean,
 }
 
+// Tipo para la creación de OIRS sin ID
+export type CrearOirs = Omit<oirs, 'id'>;
 
-
+// Constante para la colección de OIRS en Firestore
 const PATH_Oirs = 'Oirs';
-
-
-export type CrearOirs = Omit<oirs, 'id'>
 
 @Injectable({
   providedIn: 'root',
 })
 export class OirsService {
   private _firestore = inject(Firestore);
+  private _storage = inject(Storage);
   private _rutaOirs = collection(this._firestore, PATH_Oirs);
-  private _storage = inject(Storage); // Agrega Storage
 
-
-
- getOirsUsuario(id: string): Observable<oirs[]> {
-  const oirsQuery = query(this._rutaOirs, where('userId', '==', id));
-  return collectionData(oirsQuery, { idField: 'id' }) as Observable<oirs[]>;
-}
-
-
-async uploadImage(file: File): Promise<string> {
-  const filePath = `Oirs/${file.name}`; // Ruta donde se almacenará la imagen en Cloud Storage
-  const storageRef = ref(this._storage, filePath);
-  const snapshot = await uploadBytes(storageRef, file); // Sube el archivo
-  return getDownloadURL(snapshot.ref); // Obtiene la URL pública de la imagen
-}
-
-
-
-
-async createOirs(evento: CrearOirs, imagenFile?: File) {
-  let imageUrl: string | undefined;
-
-  if (imagenFile) {
-    imageUrl = await this.uploadImage(imagenFile);
+  // Obtener las solicitudes OIRS de un usuario específico
+  getOirsUsuario(userId: string): Observable<oirs[]> {
+    const oirsQuery = query(this._rutaOirs, where('userId', '==', userId));
+    return collectionData(oirsQuery, { idField: 'id' }) as Observable<oirs[]>;
   }
-  const oirsData = {
-    ...evento,
-    ...(imageUrl && { archivoEvidencia: imageUrl })
-  };
-  return addDoc(this._rutaOirs, oirsData);
-}
+
+  // Subir imagen a Cloud Storage y obtener la URL
+  async uploadImage(file: File): Promise<string> {
+    const filePath = `Oirs/${file.name}`; // Ruta donde se almacenará la imagen en Cloud Storage
+    const storageRef = ref(this._storage, filePath);
+    const snapshot = await uploadBytes(storageRef, file); // Sube el archivo
+    return getDownloadURL(snapshot.ref); // Obtiene la URL pública de la imagen
+  }
+
+  // Crear una nueva solicitud OIRS
+  async createOirs(oirsData: CrearOirs, imagenFile?: File): Promise<void> {
+    let imageUrl: string | undefined;
+
+    // Subir la imagen si existe y obtener la URL
+    if (imagenFile) {
+      imageUrl = await this.uploadImage(imagenFile);
+    }
+
+    const oirsToSave = {
+      ...oirsData,
+      ...(imageUrl && { archivoEvidencia: imageUrl }) // Agregar la URL de la imagen si existe
+    };
+
+    // Guardar el documento en Firestore
+    await addDoc(this._rutaOirs, oirsToSave);
+  }
+
 
 
 

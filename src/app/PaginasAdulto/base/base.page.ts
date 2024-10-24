@@ -71,7 +71,7 @@ export class BasePage implements OnInit {
     } else if (cleanedUrl.includes('eventos')) {
       this.pageTitle = 'Eventos';
     } else if (cleanedUrl.includes('oirs')) {
-      this.pageTitle = 'OIRS';
+      this.pageTitle = 'Historial OIRS';
     } else if (cleanedUrl.includes('mapa')) {
       this.pageTitle = 'Mapa';
     } else if (cleanedUrl.includes('animal-info')) {

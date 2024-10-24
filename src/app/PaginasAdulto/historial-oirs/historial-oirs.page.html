@@ -1,0 +1,28 @@
+
+<ion-content>
+  <div class="center-button">
+    <ion-button shape="round" [routerLink]="['/oirs']">
+      <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <ion-card *ngFor="let solicitud of oirsList">
+    <ion-card-header>
+      <ion-card-title>{{ solicitud.tipoSolicitud }}</ion-card-title>
+      <ion-card-subtitle>Fecha: {{ solicitud.fechaEnvioFormatted }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- <p><strong>RegiÃ³n:</strong> {{ solicitud.region }}</p>
+      <p><strong>Comuna:</strong> {{ solicitud.comuna }}</p> -->
+      <p><strong>Detalles:</strong> {{ solicitud.detalles }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ng-container *ngIf="oirsList.length === 0">
+    <ion-card>
+      <ion-card-content>
+        <p>No hay solicitudes registradas.</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+</ion-content>

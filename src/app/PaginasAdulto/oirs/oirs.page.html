@@ -1,4 +1,5 @@
-<ion-content [fullscreen]="true">
+
+<ion-content [fullscreen]="true"><br>
   <ion-card class="container-login">
     <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
       <!-- Logo del bioparque centrado -->
@@ -90,7 +91,7 @@
           <ion-text style="text-transform: none;">Enviar Solicitud</ion-text>
         </ion-button>
 
-        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/adulto/inicio']">
+        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/adulto/historial-oirs']">
           <ion-text style="text-transform: none;">Volver</ion-text>
         </ion-button>
       </div>

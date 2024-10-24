@@ -89,3 +89,12 @@ ion-card.container-login {
   overflow: hidden; /* Asegura que los bordes redondeados se respeten */
   align-items: stretch;
 }
+
+ion-toolbar {
+  --background: #103116; /* Fondo del toolbar */
+  --color: #fff; /* Texto del toolbar */
+}
+
+ion-back-button {
+  --color: white;
+}

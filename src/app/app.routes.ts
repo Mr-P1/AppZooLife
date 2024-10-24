@@ -53,8 +53,8 @@ export const routes: Routes = [
         loadComponent: () => import('./PaginasAdulto/eventos/eventos.page').then(m => m.EventosPage)
       },
       {
-        path: 'oirs',
-        loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
+        path: 'historial-oirs',
+        loadComponent: () => import('./PaginasAdulto/historial-oirs/historial-oirs.page').then( m => m.HistorialOirsPage)
       },
       {
         path: 'noticias',
@@ -128,6 +128,11 @@ export const routes: Routes = [
     path: 'noticias-info',
     loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
   },
+  {
+    path: 'oirs',
+    loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
+  }
+
 
 
 
