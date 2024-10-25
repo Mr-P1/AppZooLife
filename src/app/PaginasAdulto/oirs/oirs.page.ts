@@ -1,3 +1,6 @@
+import { IonText } from '@ionic/angular/standalone';
+import { IonSelectOption, IonLabel, IonButton } from '@ionic/angular/standalone';
+import { IonCard, IonContent, IonItem } from '@ionic/angular/standalone';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,8 +16,8 @@ import {OirsService, CrearOirs} from '../../common/servicios/oirs.service'
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule,
-    RouterModule
+    RouterModule,
+    IonCard,IonContent,IonItem,IonSelectOption,IonLabel,IonButton,IonText
   ],
   templateUrl: './oirs.page.html',
   styleUrls: ['./oirs.page.scss'],
