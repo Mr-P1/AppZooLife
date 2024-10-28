@@ -61,14 +61,27 @@
 
 
 
-      <!-- ¿Es usted el afectado? -->
       <ion-item class="ion-margin" lines="none">
         <ion-label>¿Es usted el afectado?</ion-label>
-        <ion-toggle formControlName="esAfectado"></ion-toggle>
+        <ion-select formControlName="esAfectado" placeholder="Seleccionar una opción">
+          <ion-select-option [value]="true">Sí</ion-select-option>
+          <ion-select-option [value]="false">No</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-input
+        formControlName="detalles"
+        fill="solid"
+        label="Detalles (Obligatorio)"
+        labelPlacement="floating"
+        placeholder="Describe los detalles de tu solicitud"
+        errorText="Debe ingresar un mínimo de 10 caracteres"></ion-input>
       </ion-item>
 
       <!-- Detalles -->
-      <ion-item class="ion-margin" lines="none">
+      <!-- <ion-item class="ion-margin" lines="none">
         <ion-textarea
           formControlName="detalles"
           fill="solid"
@@ -77,7 +90,7 @@
           placeholder="Describe los detalles de tu solicitud"
           errorText="Debe ingresar un mínimo de 10 caracteres"
         ></ion-textarea>
-      </ion-item>
+      </ion-item> -->
 
       <!-- Subir Archivo (Evidencia) -->
       <ion-item class="ion-margin" lines="none">
