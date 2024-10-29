@@ -131,11 +131,30 @@
 
     <ion-card *ngFor="let planta of plantas" class="animal-card">
       <div class="image-container">
+        <!-- Mostrar la imagen si el video no está visible -->
         <img
-          alt="{{ planta.nombre_comun}}"
+          *ngIf="!planta.mostrarVideo"
+          alt="{{ planta.nombre_comun }}"
           src="{{ planta.imagen }}"
-          [routerLink]="['/planta-info', planta.id]"
+          (click)="toggleVideoPlanta(planta)"
         />
+
+         <!-- Mostrar el video si el video está visible -->
+      <video
+      *ngIf="planta.mostrarVideo"
+      width="100%"
+      height="auto"
+      controls
+      autoplay
+      (click)="toggleVideoPlanta(planta)"
+      (ended)="videoEndedPlanta(planta)"
+      >
+
+      <source [src]="planta.video" type="video/mp4" />
+        Tu navegador no soporta la reproducción de video.
+      </video>
+
+
         <div class="icono-numero">{{ planta.posicion_mapa }}</div>
       </div>
       <ion-card-header class="card-header">
@@ -163,6 +182,26 @@
           </ion-button>
         </div>
       </ion-card-header>
+
+      <div class="audio-container" *ngIf="planta.audio">
+        <ion-card-subtitle>Audio Explicativo</ion-card-subtitle>
+        <audio controls>
+          <source [src]="planta.audio" type="audio/mp3" />
+          Tu navegador no soporta la reproducción de audio.
+        </audio>
+      </div>
+
+      <div class="audio-container" *ngIf="planta.audioPlanta">
+        <ion-card-subtitle>Audio Planta</ion-card-subtitle>
+        <audio controls>
+          <source [src]="planta.audioPlanta" type="audio/mp3" />
+          Tu navegador no soporta la reproducción de audio.
+        </audio>
+      </div>
+
+
+
+
     </ion-card>
   </div>
 

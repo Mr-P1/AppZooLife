@@ -97,7 +97,7 @@ export class InicioPage implements OnInit {
     this.animalsService.getPlantas().subscribe((plantas: Planta[]) => {
       this.plantas = plantas;
       this.plantasOriginal = [...plantas];
-  
+
       this.plantas.forEach(planta => {
         this.animalsService.getUserReactionPlanta(planta.id, this.userId).subscribe(reaction => {
           planta.reaccion = reaction ? reaction.reaction : null;
@@ -233,7 +233,7 @@ export class InicioPage implements OnInit {
     }
   }
 
-  
+
 
   onCodeResult(result: string) {
     console.log('Contenido escaneado:', result);
@@ -287,5 +287,15 @@ export class InicioPage implements OnInit {
 
   toggleMostrarPlantas() {
     this.mostrarPlantas = !this.mostrarPlantas;
+  }
+
+  toggleVideoPlanta(planta: Planta) {
+    // Alternar el estado de mostrarVideo
+    planta.mostrarVideo = !planta.mostrarVideo;
+  }
+
+  videoEndedPlanta(planta: Planta) {
+    // Cambiar mostrarVideo a false cuando el video termine
+    planta.mostrarVideo = false;
   }
 }

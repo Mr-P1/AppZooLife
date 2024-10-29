@@ -1,7 +1,7 @@
 export interface Planta {
   id: string;
   altura: string;
-  audio: string;
+  audio?: string; // Para el audio explicativo general
   cuidados: string;
   curiosidad: string;
   descripcion_1: string;
@@ -18,8 +18,9 @@ export interface Planta {
   posicion_mapa: number;
   precaucion: string;
   usos: string;
-  video: string;
+  video?: string; // Opcional si tienes videos de plantas
   zonas: string;
   reaccion: boolean | null;
   mostrarVideo?: boolean; // Propiedad opcional para mostrar el video
+  audioPlanta?: string; // Para el audio específico de la planta
 }
