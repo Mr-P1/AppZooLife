@@ -187,9 +187,11 @@ export class FirestoreService {
       switchMap((snapshot) => {
         if (!snapshot.empty) {
           const userDocRef = doc(this._firestore, `Usuarios/${snapshot.docs[0].id}`);
-          return from(updateDoc(userDocRef, data));
+          return from(setDoc(userDocRef, data, { merge: true })); // Utiliza { merge: true }
         } else {
-          return throwError(() => new Error('Usuario no encontrado'));
+          // Si el documento no existe, crea uno nuevo
+          const newUserDocRef = doc(this._rutaUsuarios, userId);
+          return from(setDoc(newUserDocRef, data, { merge: true }));
         }
       })
     );
@@ -274,7 +276,7 @@ getUserReactionPlanta(plantaId: string, userId: string): Observable<Reaction | n
     this._rutaReaccionesPlantas,
     where('plantaId', '==', plantaId),
     where('userId', '==', userId)
-  );  
+  );
   return from(getDocs(reactionsQuery)).pipe(
     map((snapshot) => {
       if (!snapshot.empty) {

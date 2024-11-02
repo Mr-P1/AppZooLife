@@ -1,10 +1,11 @@
 import { Injectable,inject } from '@angular/core';
-import {Auth,authState,signOut,signInWithEmailAndPassword, getAuth,createUserWithEmailAndPassword } from '@angular/fire/auth'
+import {Auth,authState,signOut,signInWithEmailAndPassword, getAuth,createUserWithEmailAndPassword, getIdToken } from '@angular/fire/auth'
 import { from, map, Observable } from 'rxjs';
 import { addDoc, collectionData, doc, DocumentReference, Firestore, getDoc, getDocs, query, setDoc, where,collection, deleteDoc } from '@angular/fire/firestore';
 import {CrearUsuario, Usuario} from '../models/usuario.model'
 import {Boleta, BoletaUsada, CrearBoletaUsada} from '../models/boleta.model'
 import { registerVersion } from '@angular/fire/app';
+import { FirestoreService } from './firestore.service';
 
 
 
@@ -24,7 +25,9 @@ export interface User {
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(
+    private FirestoreService: FirestoreService
+  ) { }
 
 
   private _auth = inject(Auth);
@@ -69,15 +72,29 @@ export class AuthService {
 
 
 
-  logOut(){
-    return signOut(this._auth);
+  async logOut(): Promise<void> {
+    await signOut(this._auth);
+    sessionStorage.removeItem('authToken'); // Remover el token de sessionStorage
   }
 
 
+  async logearse(user: User): Promise<void> {
+    const userCredential = await signInWithEmailAndPassword(this._auth, user.email, user.password);
 
-  logearse(user:User){
-    return  signInWithEmailAndPassword(this._auth,user.email,user.password)
+    // Obtiene el token del usuario
+    const token = await getIdToken(userCredential.user);
+
+    // Guarda el token en sessionStorage
+    sessionStorage.setItem('authToken', token);
+
+    // Actualiza el token en el documento de Firestore del usuario
+    await this.FirestoreService.actualizarUsuario(userCredential.user.uid, { token: token }).toPromise();
   }
+
+    // Método para obtener el token de sessionStorage si ya está guardado
+    getToken(): string | null {
+      return sessionStorage.getItem('authToken');
+    }
 
 
 
