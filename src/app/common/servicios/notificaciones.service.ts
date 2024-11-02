@@ -6,32 +6,29 @@ import { LocalNotifications } from '@capacitor/local-notifications';
   providedIn: 'root'
 })
 export class NotificacionesService {
-
-  constructor(private router: Router) {
-    // Escucha cuando se presiona una notificación
-    LocalNotifications.addListener('localNotificationActionPerformed', (notification) => {
-      // Redirige a la página de trivia si la notificación tiene el identificador adecuado
-      if (notification.notification.extra?.redireccion === 'trivia') {
-        this.router.navigate(['/adulto/trivia']);
-      }
-    });
+  constructor() {
   }
+
   async mostrarNotificacion(titulo: string, mensaje: string) {
-    await LocalNotifications.requestPermissions();
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: titulo,
-          body: mensaje,
-          id: new Date().getTime(),
-          schedule: { at: new Date(Date.now() + 1000) }, // Opcional: programar después de un segundo
-          sound: undefined,
-          attachments: undefined,
-          actionTypeId: "",
-          extra: null
-        }
-      ]
-    });
+    const permission = await LocalNotifications.requestPermissions();
+    if (permission.display === 'granted') {
+      console.log('Permiso de notificación concedido, programando notificación');
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: titulo,
+            body: mensaje,
+            id: new Date().getTime(),
+            schedule: { at: new Date(Date.now() + 1000) },
+            sound: undefined,
+            attachments: undefined,
+            actionTypeId: ""
+          }
+        ]
+      });
+      console.log('Notificación programada');
+    } else {
+      console.warn('Permiso de notificación no concedido');
+    }
   }
-
 }

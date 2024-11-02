@@ -87,6 +87,9 @@ export class AuthService {
     // Guarda el token en sessionStorage
     sessionStorage.setItem('authToken', token);
 
+    // Limpia la variable `animalesVistosSesion` en localStorage al iniciar sesión
+    localStorage.removeItem('animalesVistosSesion');
+
     // Actualiza el token en el documento de Firestore del usuario
     await this.FirestoreService.actualizarUsuario(userCredential.user.uid, { token: token }).toPromise();
   }

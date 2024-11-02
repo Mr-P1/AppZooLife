@@ -8,6 +8,14 @@
 </ion-header>
 
 <ion-content class="contenidoPrincipal">
+  <ion-alert
+  [isOpen]="alertaVisible"
+  header="¡Explorador notable!"
+  subHeader="¡Felicidades!"
+  message="Ya puedes realizar la trivia."
+  [buttons]="alertButtons">
+</ion-alert>
+
   <ng-container *ngIf="animal$ | async as animal; else loading">
     <ion-card class="custom-card">
       <div>
