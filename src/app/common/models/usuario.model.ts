@@ -11,6 +11,7 @@ export interface Usuario {
   region:string,
   comuna:string,
   auth_id:string,
+  token?:string
 }
 
 
