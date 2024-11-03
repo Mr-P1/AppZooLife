@@ -30,9 +30,15 @@ export class AnimalInfoPage implements OnInit, OnDestroy {
   ) {
     this.alertButtons = [
       {
-        text: 'OK',
+        text: 'Ir a trivia',
         handler: () => {
           this.redirigirATrivia();
+        }
+      },
+      {
+        text: 'Cerrar',
+        handler: () => {
+          this.alertaVisible = false; // Cierra la alerta
         }
       }
     ];
@@ -52,13 +58,13 @@ export class AnimalInfoPage implements OnInit, OnDestroy {
           this.animalService.usuarioHaVistoAnimal(userId, id).subscribe(haVisto => {
             if (!haVisto) {
               this.animalService.guardarAnimalVisto(userId, id).subscribe({
-                next: () => console.log('Animal visto guardado exitosamente después de 20 segundos'),
+                next: () => console.log('Animal visto guardado exitosamente después de 2 segundos'),
                 error: (error) => console.error('Error al guardar el animal visto', error)
               });
             }
             this.incrementarYVerificarVistasSesion(id); // Llama al contador de vistas de la sesión
           });
-        }, 20000); // 20 segundos en milisegundos
+        }, 2000); // 20 segundos en milisegundos
       }
     }
   }
