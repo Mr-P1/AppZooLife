@@ -6,9 +6,9 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
-import {Platform} from '@ionic/angular'
+import { Platform } from '@ionic/angular'
 
-
+import { NotificacionesService } from '../app/common/servicios/notificaciones.service'
 import { register } from 'swiper/element/bundle';
 register();
 
@@ -20,38 +20,78 @@ register();
 })
 export class AppComponent {
   constructor(
-    private platform:Platform
+    private platform: Platform,
+    private notificacionesService: NotificacionesService
   ) {
-    if(this.platform.is('capacitor')) this.initPush()
+    if (this.platform.is('capacitor')) this.initPush()
 
   }
 
- initPush() {
-    console.log('Initializing HomePage');
+  //  initPush() {
+  //     console.log('Initializing HomePage');
 
-   //Permiso para aceptar las notificaciones
-    PushNotifications.requestPermissions().then(result => {
+  //    //Permiso para aceptar las notificaciones
+  //     PushNotifications.requestPermissions().then(result => {
+  //       if (result.receive === 'granted') {
+  //         // Register with Apple / Google to receive push via APNS/FCM
+  //         PushNotifications.register();
+  //       } else {
+  //         // Show some error
+  //       }
+  //     });
+
+  //    //Añade al usuario para que reciba las notificaciones
+  //     PushNotifications.addListener('registration',
+  //       (token: Token) => {
+
+  //       }
+  //     );
+
+  //     // Some issue with our setup and push will not work
+  //     PushNotifications.addListener('registrationError',
+  //       (error: any) => {
+
+  //       }
+  //     );
+
+  //     // Show us the notification payload if the app is open on our device
+  //     PushNotifications.addListener('pushNotificationReceived',
+  //       (notification: PushNotificationSchema) => {
+  //         alert(notification.title);
+  //         alert(JSON.stringify(notification))
+  //       }
+  //     );
+
+  //     // Method called when tapping on a notification
+  //     PushNotifications.addListener('pushNotificationActionPerformed',
+  //       (notification: ActionPerformed) => {
+
+  //       }
+  //     );
+  //   }
+
+
+  initPush() {
+    console.log('Inicializando notificaciones push');
+
+    // Solicita permisos para recibir notificaciones push
+    PushNotifications.requestPermissions().then((result) => {
       if (result.receive === 'granted') {
-        // Register with Apple / Google to receive push via APNS/FCM
-        PushNotifications.register();
-      } else {
-        // Show some error
+        PushNotifications.register(); // Se registra con APNS/FCM
       }
     });
 
-   //Añade al usuario para que reciba las notificaciones
-    PushNotifications.addListener('registration',
-      (token: Token) => {
+    // Obtiene el token del dispositivo
+    PushNotifications.addListener('registration', (token: Token) => {
+      console.log('Token de notificación:', token.value);
+      // Guarda el token temporalmente en el servicio
+      this.notificacionesService.setToken(token.value);
+    });
 
-      }
-    );
+    PushNotifications.addListener('registrationError', (error: any) => {
+      console.error('Error en el registro de notificaciones:', error);
+    });
 
-    // Some issue with our setup and push will not work
-    PushNotifications.addListener('registrationError',
-      (error: any) => {
-
-      }
-    );
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
@@ -61,12 +101,7 @@ export class AppComponent {
       }
     );
 
-    // Method called when tapping on a notification
-    PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
 
-      }
-    );
   }
 
 }

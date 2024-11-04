@@ -1,11 +1,12 @@
-import { Injectable,inject } from '@angular/core';
-import {Auth,authState,signOut,signInWithEmailAndPassword, getAuth,createUserWithEmailAndPassword, getIdToken } from '@angular/fire/auth'
+import { Injectable, inject } from '@angular/core';
+import { Auth, authState, signOut, signInWithEmailAndPassword, getAuth, createUserWithEmailAndPassword, getIdToken } from '@angular/fire/auth'
 import { from, map, Observable } from 'rxjs';
-import { addDoc, collectionData, doc, DocumentReference, Firestore, getDoc, getDocs, query, setDoc, where,collection, deleteDoc } from '@angular/fire/firestore';
-import {CrearUsuario, Usuario} from '../models/usuario.model'
-import {Boleta, BoletaUsada, CrearBoletaUsada} from '../models/boleta.model'
+import { addDoc, collectionData, doc, DocumentReference, Firestore, getDoc, getDocs, query, setDoc, where, collection, deleteDoc } from '@angular/fire/firestore';
+import { CrearUsuario, Usuario } from '../models/usuario.model'
+import { Boleta, BoletaUsada, CrearBoletaUsada } from '../models/boleta.model'
 import { registerVersion } from '@angular/fire/app';
 import { FirestoreService } from './firestore.service';
+import {NotificacionesService} from './notificaciones.service'
 
 
 
@@ -26,12 +27,13 @@ export interface User {
 export class AuthService {
 
   constructor(
-    private FirestoreService: FirestoreService
+    private FirestoreService: FirestoreService,
+    private notificacionesService: NotificacionesService
   ) { }
 
 
   private _auth = inject(Auth);
-  private _firestore=inject(Firestore)
+  private _firestore = inject(Firestore)
   private _rutaUsuarios = collection(this._firestore, PATH_USUARIOS)
   private _rutaBoletas = collection(this._firestore, PATH_BOLETAS)
   private _rutaBoletasUsadas = collection(this._firestore, PATH_BOLETAS_USADAS)
@@ -39,7 +41,7 @@ export class AuthService {
 
 
 
-  get authState$():Observable<any> {
+  get authState$(): Observable<any> {
     return authState(this._auth);
   }
 
@@ -55,8 +57,8 @@ export class AuthService {
 
 
 
-   // Obtener los datos completos del usuario, combinando la autenticación y Firestore
-   async getUsuarioFirestore(authId: string): Promise<Usuario | null> {
+  // Obtener los datos completos del usuario, combinando la autenticación y Firestore
+  async getUsuarioFirestore(authId: string): Promise<Usuario | null> {
     // Hacer una consulta en la colección `Usuarios` para obtener el usuario que coincida con el auth_id
     const q = query(this._rutaUsuarios, where('auth_id', '==', authId));
     const querySnapshot = await getDocs(q);
@@ -82,27 +84,28 @@ export class AuthService {
     const userCredential = await signInWithEmailAndPassword(this._auth, user.email, user.password);
 
     // Obtiene el token del usuario
-    const token = await getIdToken(userCredential.user);
+    const token = await getIdToken(userCredential.user); //Quitar
+    const fcmToken = this.notificacionesService.getToken();
 
-    // Guarda el token en sessionStorage
+    // Guarda el token en sessionStorage //Quitar
     sessionStorage.setItem('authToken', token);
 
     // Limpia la variable `animalesVistosSesion` en localStorage al iniciar sesión
     localStorage.removeItem('animalesVistosSesion');
 
     // Actualiza el token en el documento de Firestore del usuario
-    await this.FirestoreService.actualizarUsuario(userCredential.user.uid, { token: token }).toPromise();
+    await this.FirestoreService.actualizarUsuario(userCredential.user.uid, { token: fcmToken! }).toPromise();
   }
 
-    // Método para obtener el token de sessionStorage si ya está guardado
-    getToken(): string | null {
-      return sessionStorage.getItem('authToken');
-    }
+  // Método para obtener el token de sessionStorage si ya está guardado
+  getToken(): string | null {
+    return sessionStorage.getItem('authToken');
+  }
 
 
 
 
-  async registrarse(email: string, password: string, nombre: string, telefono: string, genero: string, patente:string,fechaNacimiento:Date,region:string , comuna:string) {
+  async registrarse(email: string, password: string, nombre: string, telefono: string, genero: string, patente: string, fechaNacimiento: Date, region: string, comuna: string) {
     try {
       // Intentar crear el usuario en Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(this._auth, email, password);
@@ -111,15 +114,15 @@ export class AuthService {
       // Crear el documento para el usuario en Firestore
       const nuevo_usuario: CrearUsuario = {
         nombre: nombre,
-        correo:email,
+        correo: email,
         telefono: telefono,
         genero: genero,
         puntos: 0,
         nivel: 0,
-        patente:patente,
-        fechaNacimiento:fechaNacimiento,
-        region:region,
-        comuna:comuna,
+        patente: patente,
+        fechaNacimiento: fechaNacimiento,
+        region: region,
+        comuna: comuna,
         auth_id: user.uid,
       };
 
@@ -173,6 +176,38 @@ export class AuthService {
       await deleteDoc(boletaDocRef);
     }
   }
+
+
+
+  async logearse2(user: User): Promise<void> {
+    const userCredential = await signInWithEmailAndPassword(this._auth, user.email, user.password);
+
+    // Limpia la variable `animalesVistosSesion` en localStorage al iniciar sesión
+    localStorage.removeItem('animalesVistosSesion');
+
+    // Obtiene el token FCM para las notificaciones
+    let fcmToken = this.notificacionesService.getToken();
+
+    // Verifica si el token FCM está disponible; si no, intenta inicializar las notificaciones nuevamente
+    if (!fcmToken) {
+        const permisoConcedido = await this.notificacionesService.initPush(); // Vuelve a pedir permiso si no hay token
+        if (permisoConcedido) {
+            fcmToken = this.notificacionesService.getToken(); // Intenta obtener el token después de initPush
+        }
+    }
+
+    // Si el token FCM aún no está disponible, muestra un mensaje de advertencia
+    if (!fcmToken) {
+        console.warn('No se pudo obtener el token FCM. Asegúrate de que el dispositivo esté registrado para notificaciones.');
+        return; // Detén el proceso si no tienes el token FCM
+    }
+
+    // Actualiza el token FCM en el documento de Firestore del usuario
+    await this.FirestoreService.actualizarUsuario(userCredential.user.uid, { token:fcmToken }).toPromise();
+    console.log('Token FCM guardado para el usuario:', userCredential.user.uid);
+}
+
+
 
 }
 
