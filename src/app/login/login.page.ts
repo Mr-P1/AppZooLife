@@ -58,7 +58,7 @@ export class LoginPage {
         return;
       }
 
-      await this._authService.logearse({ email, password });
+      await this._authService.logearse2({ email, password });
 
       const userId = this._authService.currentUserId;
       if (!userId) {
