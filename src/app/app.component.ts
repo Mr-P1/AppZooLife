@@ -85,7 +85,7 @@ export class AppComponent {
     PushNotifications.addListener('registration', (token: Token) => {
       console.log('Token de notificación:', token.value);
       // Guarda el token temporalmente en el servicio
-      this.notificacionesService.setToken(String(token));
+      this.notificacionesService.setToken(token.value);
     });
 
     PushNotifications.addListener('registrationError', (error: any) => {
