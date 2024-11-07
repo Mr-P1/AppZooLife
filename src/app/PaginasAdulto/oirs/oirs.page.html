@@ -1,4 +1,4 @@
-
+<!-- HTML sin los campos de Región y Comuna -->
 <ion-content [fullscreen]="true"><br>
   <ion-card class="container-login">
     <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
@@ -27,40 +27,7 @@
         </ion-select>
       </ion-item>
 
-
-      <!-- Región -->
-      <ion-item class="ion-margin" lines="none">
-        <ion-select
-          formControlName="region"
-          label="Región (Obligatorio)"
-          fill="solid"
-          placeholder="Seleccionar región"
-          (ionChange)="actualizarComunas($event.detail.value)"
-          errorText="Seleccione una región"
-        >
-          <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">
-            {{ region.nombre }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- Comuna -->
-      <ion-item class="ion-margin" lines="none">
-        <ion-select
-          formControlName="comuna"
-          label="Comuna (Obligatorio)"
-          fill="solid"
-          placeholder="Seleccionar comuna"
-          errorText="Seleccione una comuna"
-        >
-          <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
-            {{ comuna }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-
-
+      <!-- Campo "¿Es usted el afectado?" -->
       <ion-item class="ion-margin" lines="none">
         <ion-label>¿Es usted el afectado?</ion-label>
         <ion-select formControlName="esAfectado" placeholder="Seleccionar una opción">
@@ -69,28 +36,16 @@
         </ion-select>
       </ion-item>
 
-
+      <!-- Detalles -->
       <ion-item>
         <ion-input
-        formControlName="detalles"
-        fill="solid"
-        label="Detalles (Obligatorio)"
-        labelPlacement="floating"
-        placeholder="Describe los detalles de tu solicitud"
-        errorText="Debe ingresar un mínimo de 10 caracteres"></ion-input>
-      </ion-item>
-
-      <!-- Detalles -->
-      <!-- <ion-item class="ion-margin" lines="none">
-        <ion-textarea
           formControlName="detalles"
           fill="solid"
           label="Detalles (Obligatorio)"
           labelPlacement="floating"
           placeholder="Describe los detalles de tu solicitud"
-          errorText="Debe ingresar un mínimo de 10 caracteres"
-        ></ion-textarea>
-      </ion-item> -->
+          errorText="Debe ingresar un mínimo de 10 caracteres"></ion-input>
+      </ion-item>
 
       <!-- Subir Archivo (Evidencia) -->
       <ion-item class="ion-margin" lines="none">

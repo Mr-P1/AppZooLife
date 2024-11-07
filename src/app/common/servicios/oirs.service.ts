@@ -8,14 +8,13 @@ import { map } from 'rxjs/operators';
 export interface oirs {
   id: string;
   archivoEvidencia?: string;
-  comuna: string;
   detalles: string;
   esAfectado: boolean;
   fechaEnvio: Timestamp;
-  region: string;
   tipoSolicitud: string;
   userId: string;
-  respondido: boolean,
+  respondido: boolean;
+  respuesta?: string;
 }
 
 // Tipo para la creación de OIRS sin ID
