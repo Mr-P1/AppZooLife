@@ -28,18 +28,29 @@ export class MapaPage implements OnInit , AfterViewInit {
     private storageService: StorageService,
     private animalsService: FirestoreService,
     private router: Router,
-    private _mapaService:MapaService,
+    private mapaService:MapaService,
   ) { }
 
   ngOnInit(): void {
 
-    const imagePath = 'gs://appzoolife.appspot.com/mapas/MAPA-BP-BZ_2024-.jpg';
 
-    this.storageService.getImageUrl(imagePath).then((url) => {
-      this.imageUrl = url;
-    }).catch((error) => {
-      console.error('Error getting image URL:', error);
-    });
+      // Obtener el único documento de la colección Mapa
+      this.mapaService.getMapa().subscribe((mapas: Mapa[]) => {
+        if (mapas.length > 0) {
+          const mapa = mapas[0]; // Obtener el primer y único mapa
+          this.mapa = [mapa]; // Almacena el mapa en el array para el binding
+
+          // Obtener la URL de la imagen del mapa
+          this.mapaService.getImageUrl(mapa.imagen).then((url) => {
+            this.imageUrl = url; // Asigna la URL de descarga a `imageUrl`
+          }).catch((error) => {
+            console.error('Error al obtener la URL de la imagen:', error);
+          });
+        } else {
+          console.error('No se encontró ningún mapa en la colección.');
+        }
+      });
+
   }
 
   ngAfterViewInit(): void {
