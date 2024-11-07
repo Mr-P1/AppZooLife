@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonIcon, IonItem, IonRow,
-  IonCol, IonList, IonGrid, IonCardTitle, IonCard, IonSegmentButton, IonLabel, IonSegment, IonCardHeader, IonButtons, IonBackButton
-} from '@ionic/angular/standalone';
+  IonCol, IonList, IonGrid, IonCardTitle, IonCard, IonSegmentButton, IonLabel, IonSegment, IonCardHeader, IonButtons, IonBackButton, IonSearchbar } from '@ionic/angular/standalone';
 import { AuthService } from '../common/servicios/auth.service';
 import { Usuario } from '../common/models/usuario.model';
 import { Timestamp } from 'firebase/firestore';
@@ -13,7 +12,7 @@ import { Timestamp } from 'firebase/firestore';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonCardHeader,
+  imports: [IonSearchbar, IonBackButton, IonButtons, IonCardHeader,
     IonSegment, IonLabel, IonSegmentButton, IonCard, IonCardTitle, IonGrid, IonList, RouterModule,
     IonCol, IonRow, IonItem, IonIcon, IonInput, IonButton, IonHeader, IonToolbar, IonTitle, IonContent
   ],

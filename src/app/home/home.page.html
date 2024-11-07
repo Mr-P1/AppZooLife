@@ -1,21 +1,19 @@
 <ion-content class="content-bg">
-  <div class="top-image-container">
-    <img src="../../assets/fondos/logo.png" alt="Zoo Logo" class="small-logo" />
+  <div class="nav">
+    <!-- Logo del Bioparque -->
+    <div class="top-image-container">
+      <img src="../../assets/icon/logoBienvenida.png" alt="Zoo Logo" class="small-logo" />
+    </div>
+
   </div>
+  <!-- Botones principales (Bioparque, Informaciones) -->
+  <div class="button-container">
+    <ion-button expand="block" class="custom-button" fill="clear" (click)="reenviar()" [routerLink]="['/adulto/inicio']">
+      <img src="https://s3.amazonaws.com/entrekidscl/vich_files/actividadfoto/670589e4eed8d773391831.png" alt="Bioparque" />
+    </ion-button>
 
-
-
-  <ion-card class="custom-card full-width-card" (click)="reenviar()" [routerLink]="['/adulto/inicio']">
-    <img src="./../../assets/fondos/leonHome.jpg" alt="Mapa" />
-    <ion-card-header>
-      <ion-card-title>Bioparque</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card class="custom-card full-width-card" [routerLink]="['/informacion']">
-    <img src="./../../assets/icon/infoicon.png" alt="Actividades" />
-    <ion-card-header>
-      <ion-card-title>Informaciones</ion-card-title>
-    </ion-card-header>
-  </ion-card>
+    <ion-button expand="block" class="custom-button" fill="clear" [routerLink]="['/informacion']">
+      <img src="./../../assets/icon/infoIconHome.png" alt="Informaciones" />
+    </ion-button>
+  </div>
 </ion-content>
