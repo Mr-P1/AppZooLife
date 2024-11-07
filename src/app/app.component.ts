@@ -10,6 +10,7 @@ import { Platform } from '@ionic/angular'
 
 import { NotificacionesService } from '../app/common/servicios/notificaciones.service'
 import { register } from 'swiper/element/bundle';
+import { AlertService } from './common/servicios/alert.service';
 register();
 
 @Component({
@@ -20,6 +21,7 @@ register();
 })
 export class AppComponent {
   constructor(
+    private alertService: AlertService,
     private platform: Platform,
     private notificacionesService: NotificacionesService
   ) {
