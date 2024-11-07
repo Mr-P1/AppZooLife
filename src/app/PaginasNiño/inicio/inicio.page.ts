@@ -12,7 +12,6 @@ import { addIcons } from 'ionicons';
 import { leafOutline,pawOutline} from 'ionicons/icons';import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Mapa, MapaService } from '../../common/servicios/mapa.service';
 import { Planta } from 'src/app/common/models/plantas.model';
-import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -25,7 +24,6 @@ import { AlertController } from '@ionic/angular';
 })
 export class InicioPage implements OnInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
-  private alertController = inject(AlertController);
 
   animales: Animal[] = [];
   plantas: Planta[] = [];
@@ -57,8 +55,6 @@ export class InicioPage implements OnInit {
 
   ngOnInit(): void {
 
-    this.checkAlertTime();
-
     this._mapaService.getMapa().subscribe((data: Mapa[]) => {
       this.mapa = data;
     });
@@ -82,38 +78,6 @@ export class InicioPage implements OnInit {
     });
 
 
-  }
-
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ['Cerrar'],
-    });
-
-    await alert.present();
-  }
-
-  checkAlertTime() {
-    // Configura las horas objetivo con sus respectivos mensajes y títulos
-    const alertConfigs = [
-      { hour: 22, minute: 18, header: '¡Promoción Especial de Hoy! 🍦', message: '¡Presenta nuestra app en caja y disfruta de todos los helados 2x1! No pierdas esta oportunidad para compartir el doble de sabor, solo por tiempo limitado.' },
-      { hour: 22, minute: 19, header: '¡Hora de un Snack! 🍔', message: 'Presenta nuestra app y recibe un descuento especial en todos los combos de la tarde. ¡Aprovecha esta deliciosa oferta para recargar energías! Solo disponible hoy, ¡no te lo pierdas!.' }
-    ];
-
-    setInterval(() => {
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMinute = now.getMinutes();
-
-      // Verifica si la hora actual coincide con alguna de las configuraciones de alerta
-      for (const config of alertConfigs) {
-        if (currentHour === config.hour && currentMinute === config.minute) {
-          this.presentAlert(config.header, config.message);
-          break;
-        }
-      }
-    }, 60000); // Verifica cada minuto
   }
 
   loadAnimalsWithReactions() {
