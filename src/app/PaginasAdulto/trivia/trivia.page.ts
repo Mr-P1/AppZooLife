@@ -14,7 +14,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, Io
   templateUrl: './trivia.page.html',
   styleUrls: ['./trivia.page.scss'],
   standalone: true,
-  imports: [IonSpinner, IonCardContent, IonButton, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,RouterModule]
+  imports: [IonSpinner, IonCardContent, IonButton, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterModule]
 })
 export class TriviaPage implements OnInit, OnDestroy {
 
@@ -33,8 +33,9 @@ export class TriviaPage implements OnInit, OnDestroy {
   loading: boolean = true; // Variable para controlar el estado de carga
   triviaComenzada: boolean = false; // Nueva variable para controlar si la trivia ha comenzado
   triviaFinalizada: boolean = false; // Nueva variable para controlar si la trivia ha finalizado
-
+  triviaAbandonada: boolean = false; // Nueva variable para controlar si la trivia fue abandonada
   tipo = "";
+  tiempoInicio: number = 0; // Tiempo en milisegundos cuando se muestra la pregunta
 
   constructor(
     private preguntaService: FirestoreService,
@@ -99,8 +100,13 @@ export class TriviaPage implements OnInit, OnDestroy {
     this.mostrarPregunta();
   }
 
-
   ngOnDestroy() {
+    if (!this.triviaFinalizada) { // Detecta si la trivia fue abandonada
+      this.triviaAbandonada = true;
+      const hoy = new Date().toISOString().split('T')[0];
+      localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
+      this.guardarRespuestas(true); // Guardamos respuestas con `abandonada: true`
+    }
     clearInterval(this.temporizador);
   }
 
@@ -108,6 +114,7 @@ export class TriviaPage implements OnInit, OnDestroy {
     if (this.preguntaIndex < this.preguntasRandom.length) {
       this.preguntaActual = this.preguntasRandom[this.preguntaIndex];
       this.preguntaIndex++;
+      this.tiempoInicio = Date.now(); // Guardamos el tiempo en el que se muestra la pregunta
       this.iniciarTemporizador();
     } else {
       this.finalizarTrivia(); // Finaliza la trivia
@@ -133,17 +140,14 @@ export class TriviaPage implements OnInit, OnDestroy {
     pregunta.respondida = true;
     pregunta.respuestaCorrecta = respuesta === pregunta.respuesta_correcta;
 
+    const tiempoRespuesta = (Date.now() - this.tiempoInicio) / 1000; // Tiempo en segundos
+
     if (pregunta.respuestaCorrecta) {
       this.respuestasCorrectas++;
     }
 
     clearInterval(this.temporizador);
     setTimeout(() => this.mostrarPregunta(), 1000); // Mostramos la siguiente pregunta tras 1 segundo
-
-  }
-
-  todasLasPreguntasRespondidas(): boolean {
-    return this.preguntasRandom.every((pregunta) => pregunta.respondida);
   }
 
   rellenarPreguntasRandom(tipoUsuario: string) {
@@ -160,7 +164,18 @@ export class TriviaPage implements OnInit, OnDestroy {
     return array;
   }
 
-  async enviarRespuestas() {
+  finalizarTrivia() {
+    clearInterval(this.temporizador); // Detenemos cualquier temporizador activo
+    this.preguntaActual = null; // Oculta la tarjeta de preguntas
+    this.triviaFinalizada = true; // Muestra la tarjeta de resultados
+    this.guardarRespuestas(false); // Guarda las respuestas con abandonada: false
+
+    // Guardar la fecha de la trivia en localStorage
+    const hoy = new Date().toISOString().split('T')[0];
+    localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
+  }
+
+  guardarRespuestas(abandonada: boolean) {
     if (!this.usuario || !this.userId) {
       console.error('No se pudo obtener el usuario o userId');
       return;
@@ -177,39 +192,34 @@ export class TriviaPage implements OnInit, OnDestroy {
         user_id: this.userId,
         pregunta_id: pregunta.id,
         fecha: new Date(),
-        genero_usuario:this.usuario.genero,
-        tipo:localStorage.getItem('tipo'),
+        abandonada: abandonada, // Indica si la trivia fue abandonada
+        tiempoRespuesta: (Date.now() - this.tiempoInicio) / 1000,
+        genero_usuario: this.usuario?.genero,
+        tipo: this.tipo
       };
 
       this.preguntaService.guardarRespuestaTrivia(respuesta).subscribe(() => {
-        console.log('Respuesta guardada en Firestore');
+        console.log(`Respuesta guardada con abandonada: ${abandonada}`);
       });
 
-      if (respuestaCorrecta) {
+      if (respuestaCorrecta && !abandonada) {
         nivelGanado += 3; // 3 puntos de nivel por respuesta correcta
         puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 5;
       }
     }
 
-    const nuevoPuntaje = this.usuario.puntos + puntosGanados;
-    const nuevoNivel = this.usuario.nivel + nivelGanado;
+    // Actualizar los puntos y el nivel solo si la trivia se completó
+    if (!abandonada) {
+      const nuevoPuntaje = this.usuario.puntos + puntosGanados;
+      const nuevoNivel = this.usuario.nivel + nivelGanado;
 
-    this.preguntaService.actualizarUsuario(this.userId, { puntos: nuevoPuntaje, nivel: nuevoNivel }).subscribe(() => {
-      console.log('Usuario actualizado correctamente');
-    });
+      this.preguntaService.actualizarUsuario(this.userId, { puntos: nuevoPuntaje, nivel: nuevoNivel }).subscribe(() => {
+        console.log('Usuario actualizado correctamente');
+      });
 
-    console.log(`Respuestas guardadas. Puntos ganados: ${puntosGanados}, Nivel ganado: ${nivelGanado}`);
+      console.log(`Trivia finalizada. Puntos ganados: ${puntosGanados}, Nivel ganado: ${nivelGanado}`);
+    } else {
+      console.log('Trivia abandonada, no se actualizan puntos ni nivel.');
+    }
   }
-
-  finalizarTrivia() {
-    clearInterval(this.temporizador); // Detenemos cualquier temporizador activo
-    this.preguntaActual = null; // Oculta la tarjeta de preguntas
-    this.triviaFinalizada = true; // Muestra la tarjeta de resultados
-    this.enviarRespuestas(); // Guarda las respuestas, pero no redirige
-
-    // Guardar la fecha de la trivia en localStorage
-    const hoy = new Date().toISOString().split('T')[0];
-    localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
-  }
-
 }
