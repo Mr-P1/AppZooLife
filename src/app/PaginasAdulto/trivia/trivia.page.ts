@@ -153,7 +153,14 @@ export class TriviaPage implements OnInit, OnDestroy {
   rellenarPreguntasRandom(tipoUsuario: string) {
     const tipoUsuarioLowerCase = tipoUsuario.toLowerCase();
     const preguntasFiltradas = this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase);
-    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, tipoUsuarioLowerCase === 'adulto' ? 10 : 8);
+
+    // Aseguramos que siempre haya 10 preguntas, aunque el filtro retorne menos
+    while (preguntasFiltradas.length < 10) {
+      preguntasFiltradas.push(...this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase));
+    }
+
+    // Mezclamos las preguntas y seleccionamos las primeras 10
+    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, 10);
   }
 
   shuffleArray(array: PreguntaTrivia[]): PreguntaTrivia[] {
@@ -185,23 +192,26 @@ export class TriviaPage implements OnInit, OnDestroy {
     let nivelGanado = 0;
 
     for (const pregunta of this.preguntasRandom) {
-      const respuestaCorrecta = pregunta.respuestaCorrecta ?? false;
+      // Determinamos si la pregunta fue respondida
+      const respuestaCorrecta = pregunta.respondida ? pregunta.respuestaCorrecta ?? false : false;
 
       const respuesta = {
         resultado: respuestaCorrecta,
         user_id: this.userId,
         pregunta_id: pregunta.id,
         fecha: new Date(),
-        abandonada: abandonada, // Indica si la trivia fue abandonada
-        tiempoRespuesta: (Date.now() - this.tiempoInicio) / 1000,
+        abandonada: true, // Indica que todas las respuestas son abandonadas
+        tiempoRespuesta: pregunta.respondida ? (Date.now() - this.tiempoInicio) / 1000 : 0,
         genero_usuario: this.usuario?.genero,
         tipo: this.tipo
       };
 
+      // Guardar la respuesta en la base de datos
       this.preguntaService.guardarRespuestaTrivia(respuesta).subscribe(() => {
-        console.log(`Respuesta guardada con abandonada: ${abandonada}`);
+        console.log(`Respuesta guardada con abandonada: ${respuesta.abandonada}, resultado: ${respuesta.resultado}`);
       });
 
+      // Solo aumentamos puntos si fue correcta y no está abandonada (es decir, si fue respondida correctamente)
       if (respuestaCorrecta && !abandonada) {
         nivelGanado += 3; // 3 puntos de nivel por respuesta correcta
         puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 5;
@@ -222,4 +232,5 @@ export class TriviaPage implements OnInit, OnDestroy {
       console.log('Trivia abandonada, no se actualizan puntos ni nivel.');
     }
   }
+
 }
