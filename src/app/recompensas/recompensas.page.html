@@ -21,21 +21,21 @@
           <ion-card-title>{{ premio.nombre }}</ion-card-title>
           <ion-card-subtitle>
             Se requieren {{ premio.puntos_necesarios }} puntos.
-  
+
             Hay disponible {{premio.cantidad}} unidades
           </ion-card-subtitle>
         </ion-card-header>
-  
+
         <ion-card-content>
           {{ premio.descripcion }}
         </ion-card-content>
-  
+
         <div class="button-container">
           <!-- Mostrar mensaje si la cantidad es 0 -->
           <ion-button *ngIf="premio.cantidad === 0" fill="clear" disabled>
             Ya no queda
           </ion-button>
-  
+
           <!-- Mostrar botón de canje si hay suficientes puntos y cantidad es mayor a 0 -->
           <ion-button
             (click)="canjearPremio(premio)"
@@ -43,7 +43,7 @@
             fill="clear">
             Canjear Premio
           </ion-button>
-  
+
           <!-- Mostrar botón de "Puntos insuficientes" si no tiene suficientes puntos -->
           <ion-button
             *ngIf="usuario && usuario.puntos < premio.puntos_necesarios && premio.cantidad > 0"
@@ -55,7 +55,7 @@
       </ion-card>
     </ng-container>
   </ng-container>
-  
+
     <ng-template #noPremios>
       <ion-card class="no-premios">
         <img alt="panda rojo" src="../../assets/fondos/imagenSinPremios.jpg" />
@@ -67,7 +67,7 @@
           Parece que todavía no has ganado ningún premio. Responde las trivias disponibles para acumular puntos e intercambiarlas por recompensas exclusivas. ¡Comienza ahora y demuestra cuánto sabes!
         </ion-card-content>
       </ion-card>
-    </ng-template>  
+    </ng-template>
 
 
   <ng-container *ngIf="segmentValue === 'default'">

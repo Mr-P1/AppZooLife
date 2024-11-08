@@ -11,7 +11,9 @@ import {
   getDoc,
   getDocs,
   query,
+  QueryDocumentSnapshot,
   setDoc,
+  startAfter,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
@@ -55,7 +57,7 @@ export class FirestoreService {
   private _rutaPremiosUsuarios = collection(this._firestore, PATH_PREMIOS_USUARIOS);
   private _rutaPremiosTrivia = collection(this._firestore, PATH_PREMIOS_TRIVIA);
 
-  constructor() {}
+  constructor() { }
 
   // Método para obtener animales
   getAnimales(): Observable<Animal[]> {
@@ -133,7 +135,7 @@ export class FirestoreService {
       animalId,
       vistoEn: new Date().toISOString(),
     };
-    return from(addDoc(this._rutaAnimalesVistos, animalVisto)).pipe(map(() => {}));
+    return from(addDoc(this._rutaAnimalesVistos, animalVisto)).pipe(map(() => { }));
   }
 
   // Método para verificar si el usuario ya ha visto el animal
@@ -142,21 +144,21 @@ export class FirestoreService {
     return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
   }
 
-    // Método para guardar la planta vista
-    guardarPlantaVista(userId: string, plantaId: string): Observable<void> {
-      const plantaVista = {
-        userId,
-        plantaId,
-        vistoEn: new Date().toISOString(),
-      };
-      return from(addDoc(this._rutaPlantasVistas, plantaVista)).pipe(map(() => {}));
-    }
+  // Método para guardar la planta vista
+  guardarPlantaVista(userId: string, plantaId: string): Observable<void> {
+    const plantaVista = {
+      userId,
+      plantaId,
+      vistoEn: new Date().toISOString(),
+    };
+    return from(addDoc(this._rutaPlantasVistas, plantaVista)).pipe(map(() => { }));
+  }
 
-    // Método para verificar si el usuario ya ha visto la planta
-    usuarioHaVistoPlanta(userId: string, plantaId: string): Observable<boolean> {
-      const q = query(this._rutaPlantasVistas, where('userId', '==', userId), where('plantaId', '==', plantaId));
-      return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
-    }
+  // Método para verificar si el usuario ya ha visto la planta
+  usuarioHaVistoPlanta(userId: string, plantaId: string): Observable<boolean> {
+    const q = query(this._rutaPlantasVistas, where('userId', '==', userId), where('plantaId', '==', plantaId));
+    return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
+  }
 
   // Método para obtener preguntas de trivia basadas en los animales vistos por el usuario
   getPreguntasTriviaPorAnimalesVistos(userId: string): Observable<PreguntaTrivia[]> {
@@ -199,12 +201,12 @@ export class FirestoreService {
 
   // Método para guardar las respuestas de trivia
   guardarRespuestaTrivia(respuesta: { resultado: boolean; user_id: string; pregunta_id: string }): Observable<void> {
-    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => {}));
+    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => { }));
   }
 
   // Método para guardar las respuestas de trivia
-  guardarRespuestaTrivia2(respuesta: { resultado: boolean; user_id: string; pregunta_id: string; fecha : Date, genero_usuario:string, tipo:string}): Observable<void> {
-    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => {}));
+  guardarRespuestaTrivia2(respuesta: { resultado: boolean; user_id: string; pregunta_id: string; fecha: Date, genero_usuario: string, tipo: string }): Observable<void> {
+    return from(addDoc(this._respuestasTrivia, respuesta)).pipe(map(() => { }));
   }
 
 
@@ -231,28 +233,28 @@ export class FirestoreService {
     );
   }
 
-obtenerPremiosUsuario(usuarioId: string): Observable<PremioUsuario[]> {
-  const premiosQuery = query(this._rutaPremiosUsuarios, where('usuarioId', '==', usuarioId));
-  return collectionData(premiosQuery, { idField: 'id' }) as Observable<PremioUsuario[]>;
-}
+  obtenerPremiosUsuario(usuarioId: string): Observable<PremioUsuario[]> {
+    const premiosQuery = query(this._rutaPremiosUsuarios, where('usuarioId', '==', usuarioId));
+    return collectionData(premiosQuery, { idField: 'id' }) as Observable<PremioUsuario[]>;
+  }
 
-// Método para obtener la información de un premio específico
-obtenerPremioPorId(premioId: string): Observable<Premio> {
-  const premioDocRef = doc(this._firestore, `Premios_trivia/${premioId}`);
-  return from(getDoc(premioDocRef)).pipe(
-    map((doc) => {
-      if (doc.exists()) {
-        return { id: doc.id, ...doc.data() } as unknown as Premio; // Agregamos manualmente el 'id'
-      } else {
-        throw new Error('Premio no encontrado');
-      }
-    })
-  );
-}
+  // Método para obtener la información de un premio específico
+  obtenerPremioPorId(premioId: string): Observable<Premio> {
+    const premioDocRef = doc(this._firestore, `Premios_trivia/${premioId}`);
+    return from(getDoc(premioDocRef)).pipe(
+      map((doc) => {
+        if (doc.exists()) {
+          return { id: doc.id, ...doc.data() } as unknown as Premio; // Agregamos manualmente el 'id'
+        } else {
+          throw new Error('Premio no encontrado');
+        }
+      })
+    );
+  }
 
-getPremios(): Observable<Premio[]> {
-  return collectionData(this._rutaPremiosTrivia, { idField: 'id' }) as Observable<Premio[]>;
-}
+  getPremios(): Observable<Premio[]> {
+    return collectionData(this._rutaPremiosTrivia, { idField: 'id' }) as Observable<Premio[]>;
+  }
 
   // Método para obtener un animal por ID
   getAnimalById(id: string): Observable<Animal | null> {
@@ -270,34 +272,65 @@ getPremios(): Observable<Premio[]> {
     );
   }
 
-// Métodos para Like y Dislike de Plantas usando la nueva ruta
-getUserReactionPlanta(plantaId: string, userId: string): Observable<Reaction | null> {
-  const reactionsQuery = query(
-    this._rutaReaccionesPlantas,
-    where('plantaId', '==', plantaId),
-    where('userId', '==', userId)
-  );
-  return from(getDocs(reactionsQuery)).pipe(
-    map((snapshot) => {
-      if (!snapshot.empty) {
-        const data = snapshot.docs[0].data() as Reaction;
-        return { id: snapshot.docs[0].id, ...data } as Reaction;
-      }
-      return null;
-    })
-  );
-}
+  // Métodos para Like y Dislike de Plantas usando la nueva ruta
+  getUserReactionPlanta(plantaId: string, userId: string): Observable<Reaction | null> {
+    const reactionsQuery = query(
+      this._rutaReaccionesPlantas,
+      where('plantaId', '==', plantaId),
+      where('userId', '==', userId)
+    );
+    return from(getDocs(reactionsQuery)).pipe(
+      map((snapshot) => {
+        if (!snapshot.empty) {
+          const data = snapshot.docs[0].data() as Reaction;
+          return { id: snapshot.docs[0].id, ...data } as Reaction;
+        }
+        return null;
+      })
+    );
+  }
 
-addReactionPlanta(reaction: ReactionPlanta): Observable<DocumentReference> {
-  return from(addDoc(this._rutaReaccionesPlantas, reaction));
-}
+  addReactionPlanta(reaction: ReactionPlanta): Observable<DocumentReference> {
+    return from(addDoc(this._rutaReaccionesPlantas, reaction));
+  }
 
 
 
-updateReactionPlanta(id: string, reaction: Partial<Reaction>): Observable<void> {
-  const docRef = doc(this._rutaReaccionesPlantas, id);
-  return from(setDoc(docRef, reaction, { merge: true }));
-}
+  updateReactionPlanta(id: string, reaction: Partial<Reaction>): Observable<void> {
+    const docRef = doc(this._rutaReaccionesPlantas, id);
+    return from(setDoc(docRef, reaction, { merge: true }));
+  }
+
+
+  // Método para obtener los animales con paginación
+  getPaginatedAnimals(itemsPerPage: number, lastDoc?: QueryDocumentSnapshot<Animal>): Observable<Animal[]> {
+    let animalQuery;
+
+    if (lastDoc) {
+      animalQuery = query(this._rutaAnimal, orderBy('nombre_comun'), startAfter(lastDoc), limit(itemsPerPage));
+    } else {
+      animalQuery = query(this._rutaAnimal, orderBy('nombre_comun'), limit(itemsPerPage));
+    }
+
+    return from(getDocs(animalQuery)).pipe(
+      map(snapshot => snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Animal)))
+    );
+  }
+
+  // Método para obtener las plantas con paginación
+  getPaginatedPlants(itemsPerPage: number, lastDoc?: QueryDocumentSnapshot<Planta>): Observable<Planta[]> {
+    let plantQuery;
+
+    if (lastDoc) {
+      plantQuery = query(this._rutaPlantas, orderBy('nombre_comun'), startAfter(lastDoc), limit(itemsPerPage));
+    } else {
+      plantQuery = query(this._rutaPlantas, orderBy('nombre_comun'), limit(itemsPerPage));
+    }
+
+    return from(getDocs(plantQuery)).pipe(
+      map(snapshot => snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Planta)))
+    );
+  }
 
 
 
