@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
 import { Reaction, ReactionPlanta } from 'src/app/common/models/reaction.model';
@@ -9,9 +9,10 @@ import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
 import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { leafOutline,pawOutline} from 'ionicons/icons';import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { leafOutline,pawOutline, arrowUp } from 'ionicons/icons';import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Mapa, MapaService } from '../../common/servicios/mapa.service';
 import { Planta } from 'src/app/common/models/plantas.model';
+
 
 
 @Component({
@@ -24,14 +25,24 @@ import { Planta } from 'src/app/common/models/plantas.model';
 })
 export class InicioPage implements OnInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
+  @ViewChild(IonContent, { static: false }) contentRef!: IonContent;
+
 
   animales: Animal[] = [];
   plantas: Planta[] = [];
+  displayedAnimals: Animal[] = []; // Animales visibles actualmente
+  displayedPlantas: Planta[] = []; // Plantas visibles actualmente
+  itemsPerPage: number = 5; // Número de elementos que se muestran en cada carga
+  currentPageAnimals: number = 1; // Página actual para los animales
+  currentPagePlantas: number = 1; // Página actual para las plantas
+
   userId: string = '';
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
   searchTerm: string = ''; // Para almacenar el término de búsqueda
   mapa: Mapa[] = [];
   mostrarPlantas: boolean = false;
+  showScrollToTop: boolean = false; // Controla la visibilidad del botón
+
 
 
   animalesOriginal: Animal[] = []; // Guardar el orden original
@@ -39,7 +50,6 @@ export class InicioPage implements OnInit {
 
   isScanning: boolean = false;
   allowedFormats = [BarcodeFormat.QR_CODE];
-  isSortedByMap: boolean = false; // Controla si está ordenado por posición
 
 
 
@@ -50,10 +60,40 @@ export class InicioPage implements OnInit {
     private _mapaService: MapaService,
 
   ) {
-    addIcons({ leafOutline,pawOutline});
+    addIcons({arrowUp,leafOutline,pawOutline});
   }
 
   ngOnInit(): void {
+    this.loadAnimals();
+    this.loadPlantas();
+
+     // Cargar animales y establecer los primeros elementos para mostrar
+     this.animalsService.getAnimales().subscribe((data: Animal[]) => {
+      this.animales = data;
+      if (this.animales.length > 0) {
+        this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
+        console.log("Animales cargados:", this.animales);
+      }
+    });
+
+     // Cargar plantas y establecer los primeros elementos para mostrar
+     this.animalsService.getPlantas().subscribe((data: Planta[]) => {
+      this.plantas = data;
+      if (this.plantas.length > 0) {
+        this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
+        console.log("Plantas cargadas:", this.plantas);
+      }
+    });
+
+    // Cargar mapa
+    this._mapaService.getMapa().subscribe((data: Mapa[]) => {
+      this.mapa = data;
+    });
+
+    this.animalsService.getPlantas().subscribe((data: Planta[]) => {
+      this.plantas = data;
+      this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
+    });
 
     this._mapaService.getMapa().subscribe((data: Mapa[]) => {
       this.mapa = data;
@@ -77,7 +117,21 @@ export class InicioPage implements OnInit {
 
     });
 
+  }
 
+
+  loadAnimals() {
+    this.animalsService.getAnimales().subscribe((data: Animal[]) => {
+      this.animales = data;
+      this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
+    });
+  }
+
+  loadPlantas() {
+    this.animalsService.getPlantas().subscribe((data: Planta[]) => {
+      this.plantas = data;
+      this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
+    });
   }
 
   loadAnimalsWithReactions() {
@@ -285,10 +339,6 @@ export class InicioPage implements OnInit {
     animal.mostrarVideo = false;
   }
 
-  toggleMostrarPlantas() {
-    this.mostrarPlantas = !this.mostrarPlantas;
-  }
-
   toggleVideoPlanta(planta: Planta) {
     // Alternar el estado de mostrarVideo
     planta.mostrarVideo = !planta.mostrarVideo;
@@ -298,4 +348,74 @@ export class InicioPage implements OnInit {
     // Cambiar mostrarVideo a false cuando el video termine
     planta.mostrarVideo = false;
   }
+
+  enableInfiniteScroll() {
+    const infiniteScroll = document.querySelector('ion-infinite-scroll');
+    if (infiniteScroll) {
+      infiniteScroll.disabled = false;
+    }
+  }
+
+
+
+  toggleMostrarPlantas() {
+    this.mostrarPlantas = !this.mostrarPlantas;
+    if (this.mostrarPlantas) {
+      this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
+      this.currentPagePlantas = 1;
+    } else {
+      this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
+      this.currentPageAnimals = 1;
+    }
+
+    // Habilitamos el infinite scroll
+    const infiniteScroll = document.querySelector('ion-infinite-scroll');
+    if (infiniteScroll) {
+      infiniteScroll.disabled = false;
+    }
+  }
+
+  loadMore(event: any) {
+    setTimeout(() => {
+      if (!this.mostrarPlantas) {
+        const start = this.currentPageAnimals * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        this.displayedAnimals = [
+          ...this.displayedAnimals,
+          ...this.animales.slice(start, end),
+        ];
+        this.currentPageAnimals++;
+      } else {
+        const start = this.currentPagePlantas * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        this.displayedPlantas = [
+          ...this.displayedPlantas,
+          ...this.plantas.slice(start, end),
+        ];
+        this.currentPagePlantas++;
+      }
+
+      event.target.complete();
+
+      if (
+        (!this.mostrarPlantas && this.displayedAnimals.length >= this.animales.length) ||
+        (this.mostrarPlantas && this.displayedPlantas.length >= this.plantas.length)
+      ) {
+        event.target.disabled = true;
+      }
+    }, 1000);
+  }
+
+  scrollToTop() {
+    if (this.contentRef) {
+      this.contentRef.scrollToTop(500);
+    }
+  }
+
+  onScroll(event: any) {
+    const scrollTop = event.detail.scrollTop;
+    this.showScrollToTop = scrollTop > 300;
+  }
+
+
 }

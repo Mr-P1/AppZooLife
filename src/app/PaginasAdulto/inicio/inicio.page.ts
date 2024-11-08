@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FirestoreService } from '../../common/servicios/firestore.service';
 import { Animal } from '../../common/models/animal.model';
 import { Reaction, ReactionPlanta } from 'src/app/common/models/reaction.model';
@@ -7,14 +7,12 @@ import { Router, RouterLink } from '@angular/router';
 import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
-import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/angular/standalone";
+import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon, IonInfiniteScroll } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { leafOutline, pawOutline, star, personCircle, chevronUpCircle, document, colorPalette, globe, qrCodeOutline, earthOutline, mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Planta } from 'src/app/common/models/plantas.model';
 import { NotificacionesService } from 'src/app/common/servicios/notificaciones.service';
-
-
 
 @Component({
   selector: 'app-inicio-adulto',
@@ -24,11 +22,17 @@ import { NotificacionesService } from 'src/app/common/servicios/notificaciones.s
   standalone: true,
   imports: [ZXingScannerModule, IonIcon, IonFabList, IonFabButton, IonFab, IonCardTitle, IonButton, IonCardHeader, IonCard, IonLabel, IonSearchbar, IonItem, IonList, IonContent, CommonModule, RouterLink,]
 })
-export class InicioPage implements OnInit {
+export class InicioPage implements OnInit, AfterViewInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
+  @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
   animales: Animal[] = [];
   plantas: Planta[] = [];
+  displayedAnimals: Animal[] = [];
+  displayedPlantas: Planta[] = [];
+  itemsPerPage: number = 5;
+  currentPageAnimals: number = 1;
+  currentPagePlantas: number = 1;
   animalesOriginal: Animal[] = [];
   plantasOriginal: Planta[] = [];
   userId: string = '';
@@ -56,15 +60,8 @@ export class InicioPage implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.animalsService.getAnimales().subscribe((data: Animal[]) => {
-      this.animales = data;
-      this.animalesOriginal = [...data];
-    });
-
-    this.animalsService.getPlantas().subscribe((data: Planta[]) => {
-      this.plantas = data;
-      this.plantasOriginal = [...data];
-    });
+    this.loadAnimals();
+    this.loadPlantas();
 
     this.authService.authState$.subscribe(user => {
       if (user) {
@@ -73,8 +70,69 @@ export class InicioPage implements OnInit {
         this.loadPlantsWithReactions();
       }
     });
+  }
 
-    console.log(localStorage.getItem("tipo"))
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.infiniteScroll) {
+        this.infiniteScroll.disabled = false;  // Configuración inicial
+      }
+    }, 0); // Retraso mínimo para permitir la inicialización completa
+  }
+
+  loadAnimals() {
+    this.animalsService.getAnimales().subscribe((data: Animal[]) => {
+      this.animales = data;
+      this.animalesOriginal = [...data];
+      this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
+    });
+  }
+
+  loadPlantas() {
+    this.animalsService.getPlantas().subscribe((data: Planta[]) => {
+      this.plantas = data;
+      this.plantasOriginal = [...data];
+      this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
+    });
+  }
+
+  loadMore(event: any) {
+    setTimeout(() => {
+      if (!this.mostrarPlantas) {
+        const start = this.currentPageAnimals * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        this.displayedAnimals = [
+          ...this.displayedAnimals,
+          ...this.animales.slice(start, end),
+        ];
+        this.currentPageAnimals++;
+      } else {
+        const start = this.currentPagePlantas * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        this.displayedPlantas = [
+          ...this.displayedPlantas,
+          ...this.plantas.slice(start, end),
+        ];
+        this.currentPagePlantas++;
+      }
+
+      event.target.complete();
+
+      if (
+        (!this.mostrarPlantas && this.displayedAnimals.length >= this.animales.length) ||
+        (this.mostrarPlantas && this.displayedPlantas.length >= this.plantas.length)
+      ) {
+        if (this.infiniteScroll) {  // Verifica que infiniteScroll esté definido
+          this.infiniteScroll.disabled = true;
+        }
+      }
+    }, 1000);
+  }
+
+  enableInfiniteScroll() {
+    if (this.infiniteScroll) {  // Verifica que infiniteScroll esté definido
+      this.infiniteScroll.disabled = false;
+    }
   }
 
   filterItems(event: any) {
@@ -94,7 +152,6 @@ export class InicioPage implements OnInit {
   }
 
   goToItem(item: Animal | Planta) {
-    // Si el objeto tiene la propiedad 'familia', se asume que es una planta, de lo contrario es un animal
     const route = 'familia' in item ? '/planta-info' : '/animal-info';
     this.router.navigate([route, item.id]);
     this.searchTerm = '';
@@ -103,21 +160,34 @@ export class InicioPage implements OnInit {
 
   toggleMostrarPlantas() {
     this.mostrarPlantas = !this.mostrarPlantas;
+    if (this.mostrarPlantas) {
+      this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
+      this.currentPagePlantas = 1;
+    } else {
+      this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
+      this.currentPageAnimals = 1;
+    }
+    this.enableInfiniteScroll();
   }
-
-  // Alterna entre ordenar por posición y restaurar el orden original
   toggleOrdenRuta() {
     if (this.isSortedByMap) {
-      // Restaurar el orden original
-      this.animales = [...this.animalesOriginal];
-      this.plantas = [...this.plantasOriginal];
+      // Restauramos el orden original
+      this.displayedAnimals = this.animalesOriginal.slice(0, this.currentPageAnimals * this.itemsPerPage);
+      this.displayedPlantas = this.plantasOriginal.slice(0, this.currentPagePlantas * this.itemsPerPage);
     } else {
-      // Ordenar por 'posicion_mapa'
-      this.animales.sort((a, b) => a.posicion_mapa - b.posicion_mapa);
-      this.plantas.sort((a, b) => a.posicion_mapa - b.posicion_mapa);
+      // Ordenamos por `posicion_mapa` y solo mostramos el número de elementos visibles
+      this.displayedAnimals = [...this.animalesOriginal]
+        .sort((a, b) => a.posicion_mapa - b.posicion_mapa)
+        .slice(0, this.currentPageAnimals * this.itemsPerPage);
+
+      this.displayedPlantas = [...this.plantasOriginal]
+        .sort((a, b) => a.posicion_mapa - b.posicion_mapa)
+        .slice(0, this.currentPagePlantas * this.itemsPerPage);
     }
-    this.isSortedByMap = !this.isSortedByMap; // Cambiar el estado
+
+    this.isSortedByMap = !this.isSortedByMap;
   }
+
 
   toggleQrScan() {
     this.isScanning = !this.isScanning;
@@ -125,23 +195,6 @@ export class InicioPage implements OnInit {
       this.scanner.reset();
     }
   }
-
-  // onCodeResult(result: string) {
-  //   console.log('Contenido escaneado:', result);
-  //   this.isScanning = false;
-
-
-  //   if (result) {
-  //     if (this.scanner) {
-  //       this.scanner.reset();
-  //     }
-  //     this.router.navigate(['/animal-info/', result]);
-  //   } else {
-  //     if (this.scanner) {
-  //       this.scanner.reset();
-  //     }
-  //   }
-  // }
 
   onCodeResult(result: string) {
     console.log('Contenido escaneado:', result);
@@ -151,20 +204,14 @@ export class InicioPage implements OnInit {
       if (this.scanner) {
         this.scanner.reset();
       }
-
-      // Verificamos si el ID pertenece a un animal o una planta
       this.animalsService.getAnimalById(result).subscribe((animal) => {
         if (animal) {
-          // Si se encuentra un animal con ese ID, redirigir a /animal-info
           this.router.navigate(['/animal-info', result]);
         } else {
-          // Si no es un animal, buscamos en plantas
           this.animalsService.getPlantaById(result).subscribe((planta) => {
             if (planta) {
-              // Si se encuentra una planta con ese ID, redirigir a /planta-info
               this.router.navigate(['/planta-info', result]);
             } else {
-              // Si no se encuentra ni un animal ni una planta, mostrar un mensaje de error o manejo adicional
               console.error('No se encontró información para el ID escaneado.');
             }
           });
@@ -177,18 +224,10 @@ export class InicioPage implements OnInit {
     }
   }
 
-  // extractAnimalId(result: string): string | null {
-  //   console.log('Procesando URL:', result);
-  //   const regex = /animal-info\/(\w+)/;
-  //   const match = result.match(regex);
-  //   return match ? match[1] : null;
-  // }
-
   loadAnimalsWithReactions() {
     this.animalsService.getAnimales().subscribe((animales: Animal[]) => {
       this.animales = animales;
       this.animalesOriginal = [...animales];
-
       this.animales.forEach(animal => {
         this.animalsService.getUserReaction(animal.id, this.userId).subscribe(reaction => {
           animal.reaccion = reaction ? reaction.reaction : null;
@@ -201,7 +240,6 @@ export class InicioPage implements OnInit {
     this.animalsService.getPlantas().subscribe((plantas: Planta[]) => {
       this.plantas = plantas;
       this.plantasOriginal = [...plantas];
-  
       this.plantas.forEach(planta => {
         this.animalsService.getUserReactionPlanta(planta.id, this.userId).subscribe(reaction => {
           planta.reaccion = reaction ? reaction.reaction : null;
@@ -210,13 +248,11 @@ export class InicioPage implements OnInit {
     });
   }
 
-
-
   like(animalId: string) {
     const animal = this.animales.find(a => a.id === animalId);
     if (animal) {
       animal.reaccion = true;
-      const tipo = localStorage.getItem('tipo') || 'desconocido'; // Obtenemos el tipo de usuario
+      const tipo = localStorage.getItem('tipo') || 'desconocido';
 
       this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
         if (existingReaction && existingReaction.id) {
@@ -229,7 +265,7 @@ export class InicioPage implements OnInit {
             userId: this.userId,
             reaction: true,
             fecha: new Date(),
-            tipo // Incluimos el tipo de usuario en la nueva reacción
+            tipo
           };
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como Like');
@@ -243,7 +279,7 @@ export class InicioPage implements OnInit {
     const animal = this.animales.find(a => a.id === animalId);
     if (animal) {
       animal.reaccion = false;
-      const tipo = localStorage.getItem('tipo') || 'desconocido'; // Obtenemos el tipo de usuario
+      const tipo = localStorage.getItem('tipo') || 'desconocido';
 
       this.animalsService.getUserReaction(animalId, this.userId).subscribe(existingReaction => {
         if (existingReaction && existingReaction.id) {
@@ -256,7 +292,7 @@ export class InicioPage implements OnInit {
             userId: this.userId,
             reaction: false,
             fecha: new Date(),
-            tipo // Incluimos el tipo de usuario en la nueva reacción
+            tipo
           };
           this.animalsService.addReaction(reaction).subscribe(() => {
             console.log('Reacción guardada como No me gusta');
@@ -265,8 +301,6 @@ export class InicioPage implements OnInit {
       });
     }
   }
-
-
 
   likePlanta(plantaId: string) {
     const planta = this.plantas.find(p => p.id === plantaId);
@@ -320,8 +354,5 @@ export class InicioPage implements OnInit {
         }
       });
     }
-  } 
-
-
-
+  }
 }

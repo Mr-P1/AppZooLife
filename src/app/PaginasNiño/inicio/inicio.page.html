@@ -1,4 +1,5 @@
 <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+<ion-content #contentRef (ionScroll)="onScroll($event)">
 
 <ion-content>
   <div class="custom-background-container">
@@ -50,139 +51,107 @@
     </ion-button>
   </div>
 
-  <div class="listado-animales" *ngIf="!mostrarPlantas">
-    <div class="header-container">
-      <h2>FAUNA</h2>
-    </div>
-
-    <ion-card *ngFor="let animal of animales" class="animal-card">
-      <div class="image-container">
-        <!-- Mostrar la imagen si el video no está visible -->
-        <img
-          *ngIf="!animal.mostrarVideo"
-          alt="{{ animal.nombre_comun }}"
-          src="{{ animal.imagen }}"
-          (click)="toggleVideo(animal)"
-        />
-
-        <!-- Mostrar el video si el video está visible -->
-        <video
-          *ngIf="animal.mostrarVideo"
-          width="100%"
-          height="auto"
-          controls
-          autoplay
-          (click)="toggleVideo(animal)"
-          (ended)="videoEnded(animal)"
-        >
-          <source [src]="animal.video" type="video/mp4" />
-          Tu navegador no soporta la reproducción de video.
-        </video>
-
-        <div class="icono-numero">{{ animal.posicion_mapa }}</div>
+    <!-- Contenido de animales o plantas -->
+    <div class="listado-animales" *ngIf="!mostrarPlantas">
+      <div class="header-container">
+        <h2>FAUNA</h2>
       </div>
-      <ion-card-header class="card-header">
-        <div class="header-content">
-          <ion-button fill="clear" (click)="like(animal.id)">
-            <img
-              [src]="animal.reaccion === true
-                      ? '../../../assets/icon/likeVerde.png'
-                      : '../../../assets/icon/likeNegro.png'"
-              alt="Me gusta"
-            />
-          </ion-button>
-
-          <div class="title-container">
-            <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
-          </div>
-
-          <ion-button fill="clear" (click)="dontLike(animal.id)">
-            <img
-              [src]="animal.reaccion === false
-                      ? '../../../assets/icon/dislikeRojo.png'
-                      : '../../../assets/icon/dislikeNegro.png'"
-              alt="No me gusta"
-            />
-          </ion-button>
+      <ion-card *ngFor="let animal of displayedAnimals" class="animal-card">
+        <div class="image-container">
+          <img
+            *ngIf="!animal.mostrarVideo"
+            alt="{{ animal.nombre_comun }}"
+            src="{{ animal.imagen }}"
+            (click)="toggleVideo(animal)"
+          />
+          <video
+            *ngIf="animal.mostrarVideo"
+            width="100%"
+            height="auto"
+            controls
+            autoplay
+            (click)="toggleVideo(animal)"
+            (ended)="videoEnded(animal)"
+          >
+            <source [src]="animal.video" type="video/mp4" />
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <div class="icono-numero">{{ animal.posicion_mapa }}</div>
         </div>
-      </ion-card-header>
-
-      <div class="audio-container" *ngIf="animal.audio">
-        <ion-card-subtitle>Audio Explicativo</ion-card-subtitle>
-        <audio controls>
-          <source [src]="animal.audio" type="audio/mp3" />
-          Tu navegador no soporta la reproducción de audio.
-        </audio>
-      </div>
-      <div class="audio-container" *ngIf="animal.audioAnimal">
-        <ion-card-subtitle>Audio Animal</ion-card-subtitle>
-        <audio controls>
-          <source [src]="animal.audioAnimal" type="audio/mp3" />
-          Tu navegador no soporta la reproducción de audio.
-        </audio>
-      </div>
-    </ion-card>
-  </div>
+        <ion-card-header class="card-header">
+          <div class="header-content">
+            <ion-button fill="clear" (click)="like(animal.id)">
+              <img
+                [src]="animal.reaccion === true ? '../../../assets/icon/likeVerde.png' : '../../../assets/icon/likeNegro.png'"
+                alt="Me gusta"
+              />
+            </ion-button>
+            <div class="title-container">
+              <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
+            </div>
+            <ion-button fill="clear" (click)="dontLike(animal.id)">
+              <img
+                [src]="animal.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'"
+                alt="No me gusta"
+              />
+            </ion-button>
+          </div>
+        </ion-card-header>
+        <div class="audio-container" *ngIf="animal.audio">
+          <ion-card-subtitle>Audio Explicativo</ion-card-subtitle>
+          <audio controls>
+            <source [src]="animal.audio" type="audio/mp3" />
+            Tu navegador no soporta la reproducción de audio.
+          </audio>
+        </div>
+      </ion-card>
+    </div>
 
   <div class="listado-animales" *ngIf="mostrarPlantas">
     <div class="header-container">
       <h2>FLORA</h2>
     </div>
-
-    <ion-card *ngFor="let planta of plantas" class="animal-card">
+    <ion-card *ngFor="let planta of displayedPlantas" class="animal-card">
       <div class="image-container">
-        <!-- Mostrar la imagen si el video no está visible -->
         <img
           *ngIf="!planta.mostrarVideo"
           alt="{{ planta.nombre_comun }}"
           src="{{ planta.imagen }}"
           (click)="toggleVideoPlanta(planta)"
         />
-
-         <!-- Mostrar el video si el video está visible -->
-      <video
-      *ngIf="planta.mostrarVideo"
-      width="100%"
-      height="auto"
-      controls
-      autoplay
-      (click)="toggleVideoPlanta(planta)"
-      (ended)="videoEndedPlanta(planta)"
-      >
-
-      <source [src]="planta.video" type="video/mp4" />
-        Tu navegador no soporta la reproducción de video.
-      </video>
-
-
+        <video
+          *ngIf="planta.mostrarVideo"
+          width="100%"
+          height="auto"
+          controls
+          autoplay
+          (click)="toggleVideoPlanta(planta)"
+          (ended)="videoEndedPlanta(planta)"
+        >
+          <source [src]="planta.video" type="video/mp4" />
+          Tu navegador no soporta la reproducción de video.
+        </video>
         <div class="icono-numero">{{ planta.posicion_mapa }}</div>
       </div>
       <ion-card-header class="card-header">
         <div class="header-content">
           <ion-button fill="clear" (click)="likePlanta(planta.id)">
             <img
-              [src]="planta.reaccion === true
-                      ? '../../../assets/icon/likeVerde.png'
-                      : '../../../assets/icon/likeNegro.png'"
+              [src]="planta.reaccion === true ? '../../../assets/icon/likeVerde.png' : '../../../assets/icon/likeNegro.png'"
               alt="Me gusta"
             />
           </ion-button>
-
           <div class="title-container">
             <ion-card-title>{{ planta.nombre_comun }}</ion-card-title>
           </div>
-
           <ion-button fill="clear" (click)="dontLikePlanta(planta.id)">
             <img
-              [src]="planta.reaccion === false
-                      ? '../../../assets/icon/dislikeRojo.png'
-                      : '../../../assets/icon/dislikeNegro.png'"
+              [src]="planta.reaccion === false ? '../../../assets/icon/dislikeRojo.png' : '../../../assets/icon/dislikeNegro.png'"
               alt="No me gusta"
             />
           </ion-button>
         </div>
       </ion-card-header>
-
       <div class="audio-container" *ngIf="planta.audio">
         <ion-card-subtitle>Audio Explicativo</ion-card-subtitle>
         <audio controls>
@@ -190,19 +159,22 @@
           Tu navegador no soporta la reproducción de audio.
         </audio>
       </div>
-
-      <div class="audio-container" *ngIf="planta.audioPlanta">
-        <ion-card-subtitle>Audio Planta</ion-card-subtitle>
-        <audio controls>
-          <source [src]="planta.audioPlanta" type="audio/mp3" />
-          Tu navegador no soporta la reproducción de audio.
-        </audio>
-      </div>
-
-
-
-
     </ion-card>
+
   </div>
+     <!-- Infinite Scroll -->
+     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Cargando más..."
+      ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  <!-- Botón para volver al inicio -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="showScrollToTop">
+    <ion-fab-button (click)="scrollToTop()">
+      <ion-icon name="arrow-up"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
