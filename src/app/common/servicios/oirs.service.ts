@@ -3,6 +3,7 @@ import { Firestore, collection, addDoc, collectionData, query, where, Timestamp 
 import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // Definición de la interfaz para OIRS
 export interface oirs {
@@ -30,6 +31,9 @@ export class OirsService {
   private _firestore = inject(Firestore);
   private _storage = inject(Storage);
   private _rutaOirs = collection(this._firestore, PATH_Oirs);
+
+  constructor(private _http: HttpClient) {}
+
 
   // Obtener las solicitudes OIRS de un usuario específico
   getOirsUsuario(userId: string): Observable<oirs[]> {
@@ -62,9 +66,18 @@ export class OirsService {
     // Guardar el documento en Firestore
     await addDoc(this._rutaOirs, oirsToSave);
   }
+  private cloudFunctionUrl = ' https://us-central1-appzoolife.cloudfunctions.net/sendOIRSEmailFunction';
 
 
+    // Llamar a la función de Firebase para enviar correo
+    sendOIRSEmail(oirsType: string, email: string): Observable<any> {
+      const body = {
+        type: oirsType,
+        to: email,
+        secret: 'firebaseIsCool'
+      };
 
-
+      return this._http.post(this.cloudFunctionUrl, body);
+    }
 
 }
