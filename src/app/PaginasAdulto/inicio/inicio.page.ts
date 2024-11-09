@@ -26,6 +26,9 @@ export class InicioPage implements OnInit, AfterViewInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
+
+
+
   animales: Animal[] = [];
   plantas: Planta[] = [];
   displayedAnimals: Animal[] = [];
@@ -42,6 +45,14 @@ export class InicioPage implements OnInit, AfterViewInit {
   isSortedByMap: boolean = false;
   filteredItems: (Animal | Planta)[] = [];
   mostrarPlantas: boolean = false;
+  areas: string[] = []; // Lista de áreas únicas
+  currentAreaIndex: number = 0; // Índice para rastrear el área actual
+  selectedArea: string | null = null; // Área seleccionada para mostrar en el encabezado
+  floraAreas: string[] = []; // Lista de áreas únicas para plantas
+  currentFloraAreaIndex: number = 0; // Índice para rastrear el área actual de plantas
+
+
+
 
   constructor(
     private animalsService: FirestoreService,
@@ -62,6 +73,9 @@ export class InicioPage implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loadAnimals();
     this.loadPlantas();
+    this.floraAreas = [...new Set(this.plantas.map(planta => planta.area).filter(area => area !== undefined))];
+
+
 
     this.authService.authState$.subscribe(user => {
       if (user) {
@@ -71,6 +85,7 @@ export class InicioPage implements OnInit, AfterViewInit {
       }
     });
   }
+
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -85,6 +100,9 @@ export class InicioPage implements OnInit, AfterViewInit {
       this.animales = data;
       this.animalesOriginal = [...data];
       this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
+
+      // Obtener una lista única de áreas
+      this.areas = [...new Set(this.animales.map(animal => animal.area))];
     });
   }
 
@@ -93,6 +111,15 @@ export class InicioPage implements OnInit, AfterViewInit {
       this.plantas = data;
       this.plantasOriginal = [...data];
       this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
+
+      // Inspecciona los datos de plantas y verifica que cada una tenga `area`
+      console.log('Datos de plantas:', this.plantas);
+
+      // Llenar `floraAreas` con áreas únicas de las plantas
+      this.floraAreas = [...new Set(this.plantas.map(planta => planta.area))];
+
+      // Verifica que `floraAreas` contiene áreas válidas
+      console.log('Áreas de flora cargadas:', this.floraAreas);
     });
   }
 
@@ -151,21 +178,50 @@ export class InicioPage implements OnInit, AfterViewInit {
     }
   }
 
+  filterByArea() {
+    if (this.mostrarPlantas) {
+      // Asegúrate de que `currentFloraAreaIndex` esté dentro de los límites de `floraAreas`
+      if (this.floraAreas.length > 0) {
+        this.selectedArea = this.floraAreas[this.currentFloraAreaIndex];
+        this.displayedPlantas = this.plantas.filter(planta => planta.area === this.selectedArea);
+
+        // Avanza al siguiente área en la lista y reinicia si llega al final
+        this.currentFloraAreaIndex = (this.currentFloraAreaIndex + 1) % this.floraAreas.length;
+
+        // Verifica que `selectedArea` y `displayedPlantas` sean correctos
+        console.log('Área seleccionada para flora:', this.selectedArea);
+        console.log('Plantas mostradas después del filtrado:', this.displayedPlantas);
+      } else {
+        console.warn('No hay áreas válidas para flora en `floraAreas`');
+      }
+    } else {
+      // Lógica de filtrado para animales
+      this.selectedArea = this.areas[this.currentAreaIndex];
+      this.displayedAnimals = this.animales.filter(animal => animal.area === this.selectedArea);
+      this.currentAreaIndex = (this.currentAreaIndex + 1) % this.areas.length;
+      console.log('Área seleccionada para fauna:', this.selectedArea);
+      console.log('Animales mostrados después del filtrado:', this.displayedAnimals);
+    }
+  }
+
   goToItem(item: Animal | Planta) {
     const route = 'familia' in item ? '/planta-info' : '/animal-info';
     this.router.navigate([route, item.id]);
     this.searchTerm = '';
     this.filteredItems = [];
   }
-
   toggleMostrarPlantas() {
     this.mostrarPlantas = !this.mostrarPlantas;
+    this.selectedArea = null; // Reinicia el área seleccionada al cambiar entre flora y fauna
+
     if (this.mostrarPlantas) {
       this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
-      this.currentPagePlantas = 1;
+      this.currentFloraAreaIndex = 0; // Reinicia el índice de flora
+      console.log('Modo: Flora'); // Verificación de estado
     } else {
       this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
-      this.currentPageAnimals = 1;
+      this.currentAreaIndex = 0; // Reinicia el índice de fauna
+      console.log('Modo: Fauna'); // Verificación de estado
     }
     this.enableInfiniteScroll();
   }

@@ -67,22 +67,29 @@
         <p class="button-text">Especie</p>
       </div>
 
-      <div class="button-item">
-        <ion-button fill="clear" class="custom-button">
-          <ion-icon class="icono" name="map-outline"></ion-icon>
-        </ion-button>
-        <p class="button-text">Área</p>
+      <div class="buttons-container">
+        <div class="button-item">
+          <ion-button fill="clear" class="custom-button" (click)="filterByArea()">
+            <ion-icon class="icono" name="map-outline"></ion-icon>
+          </ion-button>
+          <p class="button-text">Área</p>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="listado-animales" *ngIf="!mostrarPlantas">
-    <div class="header-container">
-      <h2>Fauna</h2>
-    </div>
+      <!-- Muestra el área seleccionada como encabezado sobre la lista de animales -->
+  <div class="header-container" *ngIf="selectedArea">
+    <h2>Área: {{ selectedArea }}</h2> <!-- Muestra el área actualmente seleccionada -->
+  </div>
+  <div class="header-container">
+    <h2>Fauna</h2> <!-- Encabezado centrado de "Fauna" -->
+  </div>
 
-    <ion-card *ngFor="let animal of displayedAnimals" class="animal-card">
-      <div class="image-container">
+
+      <ion-card *ngFor="let animal of displayedAnimals" class="animal-card">
+        <div class="image-container">
         <img
           alt="{{ animal.nombre_comun }}"
           src="{{ animal.imagen }}"
@@ -117,8 +124,16 @@
       <h2>Flora</h2>
     </div>
 
-    <ion-card *ngFor="let planta of displayedPlantas" class="animal-card">
-      <div class="image-container">
+
+  <!-- Subtítulo con el área seleccionada -->
+  <div class="subheader-container" *ngIf="selectedArea">
+    <h3>Área: {{ selectedArea }}</h3>
+  </div>
+
+
+
+  <ion-card *ngFor="let planta of displayedPlantas" class="animal-card">
+    <div class="image-container">
         <img
           alt="{{ planta.nombre_comun }}"
           src="{{ planta.imagen }}"

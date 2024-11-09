@@ -23,4 +23,6 @@ export interface Planta {
   reaccion: boolean | null;
   mostrarVideo?: boolean; // Propiedad opcional para mostrar el video
   audioPlanta?: string; // Para el audio específico de la planta
+  area: string; // Esta propiedad es necesaria para el filtrado por área
+
 }
