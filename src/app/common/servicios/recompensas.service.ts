@@ -71,7 +71,7 @@ export class RecompensasService {
 
   getPremiosUsuario(id: string): Observable<premiosUsuario[]> {
     const oirsQuery = query(this._rutaRecompensasUsuario, where('usuarioId', '==', id));
-    return collectionData(oirsQuery, { idField: 'id' }) as Observable<premiosUsuario[]>;
+    return collectionData(oirsQuery, { idField: 'id' }) as Observable<premiosUsuario[]>; // Asegura que el ID se incluya
   }
 
 
@@ -117,6 +117,27 @@ export class RecompensasService {
       console.error('Error al actualizar los puntos del usuario:', error);
     }
   }
+
+  async reclamarPremio(codigo: string) {
+    try {
+      // Consulta para buscar el documento con el campo `codigo` igual al valor proporcionado
+      const q = query(this._rutaRecompensasUsuario, where('codigo', '==', codigo));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        throw new Error("No se encontró el documento en la colección 'PremiosUsuarios' con el código especificado.");
+      }
+
+      // Si se encuentra el documento, actualizamos el estado del primer documento obtenido
+      const docRef = querySnapshot.docs[0].ref;
+      await updateDoc(docRef, { estado: false });
+      console.log('Premio reclamado exitosamente.');
+    } catch (error) {
+      console.error('Error al reclamar el premio:', error);
+    }
+  }
+
+
 
 
 
