@@ -32,7 +32,6 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
     // El ngOnInit se llama solo una vez cuando la página se crea por primera vez.
-    this.loadUserData();
     this.tipo = localStorage.getItem('tipo')!;
     this.edad = localStorage.getItem('edad')!;
     this.loadTopUsuarios();
@@ -42,6 +41,7 @@ export class PerfilPage implements OnInit {
   ionViewWillEnter() {
     // ionViewWillEnter se ejecuta cada vez que se navega a esta página
     this.loadUserData();
+    console.log(this.usuario)
   }
 
   async loadUserData() {

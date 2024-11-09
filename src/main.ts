@@ -10,13 +10,14 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { environment } from './environments/environment.prod';
+import { provideHttpClient } from '@angular/common/http'; // Importa provideHttpClient
 
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes, withPreloading(PreloadAllModules)), 
+    provideRouter(routes, withPreloading(PreloadAllModules)),
     provideFirebaseApp(() => initializeApp(
       {
         "projectId": "appzoolife",
@@ -28,8 +29,9 @@ bootstrapApplication(AppComponent, {
         "measurementId": "G-J0ZQJR6W0K"
       }
     )),
-    provideAuth(() => getAuth()), 
+    provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
+    provideHttpClient()
   ],
 });
