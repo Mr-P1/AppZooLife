@@ -46,27 +46,25 @@ export class AnimalInfoPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    const userId = this.authService.currentUserId;
+  const metodoIngreso = this.route.snapshot.queryParamMap.get('metodo');
+  const userId = this.authService.currentUserId;
 
-    if (id) {
-      this.animal$ = this.animalService.getAnimal(id);
+  if (id && metodoIngreso) {
+    this.animal$ = this.animalService.getAnimal(id);
 
-      if (userId) {
-        // Inicia un temporizador de 20 segundos para contar el animal como visto
-        this.viewTimeout = setTimeout(() => {
-          // Guarda el animal en Firebase solo después de 20 segundos
-          this.animalService.usuarioHaVistoAnimal(userId, id).subscribe(haVisto => {
-            if (!haVisto) {
-              this.animalService.guardarAnimalVisto(userId, id).subscribe({
-                next: () => console.log('Animal visto guardado exitosamente después de 2 segundos'),
-                error: (error) => console.error('Error al guardar el animal visto', error)
-              });
-            }
-            this.incrementarYVerificarVistasSesion(id); // Llama al contador de vistas de la sesión
-          });
-        }, 2000); // 20 segundos en milisegundos
-      }
+    if (userId) {
+      // Guarda la visualización cada vez que se accede a la página
+      this.animalService.guardarAnimalVisto(userId, id, metodoIngreso).subscribe({
+        next: () => console.log('Animal visto guardado con método de ingreso:', metodoIngreso),
+        error: (error) => console.error('Error al guardar el animal visto', error)
+      });
+
+      // Inicia el temporizador para el conteo de vistas de sesión
+      this.viewTimeout = setTimeout(() => {
+        this.incrementarYVerificarVistasSesion(id);
+      }, 2000); // 20 segundos en milisegundos
     }
+  }
   }
 
   ngOnDestroy() {
