@@ -206,10 +206,11 @@ export class InicioPage implements OnInit, AfterViewInit {
 
   goToItem(item: Animal | Planta) {
     const route = 'familia' in item ? '/planta-info' : '/animal-info';
-    this.router.navigate([route, item.id]);
+    this.router.navigate([route, item.id], { queryParams: { metodo: 'searchbar' } });
     this.searchTerm = '';
     this.filteredItems = [];
   }
+
   toggleMostrarPlantas() {
     this.mostrarPlantas = !this.mostrarPlantas;
     this.selectedArea = null; // Reinicia el área seleccionada al cambiar entre flora y fauna
@@ -260,13 +261,16 @@ export class InicioPage implements OnInit, AfterViewInit {
       if (this.scanner) {
         this.scanner.reset();
       }
+
       this.animalsService.getAnimalById(result).subscribe((animal) => {
         if (animal) {
-          this.router.navigate(['/animal-info', result]);
+          // Navega a la información del animal con el parámetro de método de ingreso 'qr'
+          this.router.navigate(['/animal-info', result], { queryParams: { metodo: 'qr' } });
         } else {
           this.animalsService.getPlantaById(result).subscribe((planta) => {
             if (planta) {
-              this.router.navigate(['/planta-info', result]);
+              // Navega a la información de la planta con el parámetro de método de ingreso 'qr'
+              this.router.navigate(['/planta-info', result], { queryParams: { metodo: 'qr' } });
             } else {
               console.error('No se encontró información para el ID escaneado.');
             }
@@ -279,6 +283,7 @@ export class InicioPage implements OnInit, AfterViewInit {
       }
     }
   }
+
 
   loadAnimalsWithReactions() {
     this.animalsService.getAnimales().subscribe((animales: Animal[]) => {
