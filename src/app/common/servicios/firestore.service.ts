@@ -129,10 +129,11 @@ export class FirestoreService {
   }
 
   // Método para guardar el animal visto
-  guardarAnimalVisto(userId: string, animalId: string): Observable<void> {
+  guardarAnimalVisto(userId: string, animalId: string, metodoIngreso?: string): Observable<void> {
     const animalVisto = {
       userId,
       animalId,
+      metodoIngreso,
       vistoEn: new Date().toISOString(),
     };
     return from(addDoc(this._rutaAnimalesVistos, animalVisto)).pipe(map(() => { }));

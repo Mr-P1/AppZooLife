@@ -50,7 +50,7 @@ export class RecompensasPage implements OnInit {
       this.recompensas = data;
     })
 
-    this.loadUserData(); 
+    this.loadUserData();
 
     const tipo = localStorage.getItem("tipo");
     console.log(localStorage.getItem("tipo"))
@@ -142,9 +142,24 @@ export class RecompensasPage implements OnInit {
     }
   }
 
-  mostrarCodigo(premio: PremioUsuario & Premio) {
+  async mostrarCodigo(premio: PremioUsuario & Premio) {
+    console.log("Código del premio usuario:", premio.codigo); // Confirma que tienes el código correcto
+
+    // Muestra el código del premio
     alert(`El código asociado al premio es: ${premio.codigo}`);
+
+    try {
+      await this._recompensasService.reclamarPremio(premio.codigo); // Pasa el código en lugar del ID
+      premio.estado = false; // Actualiza el estado localmente
+      console.log(`El estado del premio "${premio.nombre}" ha cambiado a 'reclamado'.`);
+    } catch (error) {
+      console.error('Error al actualizar el estado del premio:', error);
+    }
   }
+
+
+
+
 
 
 

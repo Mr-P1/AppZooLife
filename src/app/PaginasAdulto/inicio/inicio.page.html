@@ -100,6 +100,7 @@
           alt="{{ animal.nombre_comun }}"
           src="{{ animal.imagen }}"
           [routerLink]="['/animal-info', animal.id]"
+          [queryParams]="{ metodo: 'card' }"
         />
         <div class="icono-numero">{{ animal.posicion_mapa }}</div>
       </div>
