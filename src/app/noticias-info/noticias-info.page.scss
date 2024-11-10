@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+
+/* Fondo principal */
+ion-content {
+  --background: none;
+  background-image: url('./../../assets/fondos/fondo_paginas.jpg'); /* Cambia la ruta si es necesario */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Estilo de la tarjeta de detalles de la noticia */
+.info-card {
+  margin: 15px;
+  border-radius: 15px;
+  overflow: hidden;
+  background-image: url('./../../assets/fondos/fondocardinfo3.png'); /* Cambia la ruta si es necesario */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 15px;
+}
+
+/* Imagen de la noticia */
+.image-container {
+  position: relative;
+  text-align: center;
+  padding: 5px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Encabezado de la tarjeta */
+ion-card-title {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: rgb(78, 41, 5);
+  text-align: center;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Subtítulo de la tarjeta (Fecha de publicación) */
+ion-card-subtitle {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: rgb(78, 41, 5);
+  text-align: center;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Contenido de la tarjeta de noticia */
+ion-card-content p {
+  font-size: 1rem;
+  color: rgb(78, 41, 5);
+  line-height: 1.5;
+  font-family: 'Work Sans', sans-serif;
+  text-align: justify;
+  margin-top: 10px;
+}

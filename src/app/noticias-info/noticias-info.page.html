@@ -1,13 +1,38 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>noticias-info</ion-title>
+    <ion-title>Detalles de la Noticia</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">noticias-info</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <!-- Muestra la noticia cuando esté disponible -->
+  <ng-container *ngIf="noticia$ | async as noticia; else loading">
+    <ion-card class="info-card">
+      <!-- Imagen de la noticia -->
+      <div class="image-container">
+        <img [src]="noticia.imagen" [alt]="noticia.titulo" />
+      </div>
+
+      <ion-card-header>
+        <!-- Título de la noticia -->
+        <ion-card-title>{{ noticia.titulo }}</ion-card-title>
+        <!-- Fecha de publicación -->
+        <ion-card-subtitle>Publicado el {{ noticia.fecha_publicacion || noticia.fecha }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <!-- Descripción o contenido completo de la noticia -->
+        <p>{{ noticia.descripcion }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- Mensaje de carga mientras se obtienen los datos -->
+  <ng-template #loading>
+    <ion-card>
+      <ion-card-content>
+        <p>Cargando información de la noticia...</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>

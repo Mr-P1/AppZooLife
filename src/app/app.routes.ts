@@ -125,8 +125,8 @@ export const routes: Routes = [
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
   },
   {
-    path: 'noticias-info',
-    loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
+    path: 'noticias-info/:id', // Ruta que acepta el parámetro `id`
+    loadComponent: () => import('./noticias-info/noticias-info.page').then(m => m.NoticiasInfoPage)
   },
   {
     path: 'oirs',
