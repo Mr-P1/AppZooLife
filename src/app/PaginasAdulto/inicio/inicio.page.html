@@ -61,7 +61,7 @@
       </div>
 
       <div class="button-item">
-        <ion-button fill="clear" class="custom-button">
+        <ion-button fill="clear" class="custom-button" (click)="filterByEspecie()">
           <img src="../../../assets/icon/huellaIcon.png" alt="Huella Icon" />
         </ion-button>
         <p class="button-text">Especie</p>
@@ -79,14 +79,20 @@
   </div>
 
   <div class="listado-animales" *ngIf="!mostrarPlantas">
-      <!-- Muestra el área seleccionada como encabezado sobre la lista de animales -->
-  <div class="header-container" *ngIf="selectedArea">
-    <h2>Área: {{ selectedArea }}</h2> <!-- Muestra el área actualmente seleccionada -->
-  </div>
-  <div class="header-container">
-    <h2>Fauna</h2> <!-- Encabezado centrado de "Fauna" -->
-  </div>
 
+          <!-- Mostrar encabezado de Especie solo cuando está activo el filtro de especie -->
+    <div class="header-container" *ngIf="isFilteredByEspecie && selectedEspecie">
+      <h2>Tipo de Especie: {{ selectedEspecie }}</h2>
+    </div>
+     <!-- Mostrar encabezado de Área solo cuando está activo el filtro de área -->
+     <div class="header-container" *ngIf="isFilteredByArea && selectedArea">
+      <h2>Área: {{ selectedArea }}</h2>
+    </div>
+
+    <!-- Encabezado principal de Fauna -->
+    <div class="header-container">
+      <h2>Fauna</h2>
+    </div>
 
       <ion-card *ngFor="let animal of displayedAnimals" class="animal-card">
         <div class="image-container">
@@ -120,18 +126,27 @@
     </ion-card>
   </div>
 
-  <div class="listado-animales" *ngIf="mostrarPlantas">
-    <div class="header-container">
-      <h2>Flora</h2>
+
+
+
+      <!-- Encabezado de Especie solo cuando se filtra por especie -->
+      <div class="listado-animales" *ngIf="mostrarPlantas">
+
+        <!-- Mostrar encabezado de Especie solo cuando está activo el filtro de especie -->
+     <div class="header-container" *ngIf="isFilteredByEspecie && selectedEspecie">
+      <h2>Tipo de Especie: {{ selectedEspecie }}</h2>
     </div>
 
 
-  <!-- Subtítulo con el área seleccionada -->
-  <div class="subheader-container" *ngIf="selectedArea">
-    <h3>Área: {{ selectedArea }}</h3>
-  </div>
+        <!-- Mostrar encabezado de Área solo cuando está activo el filtro de área -->
+        <div class="header-container" *ngIf="isFilteredByArea && selectedArea">
+          <h2>Área: {{ selectedArea }}</h2>
+        </div>
 
-
+    <!-- Encabezado principal de Flora -->
+     <div class="header-container">
+      <h2>Flora</h2>
+    </div>
 
   <ion-card *ngFor="let planta of displayedPlantas" class="animal-card">
     <div class="image-container">
