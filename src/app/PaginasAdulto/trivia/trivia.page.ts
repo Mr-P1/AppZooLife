@@ -2,19 +2,26 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { IonicModule, ModalController } from '@ionic/angular';
+import { RatingModalComponent } from './../../common/componentes/rating-modal/rating-modal.component';
 import { PreguntaTrivia } from 'src/app/common/models/trivia.models';
 import { FirestoreService } from 'src/app/common/servicios/firestore.service';
 import { AuthService } from './../../common/servicios/auth.service';
 import { Usuario } from 'src/app/common/models/usuario.model';
-import { RouterLink, Router, RouterModule } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonButton, IonCardContent, IonSpinner } from '@ionic/angular/standalone';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-trivia',
   templateUrl: './trivia.page.html',
   styleUrls: ['./trivia.page.scss'],
   standalone: true,
-  imports: [IonSpinner, IonCardContent, IonButton, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterModule]
+  imports: [
+    IonicModule, // Importa solo IonicModule para evitar duplicados
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    RatingModalComponent // Importa el modal para poder usarlo en esta página
+  ]
 })
 export class TriviaPage implements OnInit, OnDestroy {
 
@@ -40,7 +47,7 @@ export class TriviaPage implements OnInit, OnDestroy {
   constructor(
     private preguntaService: FirestoreService,
     private authService: AuthService,
-    private _router: Router
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -88,9 +95,9 @@ export class TriviaPage implements OnInit, OnDestroy {
     const triviaFecha = localStorage.getItem(`triviaFecha-${this.userId}`);
     const hoy = new Date().toISOString().split('T')[0]; // Solo la fecha en formato YYYY-MM-DD
 
-    console.log(  triviaFecha)
+    console.log(triviaFecha);
+    console.log(hoy);
 
-    console.log( hoy)
     if (triviaFecha === hoy) {
       return false; // Ya hizo trivia hoy
     } else {
@@ -195,7 +202,6 @@ export class TriviaPage implements OnInit, OnDestroy {
     let nivelGanado = 0;
 
     for (const pregunta of this.preguntasRandom) {
-      // Determinamos si la pregunta fue respondida
       const respuestaCorrecta = pregunta.respondida ? pregunta.respuestaCorrecta ?? false : false;
 
       const respuesta = {
@@ -203,25 +209,22 @@ export class TriviaPage implements OnInit, OnDestroy {
         user_id: this.userId,
         pregunta_id: pregunta.id,
         fecha: new Date(),
-        abandonada: true, // Indica que todas las respuestas son abandonadas
+        abandonada: true,
         tiempoRespuesta: pregunta.respondida ? (Date.now() - this.tiempoInicio) / 1000 : 0,
         genero_usuario: this.usuario?.genero,
         tipo: this.tipo
       };
 
-      // Guardar la respuesta en la base de datos
       this.preguntaService.guardarRespuestaTrivia(respuesta).subscribe(() => {
         console.log(`Respuesta guardada con abandonada: ${respuesta.abandonada}, resultado: ${respuesta.resultado}`);
       });
 
-      // Solo aumentamos puntos si fue correcta y no está abandonada (es decir, si fue respondida correctamente)
       if (respuestaCorrecta && !abandonada) {
-        nivelGanado += 3; // 3 puntos de nivel por respuesta correcta
+        nivelGanado += 3;
         puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 5;
       }
     }
 
-    // Actualizar los puntos y el nivel solo si la trivia se completó
     if (!abandonada) {
       const nuevoPuntaje = this.usuario.puntos + puntosGanados;
       const nuevoNivel = this.usuario.nivel + nivelGanado;
@@ -236,4 +239,10 @@ export class TriviaPage implements OnInit, OnDestroy {
     }
   }
 
+  async mostrarCalificacion() {
+    const modal = await this.modalController.create({
+      component: RatingModalComponent
+    });
+    return await modal.present();
+  }
 }
