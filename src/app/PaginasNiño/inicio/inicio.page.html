@@ -104,6 +104,13 @@
             Tu navegador no soporta la reproducción de audio.
           </audio>
         </div>
+        <div class="audio-container" *ngIf="animal?.audioAnimal">
+          <ion-card-subtitle>Audio Animal</ion-card-subtitle>
+          <audio controls>
+            <source [src]="animal?.audioAnimal" type="audio/mp3" />
+            Tu navegador no soporta la reproducción de audio.
+          </audio>
+        </div>
       </ion-card>
     </div>
 

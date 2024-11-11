@@ -88,6 +88,9 @@ export class TriviaPage implements OnInit, OnDestroy {
     const triviaFecha = localStorage.getItem(`triviaFecha-${this.userId}`);
     const hoy = new Date().toISOString().split('T')[0]; // Solo la fecha en formato YYYY-MM-DD
 
+    console.log(  triviaFecha)
+
+    console.log( hoy)
     if (triviaFecha === hoy) {
       return false; // Ya hizo trivia hoy
     } else {

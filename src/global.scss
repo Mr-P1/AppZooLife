@@ -35,3 +35,25 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+
+.custom-alert {
+  --background: #ffffff;
+  --border-radius: 12px;
+  --width: 90%;
+  --box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.alert-button-close {
+  --color: #ff4757;
+  --background: transparent;
+  --border-radius: 8px;
+  font-weight: bold;
+}
+
+.alert-button-more {
+  --color: #ffffff;
+  --background: #1e90ff;
+  --border-radius: 8px;
+  font-weight: bold;
+}

@@ -70,16 +70,22 @@
       </ion-card-header>
 
       <ion-card-content>
-        <ng-container *ngIf="animal.audio; else noAudio">
+        <div *ngIf="animal.audio">
           <ion-card-subtitle>Audio explicativo</ion-card-subtitle>
           <audio controls>
             <source [src]="animal.audio" type="audio/mp3" />
             Tu navegador no soporta la reproducción de audio.
           </audio>
-        </ng-container>
-        <ng-template #noAudio>
-          <p>No hay audio disponible para este animal.</p>
-        </ng-template>
+        </div>
+
+        <div *ngIf="animal?.audioAnimal">
+          <ion-card-subtitle>Audio animal</ion-card-subtitle>
+          <audio controls>
+            <source [src]="animal?.audioAnimal" type="audio/mp3" />
+            Tu navegador no soporta la reproducción de audio.
+          </audio>
+        </div>
+
 
         <ng-container *ngIf="animal.video; else noVideo">
           <ion-card-subtitle>Video</ion-card-subtitle>
@@ -97,7 +103,7 @@
     <ion-card class="custom-card">
       <ion-card-title>Ficha técnica</ion-card-title>
       <ion-card-content>
-        
+
         <p><strong>Descripción: </strong>{{ animal.descripcion_1 }}</p>
         <p><strong>Mas acerca del {{animal.nombre_comun}}: </strong>{{ animal.descripcion_2 }}</p>
         <p><strong></strong>{{ animal.descripcion_3 }}</p>
