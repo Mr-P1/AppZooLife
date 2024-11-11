@@ -84,6 +84,14 @@ export const routes: Routes = [
     path: 'chat/:id',
     loadComponent: () => import('./PaginasAdulto/chat/chat.page').then( m => m.ChatPage)
   },
+  {
+    path: 'noticias-info',
+    loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
+  },
+  {
+    path: 'oirs',
+    loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
+  },
 
 
 
@@ -121,17 +129,10 @@ export const routes: Routes = [
     loadComponent: () => import('./PaginasNiño/info-animal/info-animal.page').then( m => m.InfoAnimalPage)
   },
   {
-    path: 'planta-info',
-    loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
-  },
-  {
-    path: 'noticias-info',
-    loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
-  },
-  {
-    path: 'oirs',
-    loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
+    path: 'info-plantas-nino/:id',
+    loadComponent: () => import('./PaginasNiño/info-plantas/info-plantas.page').then( m => m.InfoPlantasPage)
   }
+
 
 
 

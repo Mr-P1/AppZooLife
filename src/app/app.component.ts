@@ -7,7 +7,7 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { Platform } from '@ionic/angular'
-
+import { AlertController } from '@ionic/angular';
 import { NotificacionesService } from '../app/common/servicios/notificaciones.service'
 import { register } from 'swiper/element/bundle';
 import { AlertService } from './common/servicios/alert.service';
@@ -23,7 +23,8 @@ export class AppComponent {
   constructor(
     private alertService: AlertService,
     private platform: Platform,
-    private notificacionesService: NotificacionesService
+    private notificacionesService: NotificacionesService,
+    private alertController: AlertController
   ) {
     if (this.platform.is('capacitor')) this.initPush()
 
@@ -95,15 +96,62 @@ export class AppComponent {
     });
 
 
-    // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
+        alert(notification)
         alert(notification.title);
-        alert(JSON.stringify(notification))
+        const title = notification.title || notification.data?.title || 'Sin título';
+        const message = notification.body || notification.data?.body || 'Sin contenido';
+        this.presentNotificationAlert(title, message);
       }
     );
 
 
+
   }
+
+
+
+  async presentSecondAlert(title: string, message: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+      cssClass: 'custom-alert',
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+          cssClass: 'alert-button-close'
+        },
+        {
+          text: 'Ver más',
+          cssClass: 'alert-button-more',
+          handler: () => {
+            console.log('Ver más clicked');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  // Function to display the custom alert with delay before interaction
+  async presentNotificationAlert(title: string, message: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+    });
+
+    await alert.present();
+
+    // Automatically dismiss the alert after 4 seconds, then show a second alert with buttons enabled
+    setTimeout(async () => {
+      await alert.dismiss();
+      // Optional: Show a second alert with active buttons
+      this.presentSecondAlert(title, message);
+    }, 4000);
+  }
+
 
 }

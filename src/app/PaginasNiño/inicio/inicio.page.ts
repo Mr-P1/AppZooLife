@@ -293,20 +293,24 @@ export class InicioPage implements OnInit {
     console.log('Contenido escaneado:', result);
     this.isScanning = false;
 
-    const animalId = this.extractAnimalId(result);
-    if (animalId) {
-      console.log('Redirigiendo a la página del animal:', animalId);
-
-      // Detén el escáner al redirigir
+    if (result) {
       if (this.scanner) {
         this.scanner.reset();
       }
-
-      this.router.navigate(['/animal-info', animalId]);
+      this.animalsService.getAnimalById(result).subscribe((animal) => {
+        if (animal) {
+          this.router.navigate(['/animal-info-nino', result]);
+        } else {
+          this.animalsService.getPlantaById(result).subscribe((planta) => {
+            if (planta) {
+              this.router.navigate(['/info-plantas-nino', result]);
+            } else {
+              console.error('No se encontró información para el ID escaneado.');
+            }
+          });
+        }
+      });
     } else {
-      console.log('No se encontró un ID de animal válido en el QR.');
-
-      // Detén el escáner si no se encuentra un ID válido
       if (this.scanner) {
         this.scanner.reset();
       }
