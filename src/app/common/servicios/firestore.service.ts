@@ -206,6 +206,12 @@ getPreguntasTriviaPorPlantasVistas(userId: string): Observable<PreguntaTrivia[]>
     return collectionData(q, { idField: 'id' });
   }
 
+  // Método para obtener las plantas vistas por un usuario
+  getPlantasVistasPorUsuario(userId: string): Observable<any[]> {
+    const q = query(this._rutaPlantasVistas, where('userId', '==', userId));
+    return collectionData(q, { idField: 'id' });
+  }
+
   // Método para actualizar los datos de un usuario
   actualizarUsuario(userId: string, data: Partial<Usuario>): Observable<void> {
     const usuariosQuery = query(this._rutaUsuarios, where('auth_id', '==', userId));

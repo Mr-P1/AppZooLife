@@ -9,6 +9,7 @@ import { Usuario } from 'src/app/common/models/usuario.model';
 import { RouterLink, Router, RouterModule, NavigationStart } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonButton, IonCardContent, IonSpinner } from '@ionic/angular/standalone';
 import { IonRouterOutlet } from '@ionic/angular';
+import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-trivia',
@@ -48,43 +49,74 @@ export class TriviaPage implements OnInit, OnDestroy {
     this.tipo = localStorage.getItem('tipo')!;
     this.authService.authState$.subscribe((user) => {
       if (user) {
+        console.log('Usuario autenticado:', user);
         this.userId = user.uid;
         this.preguntaService.getUsuarioID(this.userId).subscribe((data: Usuario | null) => {
           if (data) {
+            console.log('Datos del usuario obtenidos:', data);
             this.usuario = data;
-            this.preguntaService.getAnimalesVistosPorUsuario(this.userId).subscribe((animalesVistos) => {
-              this.animalesVistosCount = animalesVistos.length;
-              this.puedeHacerTrivia = this.animalesVistosCount >= 5;
 
-              if (this.puedeHacerTrivia) {
-                // Verificar si ya hizo trivia hoy
-                this.verificarTriviaDelDia().then((puedeHacerTriviaHoy) => {
-                  if (puedeHacerTriviaHoy) {
-                    this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe((preguntas: PreguntaTrivia[]) => {
-                      this.preguntas = preguntas;
-                      this.rellenarPreguntasRandom(this.tipo);
-                      this.loading = false; // Datos cargados, desactiva la carga
-                    });
-                  } else {
-                    this.puedeHacerTrivia = false; // No puede hacer trivia hoy
+            // Realizar consultas individuales para identificar el problema
+            this.preguntaService.getAnimalesVistosPorUsuario(this.userId).subscribe(animalesVistos => {
+              console.log('Animales vistos:', animalesVistos);
+
+              this.preguntaService.getPlantasVistasPorUsuario(this.userId).subscribe(plantasVistas => {
+                console.log('Plantas vistas:', plantasVistas);
+
+                this.animalesVistosCount = animalesVistos.length + plantasVistas.length;
+                this.puedeHacerTrivia = this.animalesVistosCount >= 5;
+
+                if (this.puedeHacerTrivia) {
+                  this.verificarTriviaDelDia().then((puedeHacerTriviaHoy) => {
+                    if (puedeHacerTriviaHoy) {
+                      this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe(preguntasAnimales => {
+                        console.log('Preguntas de animales:', preguntasAnimales);
+                        this.preguntaService.getPreguntasTriviaPorPlantasVistas(this.userId).subscribe(preguntasPlantas => {
+                          console.log('Preguntas de plantas:', preguntasPlantas);
+
+                          this.preguntas = [...preguntasAnimales, ...preguntasPlantas];
+                          this.rellenarPreguntasRandom(this.tipo);
+                          console.log(this.preguntasRandom)
+                          this.loading = false; // Finaliza el loading aquí
+                        });
+                      });
+                    } else {
+                      console.log('Trivia ya realizada hoy');
+                      this.puedeHacerTrivia = false;
+                      this.loading = false;
+                    }
+                  }).catch(error => {
+                    console.error('Error en verificarTriviaDelDia:', error);
                     this.loading = false;
-                  }
-                });
-              } else {
-                this.loading = false; // No puede hacer trivia, pero los datos han cargado
-              }
+                  });
+                } else {
+                  console.log('No hay suficientes animales o plantas vistos para hacer la trivia');
+                  this.loading = false;
+                }
+              }, error => {
+                console.error('Error al obtener plantas vistas:', error);
+                this.loading = false;
+              });
+            }, error => {
+              console.error('Error al obtener animales vistos:', error);
+              this.loading = false;
             });
           } else {
-            this.loading = false; // No puede hacer trivia, pero los datos han cargado
+            console.log('Datos del usuario no encontrados');
+            this.loading = false;
           }
+        }, error => {
+          console.error('Error al obtener datos del usuario:', error);
+          this.loading = false;
         });
       } else {
-        this.loading = false; // No puede hacer trivia, pero los datos han cargado
+        console.log('Usuario no autenticado');
+        this.loading = false;
       }
     });
-
-
   }
+
+
 
   // Verificar si el usuario ya hizo trivia hoy
   async verificarTriviaDelDia(): Promise<boolean> {
@@ -161,14 +193,12 @@ export class TriviaPage implements OnInit, OnDestroy {
     const tipoUsuarioLowerCase = tipoUsuario.toLowerCase();
     const preguntasFiltradas = this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase);
 
-    // Aseguramos que siempre haya 10 preguntas, aunque el filtro retorne menos
+    // Aseguramos que haya 10 preguntas combinadas de animales y plantas
     while (preguntasFiltradas.length < 10) {
       preguntasFiltradas.push(...this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase));
     }
 
-    // Mezclamos las preguntas y seleccionamos las primeras 10
     this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, 10);
-    console.log(this.preguntasRandom)
   }
 
   shuffleArray(array: PreguntaTrivia[]): PreguntaTrivia[] {
