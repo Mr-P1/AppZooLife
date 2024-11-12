@@ -33,8 +33,9 @@ export class TriviaPage implements OnInit, OnDestroy {
   loading: boolean = true; // Variable para controlar el estado de carga
   triviaComenzada: boolean = false; // Nueva variable para controlar si la trivia ha comenzado
   triviaFinalizada: boolean = false; // Nueva variable para controlar si la trivia ha finalizado
-
+  triviaAbandonada: boolean = false; // Nueva variable para controlar si la trivia fue abandonada
   tipo = "";
+  tiempoInicio: number = 0; // Tiempo en milisegundos cuando se muestra la pregunta
 
   constructor(
     private preguntaService: FirestoreService,
@@ -46,47 +47,83 @@ export class TriviaPage implements OnInit, OnDestroy {
     this.tipo = localStorage.getItem('tipo')!;
     this.authService.authState$.subscribe((user) => {
       if (user) {
+        console.log('Usuario autenticado:', user);
         this.userId = user.uid;
         this.preguntaService.getUsuarioID(this.userId).subscribe((data: Usuario | null) => {
           if (data) {
+            console.log('Datos del usuario obtenidos:', data);
             this.usuario = data;
-            this.preguntaService.getAnimalesVistosPorUsuario(this.userId).subscribe((animalesVistos) => {
-              this.animalesVistosCount = animalesVistos.length;
-              this.puedeHacerTrivia = this.animalesVistosCount >= 5;
 
-              if (this.puedeHacerTrivia) {
-                // Verificar si ya hizo trivia hoy
-                this.verificarTriviaDelDia().then((puedeHacerTriviaHoy) => {
-                  if (puedeHacerTriviaHoy) {
-                    this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe((preguntas: PreguntaTrivia[]) => {
-                      this.preguntas = preguntas;
-                      this.rellenarPreguntasRandom(this.tipo);
-                      this.loading = false; // Datos cargados, desactiva la carga
-                    });
-                  } else {
-                    this.puedeHacerTrivia = false; // No puede hacer trivia hoy
+            // Realizar consultas individuales para identificar el problema
+            this.preguntaService.getAnimalesVistosPorUsuario(this.userId).subscribe(animalesVistos => {
+              console.log('Animales vistos:', animalesVistos);
+
+              this.preguntaService.getPlantasVistasPorUsuario(this.userId).subscribe(plantasVistas => {
+                console.log('Plantas vistas:', plantasVistas);
+
+                this.animalesVistosCount = animalesVistos.length + plantasVistas.length;
+                this.puedeHacerTrivia = this.animalesVistosCount >= 5;
+
+                if (this.puedeHacerTrivia) {
+                  this.verificarTriviaDelDia().then((puedeHacerTriviaHoy) => {
+                    if (puedeHacerTriviaHoy) {
+                      this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe(preguntasAnimales => {
+                        console.log('Preguntas de animales:', preguntasAnimales);
+                        this.preguntaService.getPreguntasTriviaPorPlantasVistas(this.userId).subscribe(preguntasPlantas => {
+                          console.log('Preguntas de plantas:', preguntasPlantas);
+
+                          this.preguntas = [...preguntasAnimales, ...preguntasPlantas];
+                          this.rellenarPreguntasRandom(this.tipo);
+                          console.log(this.preguntasRandom)
+                          this.loading = false; // Finaliza el loading aquí
+                        });
+                      });
+                    } else {
+                      console.log('Trivia ya realizada hoy');
+                      this.puedeHacerTrivia = false;
+                      this.loading = false;
+                    }
+                  }).catch(error => {
+                    console.error('Error en verificarTriviaDelDia:', error);
                     this.loading = false;
-                  }
-                });
-              } else {
-                this.loading = false; // No puede hacer trivia, pero los datos han cargado
-              }
+                  });
+                } else {
+                  console.log('No hay suficientes animales o plantas vistos para hacer la trivia');
+                  this.loading = false;
+                }
+              }, error => {
+                console.error('Error al obtener plantas vistas:', error);
+                this.loading = false;
+              });
+            }, error => {
+              console.error('Error al obtener animales vistos:', error);
+              this.loading = false;
             });
           } else {
-            this.loading = false; // No puede hacer trivia, pero los datos han cargado
+            console.log('Datos del usuario no encontrados');
+            this.loading = false;
           }
+        }, error => {
+          console.error('Error al obtener datos del usuario:', error);
+          this.loading = false;
         });
       } else {
-        this.loading = false; // No puede hacer trivia, pero los datos han cargado
+        console.log('Usuario no autenticado');
+        this.loading = false;
       }
     });
   }
+
+
 
   // Verificar si el usuario ya hizo trivia hoy
   async verificarTriviaDelDia(): Promise<boolean> {
     const triviaFecha = localStorage.getItem(`triviaFecha-${this.userId}`);
     const hoy = new Date().toISOString().split('T')[0]; // Solo la fecha en formato YYYY-MM-DD
 
+    console.log(  triviaFecha)
+
+    console.log( hoy)
     if (triviaFecha === hoy) {
       return false; // Ya hizo trivia hoy
     } else {
@@ -99,15 +136,22 @@ export class TriviaPage implements OnInit, OnDestroy {
     this.mostrarPregunta();
   }
 
-
   ngOnDestroy() {
+    if (this.triviaComenzada && !this.triviaFinalizada) { // Detecta si la trivia fue abandonada solo si comenzó
+      this.triviaAbandonada = true;
+      const hoy = new Date().toISOString().split('T')[0];
+      localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
+      this.guardarRespuestas(true); // Guardamos respuestas con `abandonada: true`
+    }
     clearInterval(this.temporizador);
   }
+
 
   mostrarPregunta() {
     if (this.preguntaIndex < this.preguntasRandom.length) {
       this.preguntaActual = this.preguntasRandom[this.preguntaIndex];
       this.preguntaIndex++;
+      this.tiempoInicio = Date.now(); // Guardamos el tiempo en el que se muestra la pregunta
       this.iniciarTemporizador();
     } else {
       this.finalizarTrivia(); // Finaliza la trivia
@@ -133,23 +177,26 @@ export class TriviaPage implements OnInit, OnDestroy {
     pregunta.respondida = true;
     pregunta.respuestaCorrecta = respuesta === pregunta.respuesta_correcta;
 
+    const tiempoRespuesta = (Date.now() - this.tiempoInicio) / 1000; // Tiempo en segundos
+
     if (pregunta.respuestaCorrecta) {
       this.respuestasCorrectas++;
     }
 
     clearInterval(this.temporizador);
     setTimeout(() => this.mostrarPregunta(), 1000); // Mostramos la siguiente pregunta tras 1 segundo
-
-  }
-
-  todasLasPreguntasRespondidas(): boolean {
-    return this.preguntasRandom.every((pregunta) => pregunta.respondida);
   }
 
   rellenarPreguntasRandom(tipoUsuario: string) {
     const tipoUsuarioLowerCase = tipoUsuario.toLowerCase();
     const preguntasFiltradas = this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase);
-    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, tipoUsuarioLowerCase === 'adulto' ? 10 : 8);
+
+    // Aseguramos que haya 10 preguntas combinadas de animales y plantas
+    while (preguntasFiltradas.length < 10) {
+      preguntasFiltradas.push(...this.preguntas.filter((pregunta) => pregunta.tipo.toLowerCase() === tipoUsuarioLowerCase));
+    }
+
+    this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, 10);
   }
 
   shuffleArray(array: PreguntaTrivia[]): PreguntaTrivia[] {
@@ -160,7 +207,18 @@ export class TriviaPage implements OnInit, OnDestroy {
     return array;
   }
 
-  async enviarRespuestas() {
+  finalizarTrivia() {
+    clearInterval(this.temporizador); // Detenemos cualquier temporizador activo
+    this.preguntaActual = null; // Oculta la tarjeta de preguntas
+    this.triviaFinalizada = true; // Muestra la tarjeta de resultados
+    this.guardarRespuestas(false); // Guarda las respuestas con abandonada: false
+
+    // Guardar la fecha de la trivia en localStorage
+    const hoy = new Date().toISOString().split('T')[0];
+    localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
+  }
+
+  guardarRespuestas(abandonada: boolean) {
     if (!this.usuario || !this.userId) {
       console.error('No se pudo obtener el usuario o userId');
       return;
@@ -170,46 +228,45 @@ export class TriviaPage implements OnInit, OnDestroy {
     let nivelGanado = 0;
 
     for (const pregunta of this.preguntasRandom) {
-      const respuestaCorrecta = pregunta.respuestaCorrecta ?? false;
+      // Determinamos si la pregunta fue respondida
+      const respuestaCorrecta = pregunta.respondida ? pregunta.respuestaCorrecta ?? false : false;
 
       const respuesta = {
         resultado: respuestaCorrecta,
         user_id: this.userId,
         pregunta_id: pregunta.id,
         fecha: new Date(),
-        genero_usuario:this.usuario.genero,
-        tipo:localStorage.getItem('tipo'),
+        abandonada: abandonada, // Indica que todas las respuestas son abandonadas
+        tiempoRespuesta: pregunta.respondida ? (Date.now() - this.tiempoInicio) / 1000 : 0,
+        genero_usuario: this.usuario?.genero,
+        tipo: this.tipo
       };
 
+      // Guardar la respuesta en la base de datos
       this.preguntaService.guardarRespuestaTrivia(respuesta).subscribe(() => {
-        console.log('Respuesta guardada en Firestore');
+        console.log(`Respuesta guardada con abandonada: ${respuesta.abandonada}, resultado: ${respuesta.resultado}`);
       });
 
-      if (respuestaCorrecta) {
+      // Solo aumentamos puntos si fue correcta y no está abandonada (es decir, si fue respondida correctamente)
+      if (respuestaCorrecta && !abandonada) {
         nivelGanado += 3; // 3 puntos de nivel por respuesta correcta
-        puntosGanados += this.tipo.toLowerCase() === 'adulto' ? 10 : 5;
+        puntosGanados += this.tipo.toLowerCase() === 'niño' ? 5 : 10;
       }
     }
 
-    const nuevoPuntaje = this.usuario.puntos + puntosGanados;
-    const nuevoNivel = this.usuario.nivel + nivelGanado;
+    // Actualizar los puntos y el nivel solo si la trivia se completó
+    if (!abandonada) {
+      const nuevoPuntaje = this.usuario.puntos + puntosGanados;
+      const nuevoNivel = this.usuario.nivel + nivelGanado;
 
-    this.preguntaService.actualizarUsuario(this.userId, { puntos: nuevoPuntaje, nivel: nuevoNivel }).subscribe(() => {
-      console.log('Usuario actualizado correctamente');
-    });
+      this.preguntaService.actualizarUsuario(this.userId, { puntos: nuevoPuntaje, nivel: nuevoNivel }).subscribe(() => {
+        console.log('Usuario actualizado correctamente');
+      });
 
-    console.log(`Respuestas guardadas. Puntos ganados: ${puntosGanados}, Nivel ganado: ${nivelGanado}`);
-  }
-
-  finalizarTrivia() {
-    clearInterval(this.temporizador); // Detenemos cualquier temporizador activo
-    this.preguntaActual = null; // Oculta la tarjeta de preguntas
-    this.triviaFinalizada = true; // Muestra la tarjeta de resultados
-    this.enviarRespuestas(); // Guarda las respuestas, pero no redirige
-
-    // Guardar la fecha de la trivia en localStorage
-    const hoy = new Date().toISOString().split('T')[0];
-    localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
+      console.log(`Trivia finalizada. Puntos ganados: ${puntosGanados}, Nivel ganado: ${nivelGanado}`);
+    } else {
+      console.log('Trivia abandonada, no se actualizan puntos ni nivel.');
+    }
   }
 
 }
