@@ -6,8 +6,9 @@ import { PreguntaTrivia } from 'src/app/common/models/trivia.models';
 import { FirestoreService } from 'src/app/common/servicios/firestore.service';
 import { AuthService } from './../../common/servicios/auth.service';
 import { Usuario } from 'src/app/common/models/usuario.model';
-import { RouterLink, Router, RouterModule } from '@angular/router';
+import { RouterLink, Router, RouterModule, NavigationStart } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonButton, IonCardContent, IonSpinner } from '@ionic/angular/standalone';
+import { IonRouterOutlet } from '@ionic/angular';
 
 @Component({
   selector: 'app-trivia',
@@ -81,6 +82,8 @@ export class TriviaPage implements OnInit, OnDestroy {
         this.loading = false; // No puede hacer trivia, pero los datos han cargado
       }
     });
+
+
   }
 
   // Verificar si el usuario ya hizo trivia hoy
@@ -104,7 +107,7 @@ export class TriviaPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!this.triviaFinalizada) { // Detecta si la trivia fue abandonada
+    if (this.triviaComenzada && !this.triviaFinalizada) { // Detecta si la trivia fue abandonada solo si comenzó
       this.triviaAbandonada = true;
       const hoy = new Date().toISOString().split('T')[0];
       localStorage.setItem(`triviaFecha-${this.userId}`, hoy);
@@ -112,6 +115,7 @@ export class TriviaPage implements OnInit, OnDestroy {
     }
     clearInterval(this.temporizador);
   }
+
 
   mostrarPregunta() {
     if (this.preguntaIndex < this.preguntasRandom.length) {
@@ -164,6 +168,7 @@ export class TriviaPage implements OnInit, OnDestroy {
 
     // Mezclamos las preguntas y seleccionamos las primeras 10
     this.preguntasRandom = this.shuffleArray(preguntasFiltradas).slice(0, 10);
+    console.log(this.preguntasRandom)
   }
 
   shuffleArray(array: PreguntaTrivia[]): PreguntaTrivia[] {
@@ -203,7 +208,7 @@ export class TriviaPage implements OnInit, OnDestroy {
         user_id: this.userId,
         pregunta_id: pregunta.id,
         fecha: new Date(),
-        abandonada: true, // Indica que todas las respuestas son abandonadas
+        abandonada: abandonada, // Indica que todas las respuestas son abandonadas
         tiempoRespuesta: pregunta.respondida ? (Date.now() - this.tiempoInicio) / 1000 : 0,
         genero_usuario: this.usuario?.genero,
         tipo: this.tipo
