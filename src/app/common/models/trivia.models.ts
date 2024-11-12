@@ -24,3 +24,13 @@ export interface Premio {
   nombre: string;
   puntos_necesarios: number;
 }
+
+export interface TriviaVisita{
+  userId: string;           // ID del usuario que realiza la visita
+  fecha: Date;            // Fecha de la visita en formato "YYYY-MM-DD"
+  triviaRealizada: boolean; // Indicador de si realizó la trivia
+  completada?: boolean;     // Indicador opcional de si completó la trivia
+  respuestasCorrectas: number; // Número de respuestas correctas (0 si no realizó la trivia)
+  puntosGanados: number;    // Puntos obtenidos en la trivia (0 si no realizó la trivia)
+  nivelGanado: number;      // Niveles ganados en la trivia (0 si no realizó la trivia)
+}

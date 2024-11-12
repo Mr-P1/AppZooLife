@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { PreguntaTrivia } from 'src/app/common/models/trivia.models';
+import { PreguntaTrivia, TriviaVisita } from 'src/app/common/models/trivia.models';
 import { FirestoreService } from 'src/app/common/servicios/firestore.service';
 import { AuthService } from './../../common/servicios/auth.service';
 import { Usuario } from 'src/app/common/models/usuario.model';
 import { RouterLink, Router, RouterModule } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonButton, IonCardContent, IonSpinner } from '@ionic/angular/standalone';
+import { TriviaVisitaService } from 'src/app/common/servicios/trivia-visita.service';
 
 @Component({
   selector: 'app-trivia',
@@ -40,7 +41,7 @@ export class TriviaPage implements OnInit, OnDestroy {
   constructor(
     private preguntaService: FirestoreService,
     private authService: AuthService,
-    private _router: Router
+    private triviaVisitaService: TriviaVisitaService
   ) {}
 
   ngOnInit() {
@@ -65,6 +66,21 @@ export class TriviaPage implements OnInit, OnDestroy {
                 this.puedeHacerTrivia = this.animalesVistosCount >= 5;
 
                 if (this.puedeHacerTrivia) {
+                  const visita: TriviaVisita = {
+                    userId: this.userId,
+                    fecha: new Date(),
+                    triviaRealizada: false,
+                    completada: false,
+                    respuestasCorrectas: 0,
+                    puntosGanados: 0,
+                    nivelGanado: 0
+                  };
+
+                  // Guardar la visita inicial en Firebase
+                  this.triviaVisitaService.guardarTriviaVisita(visita).subscribe(() => {
+                    console.log('Visita inicial guardada con triviaRealizada: false');
+                  });
+
                   this.verificarTriviaDelDia().then((puedeHacerTriviaHoy) => {
                     if (puedeHacerTriviaHoy) {
                       this.preguntaService.getPreguntasTriviaPorAnimalesVistos(this.userId).subscribe(preguntasAnimales => {
@@ -258,6 +274,20 @@ export class TriviaPage implements OnInit, OnDestroy {
     if (!abandonada) {
       const nuevoPuntaje = this.usuario.puntos + puntosGanados;
       const nuevoNivel = this.usuario.nivel + nivelGanado;
+      const hoy = new Date()
+
+      const actualizacion: Partial<TriviaVisita> = {
+        triviaRealizada: true,
+        completada: true,
+        respuestasCorrectas: this.respuestasCorrectas,
+        puntosGanados: puntosGanados,
+        nivelGanado: nivelGanado
+      };
+
+      // Actualizar el estado de la visita al finalizar la trivia
+      this.triviaVisitaService.actualizarTriviaVisita(this.userId, hoy, actualizacion).subscribe(() => {
+        console.log('Trivia completada y visita actualizada en Firebase');
+      });
 
       this.preguntaService.actualizarUsuario(this.userId, { puntos: nuevoPuntaje, nivel: nuevoNivel }).subscribe(() => {
         console.log('Usuario actualizado correctamente');
