@@ -130,7 +130,7 @@ export const routes: Routes = [
   },
   {
     path: 'info-plantas-nino/:id',
-    loadComponent: () => import('./PaginasNiño/info-plantas/info-plantas.page').then( m => m.InfoPlantasPage)
+    loadComponent: () => import('./PaginasNiño/info-plantas/info-plantas.page').then(m => m.InfoPlantaPage)
   }
 
 

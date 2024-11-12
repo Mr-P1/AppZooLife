@@ -1,0 +1,74 @@
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ion-toolbar {
+  --background: #103116;
+  --color: #fff;
+}
+
+.title-container {
+  text-align: center;
+}
+
+.icono-numero {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff8800;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+ion-card-title {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+ion-card-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+ion-card-content {
+  font-size: 1rem;
+  padding: 15px;
+  color: rgb(255, 255, 255);
+}
+
+.contenidoPrincipal {
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+.custom-card {
+  border-radius: 15px;
+  font-family: 'Chewy', cursive;
+  background-image: url(./../../../assets/fondos/fondocardinfo2.png);
+  background-position: center;
+  background-size: cover;
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+ion-button img {
+  width: 30px;
+  height: 30px;
+}

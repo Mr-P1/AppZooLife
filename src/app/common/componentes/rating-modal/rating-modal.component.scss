@@ -1,8 +1,74 @@
-/* Ejemplo de estilos personalizados */
-ion-content {
-  --background: #ffffff;
+/* Importación de la fuente Chewy */
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+/* Estilos de fondo y fuente */
+/* Fondo del modal con imagen */
+.rating-modal-content {
+  --background: none;
+  background-image: url(./../../../../assets/fondos/fondoLogin.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: 'Chewy', cursive;
+  color: rgb(95, 39, 7);
+  padding: 1rem;
 }
 
-span {
+/* Estilos del título */
+ion-title {
+  color: #103116; /* Verde oscuro para el título */
+  font-family: 'Chewy', cursive;
+  font-size: 1.6rem;
+}
+
+/* Estilos para las estrellas */
+.stars-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc; /* Color inicial */
   transition: color 0.3s;
+}
+
+.star:hover,
+.star.selected {
+  color: #ffa807; /* Color de la estrella seleccionada */
+}
+
+/* Estilo para el textarea y el botón */
+ion-textarea {
+  --color: rgb(95, 39, 7);
+  --background: #f1ebe7;
+  font-family: 'Chewy', cursive;
+  border-radius: 8px;
+  width: 80%; /* Ajusta el ancho según necesites */
+}
+
+.submit-button {
+  --background: #f77c30;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 8px;
+  font-family: 'Chewy', cursive;
+}
+
+/* Contenedor del textarea centrado */
+.textarea-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+ion-toolbar {
+  --background: transparent; /* Hace que el fondo sea transparente */
+  --border-color: transparent; /* Elimina cualquier borde inferior */
 }

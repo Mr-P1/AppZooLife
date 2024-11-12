@@ -2,20 +2,27 @@
   <ion-toolbar>
     <ion-title>Califica tu experiencia</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Cerrar</ion-button>
+      <ion-button (click)="dismiss()">X</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1rem;">
+<ion-content class="ion-padding rating-modal-content">
+  <div class="stars-container">
     <span *ngFor="let star of stars; let i = index"
           (click)="setRating(i + 1)"
-          [style.color]="i < rating ? '#ffc107' : '#ccc'"
-          style="font-size: 2rem; cursor: pointer;">
+          [class.selected]="i < rating"
+          class="star">
       ★
     </span>
   </div>
-  <ion-textarea placeholder="Déjanos tus comentarios" [(ngModel)]="comments"></ion-textarea>
-  <ion-button expand="full" (click)="submitRating()">Enviar</ion-button>
+
+  <!-- Contenedor para centrar el textarea -->
+  <div class="textarea-container">
+    <ion-textarea placeholder="Déjanos tus comentarios" [(ngModel)]="comments"></ion-textarea>
+  </div>
+
+  <ion-button expand="full" (click)="submitRating()" class="submit-button">
+    Enviar
+  </ion-button>
 </ion-content>
