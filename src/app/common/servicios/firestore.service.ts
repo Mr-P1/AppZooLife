@@ -131,10 +131,11 @@ export class FirestoreService {
   }
 
   // Método para guardar el animal visto
-  guardarAnimalVisto(userId: string, animalId: string, metodoIngreso?: string): Observable<void> {
+  guardarAnimalVisto(userId: string, animalId: string, metodoIngreso?: string, area?: string): Observable<void> {
     const animalVisto = {
       userId,
       animalId,
+      area,
       metodoIngreso,
       vistoEn: new Date().toISOString(),
     };
@@ -148,9 +149,11 @@ export class FirestoreService {
   }
 
   // Método para guardar la planta vista
-  guardarPlantaVista(userId: string, plantaId: string): Observable<void> {
+  guardarPlantaVista(userId: string, plantaId: string, metodoIngreso:string, area:string): Observable<void> {
     const plantaVista = {
       userId,
+      metodoIngreso,
+      area,
       plantaId,
       vistoEn: new Date().toISOString(),
     };

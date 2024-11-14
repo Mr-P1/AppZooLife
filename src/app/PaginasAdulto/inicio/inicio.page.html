@@ -154,6 +154,7 @@
           alt="{{ planta.nombre_comun }}"
           src="{{ planta.imagen }}"
           [routerLink]="['/planta-info', planta.id]"
+          [queryParams]="{ metodo: 'card' }"
         />
         <div class="icono-numero">{{ planta.posicion_mapa }}</div>
       </div>

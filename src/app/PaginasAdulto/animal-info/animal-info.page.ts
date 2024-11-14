@@ -46,25 +46,30 @@ export class AnimalInfoPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-  const metodoIngreso = this.route.snapshot.queryParamMap.get('metodo');
-  const userId = this.authService.currentUserId;
+    const metodoIngreso = this.route.snapshot.queryParamMap.get('metodo');
+    const userId = this.authService.currentUserId;
 
-  if (id && metodoIngreso) {
-    this.animal$ = this.animalService.getAnimal(id);
+    if (id && metodoIngreso) {
+      // Suscribirse al observable del animal para obtener sus datos
+      this.animal$ = this.animalService.getAnimal(id);
 
-    if (userId) {
-      // Guarda la visualización cada vez que se accede a la página
-      this.animalService.guardarAnimalVisto(userId, id, metodoIngreso).subscribe({
-        next: () => console.log('Animal visto guardado con método de ingreso:', metodoIngreso),
-        error: (error) => console.error('Error al guardar el animal visto', error)
+      // Acceder al área una vez que se obtienen los datos del animal
+      this.animal$.subscribe(animal => {
+        if (animal && userId) {
+          const area = animal.area; // Obtén el área desde el modelo del animal
+          // Guardar el animal visto incluyendo el área
+          this.animalService.guardarAnimalVisto(userId, id, metodoIngreso, area).subscribe({
+            next: () => console.log('Animal visto guardado con método de ingreso:', metodoIngreso, 'y área:', area),
+            error: (error) => console.error('Error al guardar el animal visto', error)
+          });
+
+          // Inicia el temporizador para el conteo de vistas de sesión
+          this.viewTimeout = setTimeout(() => {
+            this.incrementarYVerificarVistasSesion(id);
+          }, 2000); // 20 segundos en milisegundos
+        }
       });
-
-      // Inicia el temporizador para el conteo de vistas de sesión
-      this.viewTimeout = setTimeout(() => {
-        this.incrementarYVerificarVistasSesion(id);
-      }, 2000); // 20 segundos en milisegundos
     }
-  }
   }
 
   ngOnDestroy() {
@@ -76,15 +81,15 @@ export class AnimalInfoPage implements OnInit, OnDestroy {
 
   private incrementarYVerificarVistasSesion(animalId: string) {
     // Recupera el contador de la sesión actual desde localStorage
-    let animalesVistosSesion = JSON.parse(localStorage.getItem('animalesVistosSesion') || '[]');
+    let atraccionesVistasSesion = JSON.parse(localStorage.getItem('atraccionesVistasSesion') || '[]');
 
     // Si el animal ya fue contado en esta sesión, no lo cuenta de nuevo
-    if (!animalesVistosSesion.includes(animalId)) {
-      animalesVistosSesion.push(animalId);
-      localStorage.setItem('animalesVistosSesion', JSON.stringify(animalesVistosSesion));
+    if (!atraccionesVistasSesion.includes(animalId)) {
+      atraccionesVistasSesion.push(animalId);
+      localStorage.setItem('atraccionesVistasSesion', JSON.stringify(atraccionesVistasSesion));
 
       // Verifica si el número de animales vistos en la sesión alcanza el límite
-      if (animalesVistosSesion.length === this.VIEWS_LIMIT) {
+      if (atraccionesVistasSesion.length === this.VIEWS_LIMIT) {
         console.log('Mostrando alerta automáticamente');
         this.alertaVisible = true; // Muestra la alerta
       }
