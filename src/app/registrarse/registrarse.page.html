@@ -17,22 +17,20 @@
           fill="solid"
           label="Nombre (Obligatorio)"
           labelPlacement="floating"
-          helperText="Ingrese su nombre"
-          errorText="Nombre Inválido"
           formControlName="nombre"
-        ></ion-input>
+          placeholder="Ingresa tu nombre"
+        >
+        <div slot="label">Nombre <ion-text color="red">*</ion-text></div>      </ion-input>
       </ion-item>
 
       <!-- Campo de entrada para el correo electrónico -->
-      <ion-item lines="none" class="ion-margin-horizontal ion-margin-top">
+      <ion-item lines="none" class="ion-margin" >
         <ion-input
           type="email"
           fill="solid"
           label="Correo (Obligatorio)"
           labelPlacement="floating"
-          helperText="Enter a valid email"
           placeholder="Ingresa tu correo"
-          errorText="* Ingresa un correo inválido"
           formControlName="email"
         >
           <!-- Etiqueta personalizada para el campo del correo -->
@@ -48,8 +46,6 @@
           label="Contraseña (Obligatorio)"
           labelPlacement="floating"
           placeholder="Ingresa tu contraseña (Obligatorio)"
-          helperText="Debe tener un 5 mínimo de caracteres"
-          errorText="Contraseña inválida"
           [counter]="true"
           minlength="5"
           formControlName="password"
@@ -58,22 +54,19 @@
           <div slot="label">Contraseña</div>
         </ion-input>
       </ion-item>
-
-      <!-- Campo de entrada para el teléfono -->
       <ion-item class="ion-margin" lines="none">
         <ion-input
-          type="tel"
+          type="text"
           fill="solid"
           label="Teléfono (Obligatorio)"
           labelPlacement="floating"
           placeholder="+56 9 1234 5678"
-          helperText="Ingresa un número de teléfono con código de país (Obligatorio)"
-          errorText="Teléfono inválido"
           maxlength="12"
           minlength="8"
           formControlName="telefono"
           [counter]="true"
           inputmode="tel"
+          (input)="validatePhone($event)"
         ></ion-input>
       </ion-item>
 
@@ -84,19 +77,15 @@
           fill="solid"
           label="Fecha de Nacimiento (Obligatorio)"
           labelPlacement="floating"
-          helperText="Ingresa tu fecha de nacimiento"
-          errorText="Fecha de nacimiento inválida"
           formControlName="fechaNacimiento"
         ></ion-input>
       </ion-item>
-
 
       <ion-item class="ion-margin" lines="none">
         <ion-select
           formControlName="region"
           label="Región (Obligatorio)"
-          placeholder="Seleccionar región"
-          errorText="Seleccione una región">
+          placeholder="Seleccionar región">
           <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">
             {{ region.nombre }}
           </ion-select-option>
@@ -107,8 +96,7 @@
         <ion-select
           formControlName="comuna"
           label="Comuna (Obligatorio)"
-          placeholder="Seleccionar comuna"
-          errorText="Seleccione una comuna">
+          placeholder="Seleccionar comuna">
           <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
             {{ comuna }}
           </ion-select-option>
@@ -121,25 +109,20 @@
           fill="solid"
           label="Patente (Opcional)"
           labelPlacement="floating"
-          helperText="Ingresa una patente de vehículo (Opcional)"
           formControlName="patente"
         >
           <ion-text color="success">(Opcional)</ion-text>
         </ion-input>
       </ion-item>
 
-      <ion-item class="ion-margin" >
+      <ion-item class="ion-margin">
         <ion-select
           formControlName="genero"
           label="Genero (Obligatorio)"
-          placeholder="Seleccionar genero"
-          errorText="Genero de usuario inválido"
-        >
+          placeholder="Seleccionar genero">
           <ion-select-option value="masculino">Masculino</ion-select-option>
           <ion-select-option value="femenino">Femenino</ion-select-option>
-          <ion-select-option value="Sin definir"
-            >Prefiero no decirlo</ion-select-option
-          >
+          <ion-select-option value="Sin definir">Prefiero no decirlo</ion-select-option>
         </ion-select>
       </ion-item>
 
