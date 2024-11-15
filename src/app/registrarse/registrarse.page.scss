@@ -1,27 +1,27 @@
+/* Ajuste para ion-content si necesitas más integración */
+/* Ajuste adicional para el contenido */
 ion-content {
   --background: url(./../../assets/fondos/fondoLogin.jpg) no-repeat center center;
   --background-size: cover;
   display: flex;
-  flex-direction: column; /* Alinea los elementos en columna */
-  justify-content: center; /* Centra verticalmente */
-  align-items: center; /* Centra horizontalmente */
-  padding: 20px; /* Añade padding para evitar que toque los bordes */
-  box-sizing: border-box; /* Incluye el padding en el cálculo total */
-  height: 100%; /* Asegura que el ion-content ocupe toda la altura disponible */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 100vh;
 }
 
-/* Estilo para ion-card */
+/* Estilo del card */
 ion-card {
-  width: 100%;
-  max-width: 400px; /* Limita el ancho máximo del card */
+  max-width: 400px;
+  background-color: rgba(0, 65, 41, 0.7); /* Fondo verde con transparencia */
   border-radius: 20px;
-  box-shadow: none;
-  background-color: #0041299f;
-  backdrop-filter: blur(5px);
-  padding: 20px; /* Padding interno para que los elementos no queden pegados */
-  box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
-  margin: 0 auto; /* Centra horizontalmente */
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
+
 
 h1 {
   color: white;
@@ -38,18 +38,21 @@ h1 {
   align-items: center;
   width: 100%; /* Asegura que ocupe todo el ancho del card */
   box-sizing: border-box; /* Incluye padding en el ancho total */
+  max-width: 600px;
+
+
 }
 
-/* Ajustes para ion-item */
+
+
+/* Estilo adicional para los campos en ion-item */
 ion-item {
-  border-radius: 15px;
+  --ion-item-background: transparent; /* Fondo transparente para cada ion-item */
+  border-radius: 30px; /* Redondeo adicional */
   margin: 15px 0;
-  --padding-start: 16px;
-  --inner-padding: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Suaviza la sombra */
+  --background: white; /* Fondo verde oscuro para el contenedor del campo */
 }
-
 /* Estilo para los campos dentro de ion-item */
 ion-input, ion-select, ion-datetime, ion-textarea {
   --padding-start: 16px;
@@ -73,4 +76,19 @@ ion-input, ion-select, ion-datetime, ion-textarea {
 
 .qr-button:hover {
   transform: scale(1.05);
+}
+
+.rounded-input {
+  --border-radius: 30px; // Ajusta el valor para una apariencia más circular
+  --ion-item-background: transparent; // Hace que el fondo sea transparente
+  --padding-start: 15px;
+  --padding-end: 15px;
+  --color: #2e7d32; // Color del texto (opcional)
+
+  ion-input {
+    --padding-start: 10px;
+    --placeholder-color: #66bb6a; // Color del placeholder para combinar con el estilo verde
+    --background: transparent; // Hace que el fondo del ion-input sea transparente
+    --color: #ffffff; // Color del texto dentro del input
+  }
 }

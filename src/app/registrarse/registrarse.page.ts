@@ -115,6 +115,7 @@ export class RegistrarsePage implements OnInit {
     patente: this._formBuilder.control(''),
     region: this._formBuilder.control('', [Validators.required]),
     comuna: this._formBuilder.control('', [Validators.required])
+
   });
 
   comunasFiltradas: string[] = [];
@@ -181,6 +182,20 @@ export class RegistrarsePage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  validatePhone(event: any) {
+    // Obtén el valor del campo de teléfono
+    const value = event.target.value;
+
+    // Elimina cualquier carácter que no sea un número o un '+'
+    const filteredValue = value.replace(/[^0-9+]/g, '');
+
+    // Asigna el valor filtrado al campo de teléfono
+    event.target.value = filteredValue;
+
+    // Actualiza el valor del formulario
+    this.form.get('telefono')?.setValue(filteredValue);
   }
 
 
