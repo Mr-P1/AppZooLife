@@ -85,8 +85,8 @@ export const routes: Routes = [
     loadComponent: () => import('./PaginasAdulto/chat/chat.page').then( m => m.ChatPage)
   },
   {
-    path: 'noticias-info',
-    loadComponent: () => import('./noticias-info/noticias-info.page').then( m => m.NoticiasInfoPage)
+    path: 'noticias-info/:id', // Acepta un parámetro dinámico `id`
+    loadComponent: () => import('./noticias-info/noticias-info.page').then(m => m.NoticiasInfoPage)
   },
   {
     path: 'oirs',

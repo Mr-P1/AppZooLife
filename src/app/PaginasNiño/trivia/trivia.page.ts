@@ -11,7 +11,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, Io
 import { TriviaVisitaService } from 'src/app/common/servicios/trivia-visita.service';
 
 @Component({
-  selector: 'app-trivia',
+  selector: 'app-nino-trivia',
   templateUrl: './trivia.page.html',
   styleUrls: ['./trivia.page.scss'],
   standalone: true,

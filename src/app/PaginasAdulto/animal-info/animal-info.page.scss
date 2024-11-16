@@ -6,18 +6,25 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  /* Cambiar el color del texto y el ícono del botón de retroceso */
   --color: white;
   --ion-color-base: white;
 }
-
-
 
 ion-content {
   font-family: 'Work Sans', sans-serif;
 }
 
+/* Fondo principal */
+.contenidoPrincipal {
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+/* Cabecera */
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -32,72 +39,87 @@ ion-content {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #ff8800;
+  background-color: rgb(255, 136, 0); /* Fondo translúcido */
   color: white;
   border-radius: 50%;
-  width: 40px; /* Asegura que el ancho del círculo sea suficiente para dos dígitos */
-  height: 40px; /* Hace el contenedor circular */
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra ligera */
 }
 
 ion-card-title {
   margin-top: 0.5rem;
   margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  //color: rgb(73, 23, 0);
+  color: whitesmoke;
 }
 
 ion-card-subtitle {
   margin-top: 0;
   margin-bottom: 0.5rem;
-}
-
-ion-button img {
-  width: 30px;
-  height: 30px;
-}
-
-.contenidoPrincipal {
-  --background: none; /* Elimina el background por defecto si es necesario */
-  background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
-  background-size: cover; /* Ajusta la imagen para cubrir completamente el modal */
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  height: 100%; /* Asegura que el fondo cubra toda la altura */
-}
-
-
-div img {
-  width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
-  height: 100%; /* Hace que la imagen ocupe el 100% de la altura */
-  object-fit: cover; /* Escala la imagen para que llene el contenedor sin distorsionarse */
-}
-
-.custom-card {
-  border-radius: 15px;
-  font-family: 'Chewy', cursive;
-  font-weight: 20;
-  background-image: url(./../../../assets/fondos/fondocardinfo.png);
-  color: white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-ion-card-title {
-  font-size: 1.4rem;
-  text-align: center;
-  color: rgb(73, 23, 0);
-  padding-bottom: 5px;
-  text-align: center;
+  font-size: 1.1rem;
+  //color: rgba(73, 23, 0, 0.8);
+  color: whitesmoke;
 }
 
 ion-card-content {
   font-size: 1rem;
   padding: 15px;
-  color: rgb(73, 23, 0);
+  //color: rgb(73, 23, 0);
+  color: whitesmoke;
+}
+
+/* Tarjetas personalizadas */
+.custom-card {
+  border-radius: 15px;
+  font-family: 'Work Sans', sans-serif;
+  background: rgba(255, 255, 255, 0.16); /* Fondo translúcido */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
+
+/* Botones */
+ion-button img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+ion-button:hover img {
+  transform: scale(1.1); /* Efecto de hover */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Sombra en hover */
 }
 
 ion-back-button {
   --color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
+
+/* Contenido multimedia */
+audio, video {
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+/* Sombras y bordes generales */
+div img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+div img:hover {
+  transform: scale(1.05);
+}
+

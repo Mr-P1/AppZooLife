@@ -13,7 +13,7 @@ import { IonRouterOutlet } from '@ionic/angular';
 import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
-  selector: 'app-trivia',
+  selector: 'app-adulto-trivia',
   templateUrl: './trivia.page.html',
   styleUrls: ['./trivia.page.scss'],
   standalone: true,

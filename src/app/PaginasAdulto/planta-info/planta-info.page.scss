@@ -3,11 +3,11 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .title-container {
     text-align: center;
   }
-  
+
   .icono-numero {
     position: absolute;
     top: 10px;
@@ -23,22 +23,22 @@
     font-weight: bold;
     font-size: 16px;
   }
-  
+
   ion-card-title {
     margin-top: 0.5rem;
     margin-bottom: 0.25rem;
   }
-  
+
   ion-card-subtitle {
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
-  
+
   ion-button img {
     width: 30px;
     height: 30px;
   }
-  
+
   .contenidoPrincipal {
     --background: none; /* Elimina el background por defecto si es necesario */
     background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
@@ -47,12 +47,11 @@
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     height: 100%; /* Asegura que el fondo cubra toda la altura */
   }
-  
-  
+
+
   div img {
     width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
     height: 100%; /* Hace que la imagen ocupe el 100% de la altura */
     object-fit: cover; /* Escala la imagen para que llene el contenedor sin distorsionarse */
   }
-  
-  
+

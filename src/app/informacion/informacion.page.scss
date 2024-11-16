@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
 
+/* Fondo general */
 ion-content {
   --background: none;
   background-image: url(./../../assets/fondos/fondo_paginas.jpg);
@@ -12,58 +13,63 @@ ion-content {
   align-items: center;
 }
 
+/* Contenedor de tarjetas */
 .card-container {
-  padding-top: 0px;
-  margin-bottom: 0px;
+  padding-top: 10px;
   display: flex;
-  font-family: 'Chewy', cursive;
   flex-direction: column;
   gap: 20px;
-  padding: 10px;
   width: 90%;
   max-width: 500px;
   margin: 0 auto;
+  font-family: 'Chewy', cursive; /* Fuente original */
 }
 
-ul {
-  padding-top: 10px;
-  margin-top: 10px;
-}
-
+/* Tarjetas personalizadas */
 .custom-card {
   border-radius: 15px;
-  font-family: 'Chewy', cursive;
-  font-weight: 20;
-  background-image: url(./../../assets/fondos/fondocardinfo3.png);
-  color: white;
+  background-image: url(./../../assets/fondos/fondocardinfo3.png); /* Fondo original */
+  color: rgb(0, 0, 0); /* Color de texto actualizado */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-ion-card-title {
-  font-size: 1.4rem;
-  text-align: center;
-  color: rgb(73, 23, 0);
-  padding-bottom: 5px;
-  text-align: center;
-  position: absolute;
+.custom-card:hover {
+  transform: scale(1.03); /* Zoom sutil */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
 }
 
-ion-card-content {
-  font-size: 1rem;
-  padding: 15px;
-  color: rgb(73, 23, 0);
+/* Textos */
+ion-card-title, ion-card-content p, ul li {
+  color: rgba(0, 0, 0, 0.678); /* Color de texto actualizado */
+  font-family: 'Chewy', cursive; /* Fuente original */
+  transition: color 0.2s ease-in-out;
 }
 
+ion-card-title:hover, ion-card-content p:hover, ul li:hover {
+  color: rgba(0, 0, 0, 0.4); /* Resalte sutil al hover */
+}
+
+/* Sombra en los títulos al hover */
+ion-card-title:hover {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave */
+}
+
+/* Listas */
 ul {
   list-style: disc;
   padding-left: 20px;
+  margin-top: 10px;
 }
 
+/* Barra de navegación */
 ion-toolbar {
-  --background: #103116; /* Fondo del toolbar */
-  --color: #fff; /* Texto del toolbar */
+  --background: rgba(0, 59, 11, 0.95);
+  --color: #fff;
 }
 
 ion-back-button {
-  --color: #fff; /* Color del botón de retroceso */
+  --color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
