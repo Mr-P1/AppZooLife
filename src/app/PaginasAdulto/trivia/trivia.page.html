@@ -4,20 +4,21 @@
   <!-- Mostrar mensaje si el usuario ha visto menos de 5 animales -->
   <ion-card *ngIf="!loading && !puedeHacerTrivia">
     <ion-card-header>
-      <ion-card-title>Lo sentimos</ion-card-title>
+      <ion-card-title >Lo sentimos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p *ngIf="animalesVistosCount < 5">
-        Para realizar la trivia debes visitar al menos 5 animales. <br> Has visto {{ animalesVistosCount }} animal/es.
+      <p *ngIf="animalesVistosCount < 5" class="custom-text">
+        Para realizar la trivia debes visitar al menos 5 atracciones. <br> Has visto {{ animalesVistosCount }} atracción/es.
       </p>
-      <p *ngIf="animalesVistosCount >= 5">
+      <p *ngIf="animalesVistosCount >= 5" class="custom-text">
         Ya has completado la trivia de hoy. Vuelve mañana para participar nuevamente.
       </p>
-      <ion-button expand="full" [routerLink]="['/adulto/inicio']">
+      <ion-button class="custom-text" expand="block" [routerLink]="['/adulto/inicio']">
         Volver al inicio
       </ion-button>
     </ion-card-content>
   </ion-card>
+
 
   <!-- Mostrar botón de comenzar si aún no ha comenzado la trivia -->
   <ng-container *ngIf="puedeHacerTrivia && !triviaComenzada">
@@ -26,8 +27,8 @@
         <ion-card-title>¿Estás preparado/a?</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>La trivia consta de 10 preguntas sobre los animales vistos en Zoolife. Tendrás 10 segundos para responder cada una. ¡Buena suerte!</p>
-        <ion-button (click)="comenzarTrivia()">Comenzar Trivia</ion-button>
+        <p class="custom-text">La trivia consta de 10 preguntas sobre los animales vistos en Zoolife. Tendrás 10 segundos para responder cada una. ¡Buena suerte!</p>
+        <ion-button expand="block" class="custom-text" (click)="comenzarTrivia()">Comenzar Trivia</ion-button>
       </ion-card-content>
     </ion-card>
   </ng-container>
@@ -44,6 +45,7 @@
           [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'a' ? 'success' : 'danger') : 'primary'"
           [disabled]="preguntaActual.respondida"
           (click)="seleccionarRespuesta(preguntaActual, 'a')"
+          class="custom-text"
         >
           {{ preguntaActual.respuestas.a }}
         </ion-button>
@@ -53,6 +55,7 @@
           [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'b' ? 'success' : 'danger') : 'primary'"
           [disabled]="preguntaActual.respondida"
           (click)="seleccionarRespuesta(preguntaActual, 'b')"
+          class="custom-text"
         >
           {{ preguntaActual.respuestas.b }}
         </ion-button>
@@ -62,6 +65,7 @@
           [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'c' ? 'success' : 'danger') : 'primary'"
           [disabled]="preguntaActual.respondida"
           (click)="seleccionarRespuesta(preguntaActual, 'c')"
+          class="custom-text"
         >
           {{ preguntaActual.respuestas.c }}
         </ion-button>
@@ -71,6 +75,7 @@
           [color]="preguntaActual.respondida ? (preguntaActual.respuesta_correcta === 'd' ? 'success' : 'danger') : 'primary'"
           [disabled]="preguntaActual.respondida"
           (click)="seleccionarRespuesta(preguntaActual, 'd')"
+          class="custom-text"
         >
           {{ preguntaActual.respuestas.d }}
         </ion-button>
@@ -100,9 +105,9 @@
         <ion-card-title>Trivia finalizada</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        Has respondido correctamente a {{ respuestasCorrectas }} preguntas.
-        <br />
-        <ion-button expand="full" [routerLink]="['/adulto/inicio']">Volver al inicio</ion-button>
+        <p class="custom-text">Has respondido correctamente a {{ respuestasCorrectas }} preguntas.</p><br />
+        <p class="custom-text">Sumaste {{ puntosGanados }} puntos. </p><br />
+        <ion-button class="custom-text" expand="block" [routerLink]="['/adulto/inicio']">Volver al inicio</ion-button>
       </ion-card-content>
     </ion-card>
   </ng-container>
