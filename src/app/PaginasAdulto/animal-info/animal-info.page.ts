@@ -59,8 +59,8 @@ export class AnimalInfoPage implements OnInit, OnDestroy {
           const area = animal.area; // Obtén el área desde el modelo del animal
           // Guardar el animal visto incluyendo el área
           this.animalService.guardarAnimalVisto(userId, id, metodoIngreso, area).subscribe({
-            next: () => console.log('Animal visto guardado con método de ingreso:', metodoIngreso, 'y área:', area),
-            error: (error) => console.error('Error al guardar el animal visto', error)
+            next: () => console.log('Animal visto registrado exitosamente.'),
+            error: (error) => console.error('Error al registrar el animal visto:', error),
           });
 
           // Inicia el temporizador para el conteo de vistas de sesión

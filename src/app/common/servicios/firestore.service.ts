@@ -132,15 +132,51 @@ export class FirestoreService {
 
   // Método para guardar el animal visto
   guardarAnimalVisto(userId: string, animalId: string, metodoIngreso?: string, area?: string): Observable<void> {
-    const animalVisto = {
-      userId,
-      animalId,
-      area,
-      metodoIngreso,
-      vistoEn: new Date().toISOString(),
-    };
-    return from(addDoc(this._rutaAnimalesVistos, animalVisto)).pipe(map(() => { }));
+    const hoy = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD para la fecha actual
+
+    // Consulta para verificar si ya existe un registro del mismo animal, usuario y método en la fecha actual
+    const queryRef = query(
+      this._rutaAnimalesVistos,
+      where('userId', '==', userId),
+      where('animalId', '==', animalId),
+      where('metodoIngreso', '==', metodoIngreso)
+    );
+
+    return from(getDocs(queryRef)).pipe(
+      switchMap((snapshot) => {
+        const existeHoy = snapshot.docs.some((doc) => {
+          const data = doc.data() as any;
+          const fechaGuardada = new Date(data.vistoEn.toDate()).toISOString().split('T')[0]; // Convertir Firestore Timestamp a fecha
+          return fechaGuardada === hoy;
+        });
+
+        if (!existeHoy) {
+          // Si no existe un registro en la fecha actual, se guarda el nuevo registro
+          const nuevoRegistro = {
+            userId,
+            animalId,
+            area,
+            metodoIngreso,
+            vistoEn: new Date(), // Fecha y hora actuales
+          };
+
+          return from(addDoc(this._rutaAnimalesVistos, nuevoRegistro)).pipe(
+            map(() => {
+              console.log('Animal visto guardado con éxito.');
+            })
+          );
+        } else {
+          console.log(`El animal ya fue visto hoy por este usuario con el método ${metodoIngreso}.`);
+          return of(); // No realiza ninguna acción si ya existe
+        }
+      }),
+      catchError((error) => {
+        console.error('Error al guardar el animal visto:', error);
+        return throwError(() => new Error('Error al guardar el animal visto.'));
+      })
+    );
   }
+
 
   // Método para verificar si el usuario ya ha visto el animal
   usuarioHaVistoAnimal(userId: string, animalId: string): Observable<boolean> {
@@ -149,16 +185,52 @@ export class FirestoreService {
   }
 
   // Método para guardar la planta vista
-  guardarPlantaVista(userId: string, plantaId: string, metodoIngreso:string, area:string): Observable<void> {
-    const plantaVista = {
-      userId,
-      metodoIngreso,
-      area,
-      plantaId,
-      vistoEn: new Date().toISOString(),
-    };
-    return from(addDoc(this._rutaPlantasVistas, plantaVista)).pipe(map(() => { }));
+  guardarPlantaVista(userId: string, plantaId: string, metodoIngreso?: string, area?: string): Observable<void> {
+    const hoy = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD para la fecha actual
+
+    // Consulta para verificar si ya existe un registro del mismo usuario, planta, y método en la fecha actual
+    const queryRef = query(
+      this._rutaPlantasVistas,
+      where('userId', '==', userId),
+      where('plantaId', '==', plantaId),
+      where('metodoIngreso', '==', metodoIngreso)
+    );
+
+    return from(getDocs(queryRef)).pipe(
+      switchMap((snapshot) => {
+        const existeHoy = snapshot.docs.some((doc) => {
+          const data = doc.data() as any;
+          const fechaGuardada = new Date(data.vistoEn.toDate()).toISOString().split('T')[0]; // Convertir Firestore Timestamp a fecha
+          return fechaGuardada === hoy;
+        });
+
+        if (!existeHoy) {
+          // Si no existe un registro en la fecha actual, guardar el nuevo registro
+          const nuevaPlantaVista = {
+            userId,
+            plantaId,
+            area,
+            metodoIngreso,
+            vistoEn: new Date(), // Fecha y hora actuales
+          };
+
+          return from(addDoc(this._rutaPlantasVistas, nuevaPlantaVista)).pipe(
+            map(() => {
+              console.log('Planta vista guardada con éxito.');
+            })
+          );
+        } else {
+          console.log(`La planta ya fue vista hoy por este usuario con el método ${metodoIngreso}.`);
+          return of(); // No realiza ninguna acción si ya existe
+        }
+      }),
+      catchError((error) => {
+        console.error('Error al guardar la planta vista:', error);
+        return throwError(() => new Error('Error al guardar la planta vista.'));
+      })
+    );
   }
+
 
   // Método para verificar si el usuario ya ha visto la planta
   usuarioHaVistoPlanta(userId: string, plantaId: string): Observable<boolean> {
