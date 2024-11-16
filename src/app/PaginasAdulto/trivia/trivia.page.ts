@@ -29,6 +29,8 @@ export class TriviaPage implements OnInit, OnDestroy {
   circumference: number = 2 * Math.PI * 45; // Circunferencia del círculo (r=45)
   respuestasCorrectas: number = 0;
   temporizador: any;
+  puntosGanados:number = 0;
+  nivelGanado:number = 0;
   usuario: Usuario | null = null;
   userId: string = '';
   animalesVistosCount: number = 0;
@@ -275,6 +277,8 @@ export class TriviaPage implements OnInit, OnDestroy {
 
     // Actualizar los puntos y el nivel solo si la trivia se completó
     if (!abandonada) {
+      this.puntosGanados = puntosGanados;
+      this.nivelGanado = nivelGanado;
       const nuevoPuntaje = this.usuario.puntos + puntosGanados;
       const nuevoNivel = this.usuario.nivel + nivelGanado;
 
