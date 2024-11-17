@@ -141,11 +141,12 @@ export class RegistrarsePage implements OnInit {
       const { email, password, telefono, nombre, genero, patente, region ,comuna } = this.form.value;
       const fechaNacimientoString = this.form.get('fechaNacimiento')?.value; // Obtén el valor de fecha como string
       const fechaNacimiento = fechaNacimientoString ? new Date(fechaNacimientoString) : null;
+      const fechaRegistro = new Date();
 
       if (!email || !password) return;
 
       // Intentar registrar al usuario
-      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(genero), String(patente) ,fechaNacimiento!, String(region),String(comuna) );
+      await this._authService.registrarse(email, password, String(nombre), String(telefono), String(genero), String(patente) ,fechaNacimiento!, String(region),String(comuna), fechaRegistro);
 
       // Restablecer el formulario después del registro exitoso
       this.form.reset();

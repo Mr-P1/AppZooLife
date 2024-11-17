@@ -12,6 +12,7 @@ export interface Usuario {
   comuna:string,
   auth_id:string,
   token?:string
+  fechaRegistro: Date
 }
 
 
