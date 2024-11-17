@@ -71,6 +71,9 @@ export class OirsFormPage implements OnInit {
       formData.userId = this.userId; // Agregar el ID del usuario al formulario
       formData.fechaEnvio = new Date(); // Agregar la fecha y hora actual
 
+      // Verificar si el tipo de solicitud es "felicitación" o "sugerencia"
+      const isAutoRespondido = formData.tipoSolicitud === 'felicitacion' || formData.tipoSolicitud === 'sugerencia';
+
       // Crear el objeto 'oirs' con los valores del formulario
       const oirs: CrearOirs = {
         tipoSolicitud: formData.tipoSolicitud,
@@ -78,7 +81,7 @@ export class OirsFormPage implements OnInit {
         detalles: formData.detalles,
         userId: this.userId!,
         fechaEnvio: formData.fechaEnvio,
-        respondido: false
+        respondido: isAutoRespondido // Asignar true si aplica, de lo contrario false
       };
 
       try {
@@ -90,7 +93,6 @@ export class OirsFormPage implements OnInit {
 
         // Llamar al servicio para crear el OIRS
         await this._oirsService.createOirs(oirs);
-
 
         // Llamar a la función de Firebase para enviar el correo
         this._oirsService.sendOIRSEmail(oirs.tipoSolicitud, this.correo).subscribe({
@@ -111,6 +113,7 @@ export class OirsFormPage implements OnInit {
       this.oirsForm.markAllAsTouched(); // Marcar todos los campos como tocados para mostrar errores
     }
   }
+
 
   async loadUserData() {
     try {
