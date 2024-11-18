@@ -10,23 +10,22 @@
 <ion-content class="contenidoPrincipal">
   <ng-container *ngIf="evento$ | async as evento; else loading">
     <ion-card>
-      <div>
-        <img alt="Silhouette of mountains" src="{{evento.imagen}}" />
+      <div class="image-container">
+        <img alt="Imagen del evento" src="{{ evento.imagen }}" />
       </div>
 
       <ion-card-header>
         <div class="header-content">
           <div class="title-container">
             <ion-card-title>{{ evento.nombre_evento }}</ion-card-title>
-
           </div>
         </div>
       </ion-card-header>
 
       <ion-card-content>
         <p><strong>Descripción: </strong>{{ evento.descripcion }}</p>
-        <p><strong>Fecha inicio:</strong> {{ evento.fecha_inicio }} a las {{evento.hora_inicio}}</p>
-        <p><strong>Fecha término: </strong>{{ evento.fecha_termino }} a las {{evento.hora_termino}}</p>
+        <p><strong>Fecha inicio:</strong> {{ evento.fecha_inicio }} a las {{ evento.hora_inicio }}</p>
+        <p><strong>Fecha término: </strong>{{ evento.fecha_termino }} a las {{ evento.hora_termino }}</p>
       </ion-card-content>
     </ion-card>
   </ng-container>
