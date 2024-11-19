@@ -31,8 +31,12 @@
           </ion-popover>
 
           <div class="title-container">
-            <h6 [ngClass]="{'estado-disponible': animal.disponibilidad === 'Disponible', 'estado-no-disponible': animal.disponibilidad !== 'Disponible'}">
-              {{animal.disponibilidad}}
+            <h6 [ngClass]="{
+              'estado-disponible': animal.disponibilidad === 'Disponible',
+              'estado-tratamiento': animal.disponibilidad === 'Tratamiento',
+              'estado-proximamente': animal.disponibilidad === 'Proximamente'
+            }">
+            {{animal.disponibilidad}}
             </h6>
             <ion-card-title>{{ animal.nombre_comun }}</ion-card-title>
             <ion-card-subtitle>{{ animal.nombre_cientifico }}</ion-card-subtitle>
