@@ -67,5 +67,28 @@ ion-card-title {
 ion-button {
   --background: #ff8800; /* Color de fondo del botón */
   --color: #ffffff; /* Color del texto */
-  --border-radius: 5px; /* Opción para redondear bordes */
+  --border-radius: 20px; /* Opción para redondear bordes */
+}
+
+
+.lo-sentimos-card {
+  background-image: url('../../../assets/fondos/fondoMapa.jpg'); /* Ruta de la imagen */
+  background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que se repita */
+  color: rgb(252, 245, 245); /* Cambia el color del texto para mayor contraste */
+  border-radius: 15px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra */
+  padding: 15px; /* Espaciado interno */
+  text-align: center; /* Centrar el texto */
+  font-family: 'Chewy', cursive; /* Cambia la fuente si es necesario */
+}
+
+.lo-sentimos-card ion-card-title {
+  font-size: 1.8rem; /* Tamaño del título */
+  color: rgb(252, 245, 245);
+}
+
+.lo-sentimos-card ion-card-content {
+  font-size: 1.5rem; /* Tamaño del contenido */
 }

@@ -118,14 +118,14 @@ ion-card-title {
   margin-bottom: 0.25rem;
   font-size: 2rem;
   font-weight: bold;
-  color: rgb(85, 62, 41); /* Cambia el color del texto a blanco */
+  color: rgb(64, 20, 20); /* Cambia el color del texto a blanco */
 }
 
 ion-card-subtitle {
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: rgb(85, 55, 28); /* Cambia el color del subtítulo a blanco */
+  color: rgb(64, 20, 20); /* Cambia el color del subtítulo a blanco */
 }
 
 
@@ -322,3 +322,9 @@ h2 {
 //   object-position: center; /* Centra la imagen */
 //   border-radius: 10px; /* Opcional: bordes redondeados */
 // }
+
+
+
+audio::-webkit-media-controls-panel {
+  background-color:#2d8700f1 /* Fondo del panel de controles */
+}
