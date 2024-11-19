@@ -1,40 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+/* Fondo principal */
 ion-content {
   --background: url(./../../../assets/fondos/fondo_paginas.jpg) no-repeat center center;
   --background-size: cover;
   padding: 16px;
 }
 
-ion-card {
+/* Botón de agregar solicitud */
+.add-button {
+  --background: linear-gradient(45deg, #ff8800, #ff5722); /* Gradiente naranja */
+  --color: white; /* Texto blanco */
+  font-size: 20px; /* Tamaño del icono */
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  transition: transform 0.2s ease;
+}
+
+.add-button:hover {
+  transform: scale(1.1); /* Ampliación sutil al pasar el cursor */
+}
+
+/* Tarjetas de solicitudes OIRS */
+.oirs-card {
   margin-bottom: 20px;
   border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco con mayor opacidad */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.oirs-card:hover {
+  transform: translateY(-5px); /* Efecto de elevación */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Títulos de las tarjetas */
 ion-card-title {
   font-weight: bold;
-  color: #103116;
+  color: #103116; /* Color verde oscuro */
+  font-size: 1.2rem;
 }
 
+/* Subtítulos de las tarjetas (fecha) */
 ion-card-subtitle {
   color: #555;
+  font-size: 0.9rem;
 }
 
+/* Contenido de las tarjetas */
 ion-card-content p {
+  font-size: 1rem;
+  color: #103116;
+  line-height: 1.5;
   margin: 0;
   padding: 5px 0;
 }
 
-ion-toolbar {
-  --background: #103116;
-  --color: #fff;
-}
-
-ion-button {
-  --color: white;
-  font-size: 16px;
-}
-
+/* Alineación del botón central */
 .center-button {
   display: flex;
   justify-content: center;

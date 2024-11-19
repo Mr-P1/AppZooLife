@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+/* Fuente global */
+* {
+  font-family: 'Chewy', cursive;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fondo principal */
+ion-content {
+  --background: url('./../../assets/fondos/fondo_paginas.jpg') no-repeat center center;
+  --background-size: cover;
+  padding: 16px;
+}
+
+/* Estilo de la tarjeta principal */
+.info-card {
+  border-radius: 15px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  overflow: hidden; /* Asegura que todo quede dentro de la tarjeta */
+  background-image: url(./../../assets/fondos/fondocardinfo3.png);
+}
+
+/* Imagen de la noticia */
+.image-container {
+  position: relative;
+  text-align: center;
+  padding: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto; /* Mantén la proporción original de la imagen */
+  object-fit: contain; /* Ajusta la imagen sin recortarla */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease; /* Efecto de zoom */
+}
+
+.image-container img:hover {
+  transform: scale(1.05); /* Ampliación sutil al pasar el cursor */
+}
+
+/* Encabezado de la tarjeta */
+.card-header {
+  text-align: center;
+  margin-top: 10px;
+}
+
+ion-card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #103116;
+}
+
+ion-card-subtitle {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Contenido de la tarjeta */
+.card-content p {
+  font-size: 1rem;
+  color: #103116;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+/* Mensaje de carga */
+.loading-card {
+  text-align: center;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #103116;
+}
+
+/* Botón de retroceso */
+ion-toolbar {
+  --background: #103116;
+  --color: #fff;
+}
+
+ion-back-button {
+  --color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+p {
+  color: #fff;
+}

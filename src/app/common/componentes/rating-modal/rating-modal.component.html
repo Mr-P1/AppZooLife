@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="dismiss()">X</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding rating-modal-content">
+  <!-- Título adicional -->
+  <div class="rating-title">
+    ¡Califica tu experiencia!
+  </div>
+
+  <!-- Contenedor de efecto vidrio -->
+  <div class="glass-container">
+    <!-- Contenedor de estrellas -->
+    <div class="stars-container">
+      <span *ngFor="let star of stars; let i = index"
+            (click)="setRating(i + 1)"
+            [class.selected]="i < rating"
+            class="star">
+        ★
+      </span>
+    </div>
+
+    <!-- Contenedor para el textarea -->
+    <div class="textarea-container">
+      <ion-textarea placeholder="Déjanos tus comentarios" [(ngModel)]="comments"></ion-textarea>
+    </div>
+
+    <!-- Botón de envío -->
+    <ion-button expand="full" (click)="submitRating()" class="submit-button">
+      Enviar
+    </ion-button>
+  </div>
+</ion-content>

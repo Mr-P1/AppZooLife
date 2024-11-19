@@ -1,13 +1,103 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>info-plantas</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/nino/inicio" text=""></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">info-plantas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="contenidoPrincipal">
+  <ng-container *ngIf="planta$ | async as planta; else loading">
+    <ion-card class="custom-card">
+      <div>
+        <img alt="Imagen de la planta" src="{{planta.imagen}}" />
+        <div class="icono-numero">{{planta.posicion_mapa}}</div>
+      </div>
+
+      <ion-card-header>
+        <div class="header-content">
+
+          <!-- Botón para curiosidad -->
+          <ion-button id="curiosidad-trigger" fill="clear">
+            <img src="../../../assets/icon/ampolleta.png" alt="Curiosidad" />
+          </ion-button>
+          <ion-popover trigger="curiosidad-trigger" triggerAction="click">
+            <ng-template>
+              <ion-content class="ion-padding">
+                {{ planta.curiosidad }}
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+
+          <div class="title-container">
+            <ion-card-title>{{ planta.nombre_comun }}</ion-card-title>
+            <ion-card-subtitle>{{ planta.nombre_cientifico }}</ion-card-subtitle>
+          </div>
+
+          <!-- Botón para precaución -->
+          <ion-button id="precaucion-trigger" fill="clear">
+            <img src="../../../assets/icon/precaución_rojo.png" alt="Precaución" />
+          </ion-button>
+          <ion-popover trigger="precaucion-trigger" triggerAction="click">
+            <ng-template>
+              <ion-content class="ion-padding">
+                <ion-list>
+                  <ion-item>
+                    <ion-label>{{ planta.precaucion }}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ng-container *ngIf="planta.audio; else noAudio">
+          <ion-card-subtitle>Audio explicativo</ion-card-subtitle>
+          <audio controls>
+            <source [src]="planta.audio" type="audio/mp3" />
+            Tu navegador no soporta la reproducción de audio.
+          </audio>
+        </ng-container>
+        <ng-template #noAudio>
+          <p>No hay audio disponible para esta planta.</p>
+        </ng-template>
+
+        <ng-container *ngIf="planta.video; else noVideo">
+          <ion-card-subtitle>Video</ion-card-subtitle>
+          <video width="100%" height="auto" controls>
+            <source [src]="planta.video" type="video/mp4" />
+            Tu navegador no soporta la reproducción de video.
+          </video>
+        </ng-container>
+        <ng-template #noVideo>
+          <p>No hay video disponible para esta planta.</p>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="custom-card">
+      <ion-card-title>Ficha técnica</ion-card-title>
+      <ion-card-content>
+        <p><strong>Familia:</strong> {{ planta.familia }}</p>
+        <p><strong>Descripción:</strong> {{ planta.descripcion_1 }}</p>
+        <p>{{ planta.descripcion_2 }}</p>
+        <p>{{ planta.descripcion_3 }}</p>
+        <p><strong>Floración:</strong> {{ planta.floracion }}</p>
+        <p><strong>Importancia:</strong> {{ planta.importancia }}</p>
+        <p><strong>Usos:</strong> {{ planta.usos }}</p>
+        <p><strong>Zonas:</strong> {{ planta.zonas }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-template #loading>
+    <ion-card>
+      <ion-card-content>
+        <p>Cargando información de la planta...</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
+
