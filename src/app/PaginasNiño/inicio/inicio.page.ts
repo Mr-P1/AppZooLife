@@ -299,11 +299,11 @@ export class InicioPage implements OnInit {
       }
       this.animalsService.getAnimalById(result).subscribe((animal) => {
         if (animal) {
-          this.router.navigate(['/animal-info-nino', result]);
+          this.router.navigate(['/animal-info-nino', result],{ queryParams: { metodo: 'qr' } });
         } else {
           this.animalsService.getPlantaById(result).subscribe((planta) => {
             if (planta) {
-              this.router.navigate(['/info-plantas-nino', result]);
+              this.router.navigate(['/info-plantas-nino', result],{ queryParams: { metodo: 'qr' } });
             } else {
               console.error('No se encontró información para el ID escaneado.');
             }

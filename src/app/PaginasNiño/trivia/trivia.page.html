@@ -2,12 +2,12 @@
   <ion-spinner *ngIf="loading" name="crescent" class="spinner-center"></ion-spinner>
 
   <!-- Mostrar mensaje si el usuario ha visto menos de 5 animales -->
-  <ion-card *ngIf="!loading && !puedeHacerTrivia">
+  <ion-card class="lo-sentimos-card" *ngIf="!loading && !puedeHacerTrivia">
     <ion-card-header>
       <ion-card-title>Lo sentimos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      Para realizar la trivia debes visitar al menos 5 animales. <br> Has visto {{ animalesVistosCount }} animal/es.
+      Para realizar la trivia debes visitar al menos 5 atracciones. <br> Has visto {{ animalesVistosCount }} atracción/es.
       <br />
       <ion-button expand="full" [routerLink]="['/nino/inicio']">
         Volver al inicio
