@@ -123,3 +123,20 @@ div img:hover {
   transform: scale(1.05);
 }
 
+/* Color verde para Disponible */
+.estado-disponible {
+  color: #28a745; /* Verde */
+  font-weight: bold;
+}
+
+/* Color naranja para Tratamiento */
+.estado-tratamiento {
+  color: #fd7e14; /* Naranja */
+  font-weight: bold;
+}
+
+/* Color azul para Próximamente */
+.estado-proximamente {
+  color: #007bff; /* Azul */
+  font-weight: bold;
+}
