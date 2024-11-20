@@ -28,6 +28,6 @@ export class NoticiasPage implements OnInit {
   }
 
   goToNoticia(id: string) {
-    this.router.navigate(['/noticias-info', id]);
+    this.router.navigate(['adulto/noticias-info', id]);
   }
 }

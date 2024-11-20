@@ -68,8 +68,12 @@ export class BasePage implements OnInit {
       this.pageTitle = 'Recompensas';
     } else if (cleanedUrl.includes('trivia')) {
       this.pageTitle = 'Trivia';
+    } else if (cleanedUrl.includes('eventos-info')) {
+      this.pageTitle = 'Evento';
     } else if (cleanedUrl.includes('eventos')) {
       this.pageTitle = 'Eventos';
+    } else if (cleanedUrl.includes('noticias')) {
+      this.pageTitle = 'Noticias';
     } else if (cleanedUrl.includes('oirs')) {
       this.pageTitle = 'Historial OIRS';
     } else if (cleanedUrl.includes('mapa')) {

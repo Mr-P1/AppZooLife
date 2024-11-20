@@ -64,6 +64,14 @@ export const routes: Routes = [
         path: 'recompensas',
         loadComponent: () => import('./recompensas/recompensas.page').then( m => m.RecompensasPage)
       },
+      {
+        path: 'noticias-info/:id', // Acepta un parámetro dinámico `id`
+        loadComponent: () => import('./noticias-info/noticias-info.page').then(m => m.NoticiasInfoPage)
+      },
+      {
+        path: 'eventos-info/:id',
+        loadComponent: () => import('./PaginasAdulto/eventos-info/eventos-info.page').then( m => m.EventosInfoPage)
+      },
 
 
     ]
@@ -73,20 +81,12 @@ export const routes: Routes = [
     loadComponent: () => import('./PaginasAdulto/animal-info/animal-info.page').then( m => m.AnimalInfoPage)
   },
   {
-    path: 'eventos-info/:id',
-    loadComponent: () => import('./PaginasAdulto/eventos-info/eventos-info.page').then( m => m.EventosInfoPage)
-  },
-  {
     path: 'planta-info/:id',
     loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
   },
   {
     path: 'chat/:id',
     loadComponent: () => import('./PaginasAdulto/chat/chat.page').then( m => m.ChatPage)
-  },
-  {
-    path: 'noticias-info/:id', // Acepta un parámetro dinámico `id`
-    loadComponent: () => import('./noticias-info/noticias-info.page').then(m => m.NoticiasInfoPage)
   },
   {
     path: 'oirs',

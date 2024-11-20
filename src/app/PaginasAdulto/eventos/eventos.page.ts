@@ -31,7 +31,7 @@ export class EventosPage  implements OnInit{
   }
 
   goToEvento(id:string){
-    this.router.navigate(['/eventos-info', id]);
+    this.router.navigate(['adulto/eventos-info', id]);
   }
 
 

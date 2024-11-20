@@ -111,11 +111,10 @@ h5 {
 }
 
 .fondo-tiempo {
-  background-color: #ff8800;
   color: white;
   font-family: 'Chewy', cursive;
   font-weight: 300;
-  border: none;
+  border: 2px solid rgb(255, 123, 0); /* Bordes blancos */
   border-radius: 15px;
   padding: 10px;
   font-size: 24px;
@@ -123,7 +122,8 @@ h5 {
   transition: background-color 0.3s;
   transform: scale(1.05); /* Zoom ligero al hover */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
-  background: #ff8800; /* Fondo ligeramente más brillante */
+  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido con efecto vidrio */
+  backdrop-filter: blur(8px); /* Desenfoque para el efecto vidrio */
 }
 
 
