@@ -27,6 +27,7 @@ export interface premiosUsuario {
   estado: boolean
   premioId: string,
   usuarioId: string,
+  fecha?: Date
 
 }
 
@@ -87,6 +88,7 @@ export class RecompensasService {
         estado: true,
         premioId: premio.id,
         usuarioId: id,
+        fecha: new Date()
       };
 
       await addDoc(this._rutaRecompensasUsuario, nuevoPremioUsuario);
