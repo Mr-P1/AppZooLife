@@ -77,7 +77,7 @@ export class MapaPage implements OnInit , AfterViewInit {
     const animal = this.animales.find(a => a.posicion_mapa === posicionMapa);
 
     if (animal) {
-      this.router.navigate([`/animal-info/${animal.id}`],{ queryParams: { metodo: 'mapa' } });
+      this.router.navigate([`/adulto/animal-info/${animal.id}`],{ queryParams: { metodo: 'mapa' } });
     } else {
       console.error('Animal no encontrado para la posición: ', posicionMapa);
     }

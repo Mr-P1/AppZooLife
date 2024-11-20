@@ -72,17 +72,17 @@ export const routes: Routes = [
         path: 'eventos-info/:id',
         loadComponent: () => import('./PaginasAdulto/eventos-info/eventos-info.page').then( m => m.EventosInfoPage)
       },
+      {
+        path: 'animal-info/:id',
+        loadComponent: () => import('./PaginasAdulto/animal-info/animal-info.page').then( m => m.AnimalInfoPage)
+      },
+      {
+        path: 'planta-info/:id',
+        loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
+      },
 
 
     ]
-  },
-  {
-    path: 'animal-info/:id',
-    loadComponent: () => import('./PaginasAdulto/animal-info/animal-info.page').then( m => m.AnimalInfoPage)
-  },
-  {
-    path: 'planta-info/:id',
-    loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
   },
   {
     path: 'chat/:id',
@@ -120,18 +120,19 @@ export const routes: Routes = [
         path: 'recompensas',
         loadComponent: () => import('./recompensas/recompensas.page').then( m => m.RecompensasPage)
       },
+      {
+        path: 'animal-info-nino/:id',
+        loadComponent: () => import('./PaginasNiño/info-animal/info-animal.page').then( m => m.InfoAnimalPage)
+      },
+      {
+        path: 'info-plantas-nino/:id',
+        loadComponent: () => import('./PaginasNiño/info-plantas/info-plantas.page').then( m => m.InfoPlantasPage)
+      }
 
 
     ]
   },
-  {
-    path: 'animal-info-nino/:id',
-    loadComponent: () => import('./PaginasNiño/info-animal/info-animal.page').then( m => m.InfoAnimalPage)
-  },
-  {
-    path: 'info-plantas-nino/:id',
-    loadComponent: () => import('./PaginasNiño/info-plantas/info-plantas.page').then( m => m.InfoPlantasPage)
-  }
+
 
 
 

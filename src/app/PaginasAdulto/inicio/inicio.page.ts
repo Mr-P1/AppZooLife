@@ -237,7 +237,7 @@ loadPlantas() {
 
 
   goToItem(item: Animal | Planta) {
-    const route = 'familia' in item ? '/planta-info' : '/animal-info';
+    const route = 'familia' in item ? '/adulto/planta-info' : '/adulto/animal-info';
     this.router.navigate([route, item.id]);
     this.router.navigate([route, item.id], { queryParams: { metodo: 'searchbar' } });
     this.searchTerm = '';
@@ -300,11 +300,11 @@ loadPlantas() {
       }
       this.animalsService.getAnimalById(result).subscribe((animal) => {
         if (animal) {
-          this.router.navigate(['/animal-info', result], { queryParams: { metodo: 'qr' } });
+          this.router.navigate(['/adulto/animal-info', result], { queryParams: { metodo: 'qr' } });
         } else {
           this.animalsService.getPlantaById(result).subscribe((planta) => {
             if (planta) {
-              this.router.navigate(['/planta-info', result], { queryParams: { metodo: 'qr' } });
+              this.router.navigate(['/adulto/planta-info', result], { queryParams: { metodo: 'qr' } });
             } else {
               console.error('No se encontró información para el ID escaneado.');
             }

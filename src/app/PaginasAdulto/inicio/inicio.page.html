@@ -99,7 +99,7 @@
         <img
           alt="{{ animal.nombre_comun }}"
           src="{{ animal.imagen }}"
-          [routerLink]="['/animal-info', animal.id]"
+          [routerLink]="['/adulto/animal-info', animal.id]"
           [queryParams]="{ metodo: 'card' }"
         />
         <div class="icono-numero">{{ animal.posicion_mapa }}</div>
@@ -153,7 +153,7 @@
         <img
           alt="{{ planta.nombre_comun }}"
           src="{{ planta.imagen }}"
-          [routerLink]="['/planta-info', planta.id]"
+          [routerLink]="['/adulto/planta-info', planta.id]"
           [queryParams]="{ metodo: 'card' }"
         />
         <div class="icono-numero">{{ planta.posicion_mapa }}</div>
