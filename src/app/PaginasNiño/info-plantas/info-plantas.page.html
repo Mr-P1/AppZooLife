@@ -1,3 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/nino/inicio" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="contenidoPrincipal">
   <ng-container *ngIf="planta$ | async as planta; else loading">
     <ion-card class="custom-card">
@@ -92,3 +100,4 @@
     </ion-card>
   </ng-template>
 </ion-content>
+

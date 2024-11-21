@@ -11,13 +11,17 @@ import { RouterLink, Router, RouterModule, NavigationStart } from '@angular/rout
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonButton, IonCardContent, IonSpinner } from '@ionic/angular/standalone';
 import { IonRouterOutlet } from '@ionic/angular';
 import { catchError, forkJoin, of } from 'rxjs';
+import {  ModalController } from '@ionic/angular';
+import { RatingModalComponent } from './../../common/componentes/rating-modal/rating-modal.component';
+
 
 @Component({
   selector: 'app-adulto-trivia',
   templateUrl: './trivia.page.html',
   styleUrls: ['./trivia.page.scss'],
   standalone: true,
-  imports: [IonSpinner, IonCardContent, IonButton, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterModule]
+  imports: [IonSpinner, IonCardContent, IonButton, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterModule, RatingModalComponent,],
+  providers: [ModalController], // Añadimos el ModalController aquí
 })
 export class TriviaPage implements OnInit, OnDestroy {
 
@@ -45,8 +49,20 @@ export class TriviaPage implements OnInit, OnDestroy {
   constructor(
     private preguntaService: FirestoreService,
     private authService: AuthService,
-    private triviaVisitaService: TriviaVisitaService
-  ) {}
+    private triviaVisitaService: TriviaVisitaService,
+    private modalController: ModalController,
+    private router: Router // Añadimos el Router
+  ) {
+    // Agregar el código de depuración aquí
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        console.log('Navegación iniciada hacia:', event.url);
+        if (event.url === '/adulto/trivia') {
+          console.log('Navegando a la trivia...');
+        }
+      }
+    });
+  }
 
   ngOnInit() {
     this.tipo = localStorage.getItem('tipo')!;
@@ -304,6 +320,18 @@ export class TriviaPage implements OnInit, OnDestroy {
       console.log(`Trivia finalizada. Puntos ganados: ${puntosGanados}, Nivel ganado: ${nivelGanado}`);
     } else {
       console.log('Trivia abandonada, no se actualizan puntos ni nivel.');
+    }
+  }
+
+   //calificación trivia
+   async mostrarCalificacion() {
+    try {
+      const modal = await this.modalController.create({
+        component: RatingModalComponent,
+      });
+      await modal.present();
+    } catch (error) {
+      console.error('Error al mostrar el modal:', error);
     }
   }
 

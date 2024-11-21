@@ -1,20 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Necesario para *ngIf
+import { NoticiasService, Noticia } from '../common/servicios/noticias.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-noticias-info',
   templateUrl: './noticias-info.page.html',
   styleUrls: ['./noticias-info.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [
+    CommonModule, IonHeader, IonToolbar, IonTitle, IonContent,
+    IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButtons, IonBackButton
+  ]
 })
 export class NoticiasInfoPage implements OnInit {
 
-  constructor() { }
+  noticia$: Observable<Noticia | null> | undefined;
+  private noticiasService = inject(NoticiasService);
+  private route = inject(ActivatedRoute);
 
   ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.noticia$ = this.noticiasService.getNoticia(id);
+    }
   }
-
 }

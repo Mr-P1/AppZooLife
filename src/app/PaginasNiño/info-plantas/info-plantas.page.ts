@@ -10,13 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../common/servicios/auth.service';
 
 @Component({
-  selector: 'app-info-plantas',
+  selector: 'app-info-planta',
   templateUrl: './info-plantas.page.html',
   styleUrls: ['./info-plantas.page.scss'],
   standalone: true,
   imports: [IonBackButton, IonItem, IonLabel, IonList, IonButtons, IonButton, IonPopover, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonToolbar, CommonModule, FormsModule]
 })
-export class InfoPlantasPage implements OnInit {
+export class InfoPlantaPage implements OnInit {
   planta$: Observable<Planta | null> | undefined;
 
   constructor(
