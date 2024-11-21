@@ -22,7 +22,7 @@ export class AlertService {
 
   checkAlertTime() {
     const alertConfigs = [
-      { hour: 11, minute: 28, header: '¡Promoción Especial de Hoy! 🍦', message: '¡Presenta nuestra app en caja y disfruta de todos los helados 2x1! No pierdas esta oportunidad para compartir el doble de sabor, solo por tiempo limitado.' },
+      { hour: 14, minute: 27, header: '¡Promoción Especial de Hoy! 🍦', message: '¡Presenta nuestra app en caja y disfruta de todos los helados 2x1! No pierdas esta oportunidad para compartir el doble de sabor, solo por tiempo limitado.' },
       { hour: 22, minute: 19, header: '¡Hora de un Snack! 🍔', message: 'Presenta nuestra app y recibe un descuento especial en todos los combos de la tarde. ¡Aprovecha esta deliciosa oferta para recargar energías! Solo disponible hoy, ¡no te lo pierdas!.' }
     ];
 
