@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+ion-toolbar {
+  display: none !important; /* Oculta cualquier toolbar adicional */
+}
+
+ion-header {
+  display: none !important; /* Oculta cualquier header adicional */
+}
 
 .news-card {
   margin: 15px;
@@ -34,7 +40,8 @@
   color: rgb(78, 41, 5);
 }
 
-.detalle, .fecha {
+.detalle,
+.fecha {
   font-size: 0.85em;
 }
 
@@ -68,4 +75,5 @@ ion-content {
   background-repeat: no-repeat;
   height: 100%;
   font-family: 'Work Sans', sans-serif;
+  padding-top: 0 !important; /* Asegura que no haya espacio extra encima */
 }

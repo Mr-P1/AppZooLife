@@ -1,12 +1,3 @@
-<ion-header>
-  <ion-toolbar>
-    <!-- Botón de retroceso -->
-    <ion-buttons slot="start">
-      <ion-back-button default-href="/adulto/inicio"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <!-- Muestra la noticia cuando esté disponible -->
   <ng-container *ngIf="noticia$ | async as noticia; else loading">

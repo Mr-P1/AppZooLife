@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true" [ngStyle]="{'background-image': fondo, 'background-size': 'cover', 'background-position': 'center', 'background-repeat': 'no-repeat', 'height': '100%'}">
   <div class="segment-container">
-    <ion-segment value="default" (ionChange)="onSegmentChange($event)">
+    <ion-segment value="default" (ionChange)="onSegmentChange($event)" class="glass-segment">
       <ion-segment-button value="default">
         <ion-label>Por reclamar</ion-label>
       </ion-segment-button>
@@ -12,43 +12,26 @@
 
   <ng-container *ngIf="segmentValue === 'segment'">
     <ng-container *ngIf="recompensas.length > 0; else noPremios">
-      <ion-card *ngFor="let premio of recompensas">
-        <img
-          [alt]="premio.nombre"
-          [src]="premio.imagen || 'https://ionicframework.com/docs/img/demos/card-media.png'"
-        />
+      <ion-card *ngFor="let premio of recompensas" class="glass-card">
+        <img [alt]="premio.nombre" [src]="premio.imagen || 'https://ionicframework.com/docs/img/demos/card-media.png'" />
         <ion-card-header>
           <ion-card-title>{{ premio.nombre }}</ion-card-title>
           <ion-card-subtitle>
             Se requieren {{ premio.puntos_necesarios }} puntos.
-
             Hay disponible {{premio.cantidad}} unidades
           </ion-card-subtitle>
         </ion-card-header>
-
         <ion-card-content>
           {{ premio.descripcion }}
         </ion-card-content>
-
         <div class="button-container">
-          <!-- Mostrar mensaje si la cantidad es 0 -->
           <ion-button *ngIf="premio.cantidad === 0" fill="clear" disabled>
             Ya no queda
           </ion-button>
-
-          <!-- Mostrar botón de canje si hay suficientes puntos y cantidad es mayor a 0 -->
-          <ion-button
-            (click)="canjearPremio(premio)"
-            *ngIf="usuario && usuario.puntos >= premio.puntos_necesarios && premio.cantidad > 0"
-            fill="clear">
+          <ion-button (click)="canjearPremio(premio)" *ngIf="usuario && usuario.puntos >= premio.puntos_necesarios && premio.cantidad > 0" fill="clear">
             Canjear Premio
           </ion-button>
-
-          <!-- Mostrar botón de "Puntos insuficientes" si no tiene suficientes puntos -->
-          <ion-button
-            *ngIf="usuario && usuario.puntos < premio.puntos_necesarios && premio.cantidad > 0"
-            fill="clear"
-            disabled>
+          <ion-button *ngIf="usuario && usuario.puntos < premio.puntos_necesarios && premio.cantidad > 0" fill="clear" disabled>
             Puntos insuficientes
           </ion-button>
         </div>
@@ -56,54 +39,36 @@
     </ng-container>
   </ng-container>
 
-    <ng-template #noPremios>
-      <ion-card class="no-premios">
-        <img alt="panda rojo" src="../../assets/fondos/imagenSinPremios.jpg" />
+  <ng-template #noPremios>
+    <ion-card class="no-premios glass-card">
+      <img alt="panda rojo" src="../../assets/fondos/imagenSinPremios.jpg" />
+      <ion-card-header>
+        <ion-card-title>¡Aún no tienes premios!</ion-card-title>
+        <ion-card-subtitle>Participa en las trivias</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Parece que todavía no has ganado ningún premio. Responde las trivias disponibles para acumular puntos e intercambiarlas por recompensas exclusivas. ¡Comienza ahora y demuestra cuánto sabes!
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+  <ng-container *ngIf="segmentValue === 'default'">
+    <ng-container *ngIf="premiosDetallados.length > 0; else noPremios">
+      <ion-card *ngFor="let premio of premiosDetallados" class="glass-card">
+        <img [alt]="premio.nombre" [src]="premio.imagen || 'https://ionicframework.com/docs/img/demos/card-media.png'" />
         <ion-card-header>
-          <ion-card-title>¡Aún no tienes premios!</ion-card-title>
-          <ion-card-subtitle>Participa en las trivias</ion-card-subtitle>
+          <ion-card-title>{{ premio.nombre }}</ion-card-title>
+          <ion-card-subtitle>¡Felicidades! Alcanzaste los {{ premio.puntos_necesarios }} puntos.</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          Parece que todavía no has ganado ningún premio. Responde las trivias disponibles para acumular puntos e intercambiarlas por recompensas exclusivas. ¡Comienza ahora y demuestra cuánto sabes!
+          {{ premio.descripcion }}
         </ion-card-content>
+        <div class="button-container">
+          <ion-button (click)="mostrarCodigo(premio)" fill="clear" [disabled]="!premio.estado">
+            {{ premio.estado ? 'Reclamar Premio' : 'Premio Reclamado' }}
+          </ion-button>
+        </div>
       </ion-card>
-    </ng-template>
-
-
-    <ng-container *ngIf="segmentValue === 'default'">
-      <ng-container *ngIf="premiosDetallados.length > 0; else noPremios">
-        <ion-card *ngFor="let premio of premiosDetallados">
-          <img [alt]="premio.nombre" [src]="premio.imagen || 'https://ionicframework.com/docs/img/demos/card-media.png'" />
-          <ion-card-header>
-            <ion-card-title>{{ premio.nombre }}</ion-card-title>
-            <ion-card-subtitle>¡Felicidades! Alcanzaste los {{ premio.puntos_necesarios }} puntos.</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            {{ premio.descripcion }}
-          </ion-card-content>
-          <div class="button-container">
-            <!-- Botón deshabilitado si premio.estado es false -->
-            <ion-button
-              (click)="mostrarCodigo(premio)"
-              fill="clear"
-              [disabled]="!premio.estado"> <!-- Deshabilita si estado es false -->
-              <!-- Cambia el texto del botón si está deshabilitado -->
-              {{ premio.estado ? 'Reclamar Premio' : 'Premio Reclamado' }}
-            </ion-button>
-          </div>
-        </ion-card>
-      </ng-container>
     </ng-container>
-
-    <ng-template #noPremios>
-      <ion-card class="no-premios">
-        <img alt="panda rojo" src="../../assets/fondos/imagenSinPremios.jpg" />
-        <ion-card-header>
-          <ion-card-title>¡No hay premios disponibles!</ion-card-title>
-          <ion-card-subtitle>Participa en las trivias para ganar puntos</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          Actualmente no hay premios disponibles en el sistema. Vuelve pronto para descubrir nuevas recompensas.
-        </ion-card-content>
-      </ion-card>
-    </ng-template>
+  </ng-container>
+</ion-content>

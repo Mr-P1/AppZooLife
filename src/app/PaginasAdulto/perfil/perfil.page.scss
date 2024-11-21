@@ -260,3 +260,69 @@ ion-card-content p {
     }
   }
 }
+
+
+.ranking-container {
+  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+  backdrop-filter: blur(10px); /* Efecto vidrio */
+  border-radius: 15px; /* Bordes redondeados */
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+.titulo-ranking {
+  text-align: center;
+  font-size: 24px;
+  color: white; /* Texto blanco */
+  font-weight: bold;
+  margin-bottom: 16px;
+  font-family: 'Chewy', cursive; /* Fuente personalizada */
+}
+
+.player-item {
+  margin: 10px 0;
+  border-radius: 15px; /* Bordes redondeados */
+  background: rgba(255, 255, 255, 0.8); /* Fondo semi-opaco */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.03); /* Efecto hover */
+  }
+
+  ion-avatar {
+    margin-right: 10px;
+    border: 2px solid #f4a261; /* Borde en los avatares */
+    border-radius: 50%;
+    padding: 5px; /* Espaciado interno */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra ligera en el avatar */
+  }
+
+  ion-label {
+    h1 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2a2c41; /* Azul oscuro */
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+      color: #4f4f4f;
+      font-size: 14px;
+    }
+  }
+
+  ion-badge {
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 12px; /* Bordes redondeados */
+    background: linear-gradient(45deg, #f77c30, #f4a261); /* Degradado para el ranking */
+    color: white; /* Texto blanco */
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra en el badge */
+  }
+}

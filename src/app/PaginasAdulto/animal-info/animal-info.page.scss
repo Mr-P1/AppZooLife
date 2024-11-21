@@ -140,3 +140,47 @@ div img:hover {
   color: #007bff; /* Azul */
   font-weight: bold;
 }
+
+/* Fondo principal con efecto vidrio */
+.glass-container {
+  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+  backdrop-filter: blur(10px); /* Efecto desenfoque */
+  border-radius: 15px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Borde translúcido */
+  color: white; /* Texto blanco */
+  font-family: 'Work Sans', sans-serif;
+  max-width: 90%; /* Ajusta el ancho máximo */
+  margin: 0 auto; /* Centra el contenedor */
+}
+
+/* Fondos transparentes para listas */
+ion-list {
+  background: transparent !important; /* Asegura transparencia en el fondo */
+  border: none !important; /* Elimina bordes */
+  box-shadow: none !important; /* Elimina sombras */
+  padding: 0; /* Sin espaciado extra */
+}
+
+/* Fondos transparentes para elementos de la lista */
+.transparent-item {
+  --background: transparent !important; /* Transparencia completa */
+  --border-color: transparent !important; /* Sin bordes */
+  color: white !important; /* Texto blanco */
+  font-size: 1rem; /* Ajuste del tamaño de texto */
+  font-family: 'Work Sans', sans-serif !important; /* Fuente consistente */
+  text-align: justify; /* Alineación justificada */
+}
+
+/* Ajustes generales del ion-popover */
+ion-popover {
+  --background: transparent !important; /* Fondo transparente del popover */
+  --backdrop-opacity: 0.3; /* Opacidad del fondo detrás del popover */
+}
+
+/* Estilo de las etiquetas */
+ion-label {
+  color: white !important; /* Asegura que el texto sea blanco */
+}
+

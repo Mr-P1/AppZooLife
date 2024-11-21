@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="custom-content">
   <ion-card *ngFor="let noticia of noticias" class="news-card">
     <div class="image-container">
       <img alt="{{noticia.titulo}}" src="{{noticia.imagen}}" (click)="goToNoticia(noticia.id)" />

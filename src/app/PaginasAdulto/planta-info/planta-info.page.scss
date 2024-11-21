@@ -1,8 +1,30 @@
+/* Contenedor principal de los botones */
 .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+//* Estilo del popover */
+ion-popover {
+  --background: transparent !important; /* Fondo transparente */
+  --backdrop-opacity: 0.3; /* Opcional: transparencia para el fondo general */
+}
+
+/* Contenedor con efecto vidrio */
+.glass-container {
+  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+  backdrop-filter: blur(15px); /* Efecto de desenfoque */
+  border-radius: 12px; /* Bordes redondeados */
+  padding: 15px; /* Espaciado interno */
+  color: white; /* Texto blanco */
+  text-align: justify; /* Alineación del texto */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Borde translúcido */
+  max-width: 90%; /* Asegura que el contenido no se extienda demasiado */
+  margin: 0 auto; /* Centra el contenedor */
+}
+
+
 
   .title-container {
     text-align: center;
