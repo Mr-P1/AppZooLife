@@ -16,7 +16,7 @@ import { AuthService } from '../../common/servicios/auth.service';
   standalone: true,
   imports: [IonBackButton, IonItem, IonLabel, IonList, IonButtons, IonButton, IonPopover, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonToolbar, CommonModule, FormsModule]
 })
-export class InfoPlantaPage implements OnInit {
+export class InfoPlantasPage implements OnInit {
   planta$: Observable<Planta | null> | undefined;
 
   constructor(
