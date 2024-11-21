@@ -70,3 +70,13 @@ ion-segment-button:focus {
   --indicator-color: #ff8800 !important; /* Barra naranja al presionar */
   color: #ff8800 !important; /* Refuerza el color del texto */
 }
+
+/* Contenedor de botones */
+.button-container {
+  display: flex; /* Activa Flexbox */
+  justify-content: center; /* Centra los botones horizontalmente */
+  align-items: center; /* (Opcional) Centra los botones verticalmente si tienen altura variable */
+  gap: 10px; /* Espaciado entre los botones */
+  margin-top: 10px; /* (Opcional) Espacio superior */
+  margin-bottom: 10px;
+}
