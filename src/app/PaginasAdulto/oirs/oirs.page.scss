@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+
 ion-content {
   --background: url(./../../../assets/fondos/fondoLogin.jpg) no-repeat center center;
   --background-size: cover;
@@ -7,6 +9,7 @@ ion-content {
   padding: 20px;
   height: 100%;
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del contenedor */
+  font-family: 'Work Sans', sans-serif;
 }
 
 ion-card {
@@ -19,6 +22,7 @@ ion-card {
   backdrop-filter: blur(8px);
   overflow: hidden; /* Asegura que los bordes redondeados sean visibles */
   margin: 0 auto;
+  font-family: 'Work Sans', sans-serif;
 }
 
 h1 {
@@ -37,6 +41,7 @@ h1 {
   padding: 20px;
   margin-top: 10px;
   padding-top: 10px;
+  font-family: 'Work Sans', sans-serif;
 }
 
 ion-item {
@@ -48,6 +53,7 @@ ion-item {
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden; /* Asegura que el contenido respete el borde redondeado */
+  font-family: 'Work Sans', sans-serif;
 }
 
 ion-input, ion-select, ion-datetime, ion-textarea {
@@ -56,6 +62,7 @@ ion-input, ion-select, ion-datetime, ion-textarea {
   --background: transparent;
   --placeholder-color: rgba(0, 0, 0, 0.5);
   width: 100%; /* Asegura que el contenido ocupe todo el espacio del ion-item */
+  font-family: 'Work Sans', sans-serif;
 }
 
 .qr-button {
@@ -71,6 +78,7 @@ ion-input, ion-select, ion-datetime, ion-textarea {
   --background: linear-gradient(45deg, #ff8800, #ff5722);
   text-transform: none;
   margin-top: 10px;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .qr-button:hover {
@@ -88,11 +96,13 @@ ion-card.container-login {
   box-shadow: none;
   overflow: hidden; /* Asegura que los bordes redondeados se respeten */
   align-items: stretch;
+  font-family: 'Work Sans', sans-serif;
 }
 
 ion-toolbar {
   --background: #103116; /* Fondo del toolbar */
   --color: #fff; /* Texto del toolbar */
+  font-family: 'Work Sans', sans-serif;
 }
 
 ion-back-button {

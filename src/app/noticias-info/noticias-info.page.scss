@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
 /* Fuente global */
 * {
-  font-family: 'Chewy', cursive;
+  font-family: 'Work Sans', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,18 +12,29 @@
 ion-content {
   --background: url('./../../assets/fondos/fondo_paginas.jpg') no-repeat center center;
   --background-size: cover;
+  --background-attachment: fixed; /* Fija el fondo para evitar desplazamiento */
   padding: 16px;
 }
 
 /* Estilo de la tarjeta principal */
 .info-card {
   border-radius: 15px;
-  margin-bottom: 20px;
+  margin: 15px auto; /* Centrado horizontal con márgenes */
+  padding: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+  margin-top: 15px;
   background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px;
   overflow: hidden; /* Asegura que todo quede dentro de la tarjeta */
   background-image: url(./../../assets/fondos/fondocardinfo3.png);
+  background-size: cover;
+  background-position: center;
+  max-width: 600px; /* Límite máximo para pantallas grandes */
+  width: 90%; /* Responsivo para pantallas pequeñas */
 }
 
 /* Imagen de la noticia */
@@ -38,7 +49,7 @@ ion-content {
 .image-container img {
   width: 100%;
   height: auto; /* Mantén la proporción original de la imagen */
-  object-fit: contain; /* Ajusta la imagen sin recortarla */
+  object-fit: cover; /* Ajusta la imagen sin recortarla */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease; /* Efecto de zoom */
@@ -73,12 +84,20 @@ ion-card-subtitle {
   text-align: justify;
 }
 
-/* Mensaje de carga */
+/* Mensaje de carga con efecto vidrio */
 .loading-card {
   text-align: center;
   border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.1);
-  color: #103116;
+  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido con efecto vidrio */
+  backdrop-filter: blur(10px); /* Desenfoque para el efecto vidrio */
+  border: 2px solid white; /* Bordes blancos */
+  color: white; /* Texto blanco */
+  margin: 15px auto;
+  width: 90%;
+  max-width: 600px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para resaltar la tarjeta */
+  font-weight: bold; /* Destaca el texto */
 }
 
 /* Botón de retroceso */
@@ -93,6 +112,49 @@ ion-back-button {
   font-weight: bold;
 }
 
-p {
-  color: #fff;
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .info-card {
+    margin: 10px auto; /* Márgenes más pequeños en pantallas medianas */
+    width: 95%; /* Ocupa casi todo el ancho */
+  }
+
+  ion-card-title {
+    font-size: 1.5rem; /* Tamaño reducido para el título */
+  }
+
+  ion-card-subtitle {
+    font-size: 0.9rem; /* Subtítulos más pequeños */
+  }
+
+  .card-content p {
+    font-size: 0.9rem; /* Texto más compacto */
+  }
+
+  .image-container img {
+    border-radius: 10px; /* Ajusta el redondeo */
+  }
+}
+
+@media (max-width: 480px) {
+  .info-card {
+    margin: 5px auto; /* Márgenes mínimos para móviles */
+    padding: 10px; /* Reduce el padding */
+  }
+
+  ion-card-title {
+    font-size: 1.2rem; /* Ajuste para pantallas pequeñas */
+  }
+
+  ion-card-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .card-content p {
+    font-size: 0.8rem;
+  }
+
+  .image-container img {
+    border-radius: 5px; /* Ajusta el redondeo */
+  }
 }

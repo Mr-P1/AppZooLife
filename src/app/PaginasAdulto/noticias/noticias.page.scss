@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
 ion-toolbar {
   display: none !important; /* Oculta cualquier toolbar adicional */
 }
@@ -38,11 +40,13 @@ ion-header {
 .title-container {
   text-align: center;
   color: rgb(78, 41, 5);
+  font-family: 'Outfit', sans-serif; /* Cambia la fuente */
 }
 
 .detalle,
 .fecha {
   font-size: 0.85em;
+  font-family: 'Outfit', sans-serif; /* Cambia la fuente */
 }
 
 ion-card-title {
@@ -51,7 +55,7 @@ ion-card-title {
   font-size: 1.5rem;
   font-weight: bold;
   color: rgb(78, 41, 5);
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Outfit', sans-serif; /* Cambia la fuente */
 }
 
 .card-header {
@@ -64,7 +68,7 @@ ion-card-subtitle {
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
   color: rgb(78, 41, 5);
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Outfit', sans-serif; /* Cambia la fuente */
 }
 
 ion-content {
@@ -74,6 +78,6 @@ ion-content {
   background-position: center;
   background-repeat: no-repeat;
   height: 100%;
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Outfit', sans-serif; /* Cambia la fuente global */
   padding-top: 0 !important; /* Asegura que no haya espacio extra encima */
 }
