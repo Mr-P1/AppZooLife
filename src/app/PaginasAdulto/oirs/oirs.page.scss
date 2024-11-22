@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
 ion-content {
-  --background: url(./../../../assets/fondos/fondoLogin.jpg) no-repeat center center;
+  --background: url(./../../../assets/fondos/fondo_paginas.jpg) no-repeat center center;
   --background-size: cover;
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@ ion-card {
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  background-color: rgba(0, 65, 41, 0.8);
+  background-color: rgba(255, 255, 255, 0.226);
   backdrop-filter: blur(8px);
   overflow: hidden; /* Asegura que los bordes redondeados sean visibles */
   margin: 0 auto;
@@ -91,7 +91,7 @@ ion-card.container-login {
   margin: 0 auto;
   padding: 20px;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(255, 253, 253, 0.178);
   backdrop-filter: blur(10px);
   box-shadow: none;
   overflow: hidden; /* Asegura que los bordes redondeados se respeten */
