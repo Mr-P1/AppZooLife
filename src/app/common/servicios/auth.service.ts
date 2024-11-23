@@ -90,8 +90,8 @@ export class AuthService {
     // Guarda el token en sessionStorage //Quitar
     sessionStorage.setItem('authToken', token);
 
-    // Limpia la variable `animalesVistosSesion` en localStorage al iniciar sesión
-    localStorage.removeItem('animalesVistosSesion');
+    // Limpia la variable `atracciones vistas` en localStorage al iniciar sesión
+    localStorage.removeItem('atraccionesVistasSesion')
 
     // Actualiza el token en el documento de Firestore del usuario
     await this.FirestoreService.actualizarUsuario(userCredential.user.uid, { token: fcmToken! }).toPromise();
@@ -184,7 +184,7 @@ export class AuthService {
     const userCredential = await signInWithEmailAndPassword(this._auth, user.email, user.password);
 
     // Limpia la variable `animalesVistosSesion` en localStorage al iniciar sesión
-    localStorage.removeItem('animalesVistosSesion');
+    localStorage.removeItem('atraccionesVistasSesion')
 
     // Obtiene el token FCM para las notificaciones
     let fcmToken = this.notificacionesService.getToken();
