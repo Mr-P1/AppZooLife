@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
 ion-content {
-  --background: url(./../../../assets/fondos/fondo_paginas.jpg) no-repeat center center;
+  --background: url(./../../../assets/fondos/fondoinicio.jpg) no-repeat center center;
   --background-size: cover;
   display: flex;
   justify-content: center;
@@ -12,8 +12,21 @@ ion-content {
   font-family: 'Work Sans', sans-serif;
 }
 
+ion-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: 'Work Sans', sans-serif; /* Aplica Work Sans */
+}
+
+ion-buttons ion-icon {
+  color: white;
+  font-size: 24px;
+}
+
 ion-card {
   width: 100%;
+  padding-top: 15px;
+  margin-top: 15px;
   max-width: 400px;
   padding: 20px;
   border-radius: 20px;
@@ -100,9 +113,8 @@ ion-card.container-login {
 }
 
 ion-toolbar {
-  --background: #103116; /* Fondo del toolbar */
-  --color: #fff; /* Texto del toolbar */
-  font-family: 'Work Sans', sans-serif;
+  --background: #103116; /* Fondo de la toolbar */
+  --color: white; /* Texto blanco */
 }
 
 ion-back-button {

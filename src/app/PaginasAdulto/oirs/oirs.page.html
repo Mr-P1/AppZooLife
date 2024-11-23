@@ -1,5 +1,13 @@
-<!-- HTML sin los campos de Región y Comuna -->
-<ion-content [fullscreen]="true"><br>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/adulto/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>OIRS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
   <ion-card class="container-login">
     <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
       <!-- Logo del bioparque centrado -->
