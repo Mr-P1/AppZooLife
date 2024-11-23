@@ -17,7 +17,7 @@
         Volver al inicio
       </ion-button>
 
-      <ion-button (click)="mostrarCalificacion()">
+      <ion-button *ngIf="!yaRealizoEncuestaHoy()" (click)="mostrarCalificacion()">
         ¡Califica la experiencia!
       </ion-button>
 

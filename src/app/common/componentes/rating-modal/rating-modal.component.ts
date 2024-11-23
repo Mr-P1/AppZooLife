@@ -43,8 +43,11 @@ export class RatingModalComponent {
     }
   }
 
+
   // Cierra el modal
   dismiss() {
-    this.modalController.dismiss();
+    this.modalController.dismiss({
+      realizada: this.rating > 0, // Enviar true si se seleccionó una calificación
+    });
   }
 }
