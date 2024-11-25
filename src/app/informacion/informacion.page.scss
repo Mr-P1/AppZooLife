@@ -31,28 +31,12 @@ ion-content {
   background-image: url(./../../assets/fondos/fondocardinfo3.png); /* Fondo original */
   color: rgb(0, 0, 0); /* Color de texto actualizado */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.custom-card:hover {
-  transform: scale(1.03); /* Zoom sutil */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
 }
 
 /* Textos */
 ion-card-title, ion-card-content p, ul li {
   color: rgba(0, 0, 0, 0.678); /* Color de texto actualizado */
   font-family: 'Chewy', cursive; /* Fuente original */
-  transition: color 0.2s ease-in-out;
-}
-
-ion-card-title:hover, ion-card-content p:hover, ul li:hover {
-  color: rgba(0, 0, 0, 0.4); /* Resalte sutil al hover */
-}
-
-/* Sombra en los títulos al hover */
-ion-card-title:hover {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave */
 }
 
 /* Listas */
