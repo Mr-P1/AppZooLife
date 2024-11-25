@@ -1,4 +1,7 @@
 <ion-content [fullscreen]="true" [ngStyle]="{'background-image': fondo, 'background-size': 'cover', 'background-position': 'center', 'background-repeat': 'no-repeat', 'height': '100%'}">
+  <div class="puntos">
+    <h6><strong>Puntos disponibles: </strong> {{usuario?.puntos}}</h6>
+  </div>
   <div class="segment-container">
     <ion-segment value="default" (ionChange)="onSegmentChange($event)" class="glass-segment">
       <ion-segment-button value="default">

@@ -18,6 +18,11 @@ ion-content {
   border-radius: 10px;
 }
 
+.puntos{
+  text-align: center;
+  color: rgba(255, 255, 255, 0.884);
+}
+
 /* Tarjetas translúcidas con efecto vidrio */
 .glass-card {
   background: rgba(255, 255, 255, 0.2);
@@ -77,6 +82,5 @@ ion-segment-button:focus {
   justify-content: center; /* Centra los botones horizontalmente */
   align-items: center; /* (Opcional) Centra los botones verticalmente si tienen altura variable */
   gap: 10px; /* Espaciado entre los botones */
-  margin-top: 10px; /* (Opcional) Espacio superior */
   margin-bottom: 10px;
 }
