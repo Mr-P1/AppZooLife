@@ -9,11 +9,12 @@
   <!-- Listado de solicitudes OIRS -->
   <ion-card *ngFor="let solicitud of oirsList" class="oirs-card">
     <ion-card-header>
-      <ion-card-title>{{ solicitud.tipoSolicitud }}</ion-card-title>
+      <ion-card-title>{{ solicitud.tipoSolicitud | uppercase}}</ion-card-title>
       <ion-card-subtitle>Fecha: {{ solicitud.fechaEnvioFormatted }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <p><strong>Detalles:</strong> {{ solicitud.detalles }}</p>
+      <p><strong>Detalle:</strong> {{ solicitud.detalles }}</p>
+      <p *ngIf="solicitud.respuesta"><strong>Respuesta:</strong> {{ solicitud.respuesta }}</p>
     </ion-card-content>
   </ion-card>
 

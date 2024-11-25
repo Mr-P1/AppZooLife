@@ -47,6 +47,7 @@ ion-card-title {
 ion-card-subtitle {
   color: #555;
   font-size: 0.9rem;
+  margin-top: 1px;
 }
 
 /* Contenido de las tarjetas */
@@ -54,8 +55,7 @@ ion-card-content p {
   font-size: 1rem;
   color: #103116;
   line-height: 1.5;
-  margin: 0;
-  padding: 5px 0;
+  margin: 0px;
 }
 
 /* Alineación del botón central */
