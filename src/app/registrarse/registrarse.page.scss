@@ -1,65 +1,78 @@
-/* Ajuste para ion-content si necesitas más integración */
-/* Ajuste adicional para el contenido */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+
 ion-content {
   --background: url(./../../assets/fondos/fondoLogin.jpg) no-repeat center center;
   --background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 15px; /* Espaciado de 15px alrededor */
   box-sizing: border-box;
   height: 100%;
   min-height: 100vh;
+  font-family: 'Work Sans', sans-serif;
 }
 
 /* Estilo del card */
 ion-card {
   max-width: 400px;
-  background-color: rgba(0, 65, 41, 0.7); /* Fondo verde con transparencia */
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+  backdrop-filter: blur(10px); /* Efecto vidrio */
+  -webkit-backdrop-filter: blur(10px); /* Compatibilidad con navegadores WebKit */
   border-radius: 20px;
   padding: 20px;
   box-sizing: border-box;
   margin: 0 auto;
+  margin-top: 15px; /* Margen superior */
+  margin-left: 15px; /* Margen izquierdo */
+  margin-right: 15px; /* Margen derecho */
+  padding-top: 15px; /* Margen superior */
+  padding-left: 15px; /* Margen izquierdo */
+  padding-right: 15px; /* Margen derecho */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil */
+  width: 80%; /* Asegura que ocupe todo el ancho disponible */
+  margin: 0 auto; /* Centra horizontalmente */
 }
 
-
+/* Estilo del título */
 h1 {
   color: white;
   text-align: center;
-  font-size: 30px;
+  font-size: 32px;
   font-family: 'Work Sans', sans-serif;
   font-weight: 700;
+  margin-bottom: 20px;
 }
 
-/* Estilos para el contenedor del login */
+/* Contenedor del login */
 .container-login {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%; /* Asegura que ocupe todo el ancho del card */
-  box-sizing: border-box; /* Incluye padding en el ancho total */
+  width: 100%;
+  box-sizing: border-box;
   max-width: 600px;
-
-
 }
 
-
-
-/* Estilo adicional para los campos en ion-item */
+/* Estilo adicional para ion-item */
 ion-item {
-  --ion-item-background: transparent; /* Fondo transparente para cada ion-item */
-  border-radius: 30px; /* Redondeo adicional */
+  --ion-item-background: transparent;
+  border-radius: 30px;
   margin: 15px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Suaviza la sombra */
-  --background: white; /* Fondo verde oscuro para el contenedor del campo */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --background: rgba(255, 255, 255, 0.9);
 }
-/* Estilo para los campos dentro de ion-item */
+
+/* Estilo para los campos */
 ion-input, ion-select, ion-datetime, ion-textarea {
   --padding-start: 16px;
   --border-radius: 15px;
+  --placeholder-color: rgba(0, 0, 0, 0.6); /* Placeholder más visible */
+  font-size: 14px;
 }
 
-/* Estilo para los botones QR */
+/* Botones principales */
 .qr-button {
   display: flex;
   align-items: center;
@@ -78,17 +91,18 @@ ion-input, ion-select, ion-datetime, ion-textarea {
   transform: scale(1.05);
 }
 
+/* Estilo de inputs más redondeados */
 .rounded-input {
-  --border-radius: 30px; // Ajusta el valor para una apariencia más circular
-  --ion-item-background: transparent; // Hace que el fondo sea transparente
+  --border-radius: 30px;
+  --ion-item-background: transparent;
   --padding-start: 15px;
   --padding-end: 15px;
-  --color: #2e7d32; // Color del texto (opcional)
+  --color: #ffffff;
 
   ion-input {
     --padding-start: 10px;
-    --placeholder-color: #66bb6a; // Color del placeholder para combinar con el estilo verde
-    --background: transparent; // Hace que el fondo del ion-input sea transparente
-    --color: #ffffff; // Color del texto dentro del input
+    --placeholder-color: #66bb6a;
+    --background: transparent;
+    --color: #ffffff;
   }
 }

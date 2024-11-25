@@ -144,7 +144,7 @@ div img:hover {
 /* Fondo principal con efecto vidrio */
 .glass-container {
   background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
-  backdrop-filter: blur(10px); /* Efecto desenfoque */
+  backdrop-filter: blur(20px); /* Efecto desenfoque */
   border-radius: 15px; /* Bordes redondeados */
   padding: 20px; /* Espaciado interno */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */

@@ -1,8 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
 ion-content {
+  --background: none;
+  background-image: url(./../../../assets/fondos/fondoinicio.jpg);
+  background-size: cover; /* Cubre todo el contenedor */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fija la imagen */
   font-family: 'Work Sans', sans-serif;
+  height: 100%;
+  min-height: 100vh; /* Asegura una altura mínima */
+  display: flex;
+  flex-direction: column;
 }
+
+ion-list {
+  background: rgba(255, 255, 255, 0.5); /* Blanco semitransparente */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px; /* Espaciado interno */
+  margin: 10px; /* Espaciado externo para separar del contenedor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+ion-item {
+  --background: transparent; /* Sin fondo en cada opción */
+  border-radius: 5px; /* Bordes redondeados */
+  margin: 5px 0; /* Espaciado entre elementos */
+  color: #000000; /* Texto oscuro */
+  font-family: 'Work Sans', sans-serif; /* Fuente consistente */
+  transition: background-color 0.3s ease; /* Efecto suave al pasar el cursor */
+}
+
+ion-item:hover {
+  background: rgba(255, 255, 255, 0.7); /* Aumenta la opacidad al pasar el cursor */
+}
+
+ion-item {
+  color: #2a2a2a; /* Texto oscuro */
+  font-size: 16px; /* Ajusta el tamaño del texto */
+}
+
+ion-label {
+  --color: #ffffff; /* Texto oscuro */
+  font-size: 16px; /* Ajusta el tamaño del texto */
+}
+
 .nav {
   background-image: url('../../../assets/fondos/fondoCarrusel2.jpg');
   background-repeat: no-repeat; /* Evita que la imagen se repita */

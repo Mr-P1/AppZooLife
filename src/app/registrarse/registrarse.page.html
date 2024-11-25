@@ -1,16 +1,11 @@
 <ion-content [fullscreen]="true">
-  <!-- Tarjeta contenedora del formulario de inicio de sesión -->
   <ion-card class="container-login">
-    <!-- Formulario que se enlaza con FormBuilder y ejecuta la función 'submit' al enviarse -->
     <form [formGroup]="form" (ngSubmit)="submit()">
-      <!-- Icono de candado centrado en la parte superior -->
       <div class="ion-text-center ion-margin-vertical lock">
         <img src=".././../assets/icon/logoBioparque.png" alt="" />
       </div>
-
       <h1>ZooLife</h1>
 
-      <!-- Campo de entrada para el nombre -->
       <ion-item class="ion-margin" lines="none">
         <ion-input
           type="text"
@@ -20,11 +15,11 @@
           formControlName="nombre"
           placeholder="Ingresa tu nombre"
         >
-        <div slot="label">Nombre <ion-text color="red">*</ion-text></div>      </ion-input>
+        <div slot="label">Nombre <ion-text color="red">*</ion-text></div>
+        </ion-input>
       </ion-item>
 
-      <!-- Campo de entrada para el correo electrónico -->
-      <ion-item lines="none" class="ion-margin" >
+      <ion-item lines="none" class="ion-margin">
         <ion-input
           type="email"
           fill="solid"
@@ -33,27 +28,25 @@
           placeholder="Ingresa tu correo"
           formControlName="email"
         >
-          <!-- Etiqueta personalizada para el campo del correo -->
           <div slot="label">Correo <ion-text color="red">*</ion-text></div>
         </ion-input>
       </ion-item>
 
-      <!-- Campo de entrada para la contraseña -->
       <ion-item class="ion-margin" lines="none">
         <ion-input
           type="password"
           fill="solid"
           label="Contraseña (Obligatorio)"
           labelPlacement="floating"
-          placeholder="Ingresa tu contraseña (Obligatorio)"
+          placeholder="Ingresa tu contraseña"
           [counter]="true"
           minlength="5"
           formControlName="password"
         >
-          <!-- Etiqueta personalizada para el campo de contraseña -->
           <div slot="label">Contraseña</div>
         </ion-input>
       </ion-item>
+
       <ion-item class="ion-margin" lines="none">
         <ion-input
           type="text"
@@ -70,7 +63,6 @@
         ></ion-input>
       </ion-item>
 
-      <!-- Campo de entrada fecha de nacimiento -->
       <ion-item class="ion-margin" lines="none">
         <ion-input
           type="date"
@@ -126,7 +118,6 @@
         </ion-select>
       </ion-item>
 
-      <!-- Botón de envío del formulario para iniciar sesión -->
       <div class="ion-margin">
         <ion-button
           type="submit"
