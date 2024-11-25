@@ -39,7 +39,10 @@
       <ion-title>{{ pageTitle }}</ion-title>
       <ion-buttons slot="end">
 
-        <ion-back-button *ngIf="!esPaginaDeInicio" defaultHref="/adulto/inicio" class="boton" text=""></ion-back-button>
+        <ion-button *ngIf="!esPaginaDeInicio" (click)="goBack()" class="boton">
+          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+
       </ion-buttons>
 
     </ion-toolbar>
