@@ -14,32 +14,7 @@ ion-content {
   flex-direction: column;
 }
 
-ion-list {
-  background: rgba(255, 255, 255, 0.5); /* Blanco semitransparente */
-  backdrop-filter: blur(10px); /* Efecto de desenfoque */
-  border-radius: 10px; /* Bordes redondeados */
-  padding: 10px; /* Espaciado interno */
-  margin: 10px; /* Espaciado externo para separar del contenedor */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-}
 
-ion-item {
-  --background: transparent; /* Sin fondo en cada opción */
-  border-radius: 5px; /* Bordes redondeados */
-  margin: 5px 0; /* Espaciado entre elementos */
-  color: #000000; /* Texto oscuro */
-  font-family: 'Work Sans', sans-serif; /* Fuente consistente */
-  transition: background-color 0.3s ease; /* Efecto suave al pasar el cursor */
-}
-
-ion-item:hover {
-  background: rgba(255, 255, 255, 0.7); /* Aumenta la opacidad al pasar el cursor */
-}
-
-ion-item {
-  color: #2a2a2a; /* Texto oscuro */
-  font-size: 16px; /* Ajusta el tamaño del texto */
-}
 
 ion-label {
   --color: #ffffff; /* Texto oscuro */
@@ -52,20 +27,6 @@ ion-label {
   background-size: cover; /* La imagen cubrirá todo el contenedor */
   background-position: center; /* Centra la imagen en el contenedor */
   padding-top: 10px;
-}
-
-
-.search-container {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil */
-  backdrop-filter: blur(10px); /* Efecto de desenfoque */
-  border-radius: 15px; /* Bordes más redondeados */
-  padding: 8px; /* Ajuste del espaciado interno */
-  margin: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .animal-card {
@@ -311,3 +272,49 @@ ion-searchbar {
   color: white;
 }
 
+.search-overlay {
+  position: absolute; /* Superpone el contenedor sobre el contenido */
+  top: 100%; /* Asegura que el overlay comience justo debajo de la barra de búsqueda */
+  left: 0;
+  right: 0;
+  z-index: 10; /* Asegura que el overlay esté en la parte superior */
+  background: transparent; /* Fondo transparente */
+  border: none; /* Sin bordes */
+  box-shadow: none; /* Sin sombras */
+  max-height: 300px; /* Limita la altura si es necesario */
+  overflow-y: auto; /* Habilita el desplazamiento si hay muchos resultados */
+  padding: 0; /* Elimina cualquier padding extra */
+  margin: 0; /* Elimina márgenes */
+  border-radius: 8px;
+}
+
+/* Ajusta los estilos de los items de la lista si es necesario */
+ion-item {
+  --background: transparent; /* Sin fondo en los items */
+  margin: 0; /* Sin espacio entre los items */
+  border: none; /* Sin bordes */
+  color: #000000; /* Texto oscuro */
+  font-family: 'Work Sans', sans-serif; /* Fuente consistente */
+  transition: background-color 0.3s ease; /* Efecto suave al pasar el cursor */
+}
+
+
+
+ion-list {
+  background: rgba(255, 255, 255, 0.5); /* Blanco semitransparente */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+/* Ajusta el contenedor de la barra de búsqueda para evitar desalineaciones */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff56;
+  border-radius: 5px;
+  padding: 1px;
+  margin: 10px auto;
+  z-index: 5;
+}

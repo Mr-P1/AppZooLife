@@ -10,6 +10,19 @@
       <ion-button fill="clear" (click)="toggleQrScan()">
         <img src="../../../assets/icon/qrIcon.png" alt="Escanear QR"/>
       </ion-button>
+
+      <div class="search-overlay" *ngIf="filteredItems.length > 0">
+        <ion-list>
+          <ion-item *ngFor="let item of filteredItems" (click)="goToItem(item)">
+            {{ item.nombre_comun }}
+          </ion-item>
+        </ion-list>
+
+        <ion-item *ngIf="filteredItems.length === 0 && searchTerm">
+          <ion-label>No se encontraron resultados</ion-label>
+        </ion-item>
+
+      </div>
     </div>
 
     <div *ngIf="isScanning">
@@ -19,15 +32,7 @@
       ></zxing-scanner>
     </div>
 
-    <ion-list *ngIf="filteredItems.length > 0">
-      <ion-item *ngFor="let item of filteredItems" (click)="goToItem(item)">
-        {{ item.nombre_comun }}
-      </ion-item>
-    </ion-list>
 
-    <ion-item *ngIf="filteredItems.length === 0 && searchTerm">
-      <ion-label>No se encontraron resultados</ion-label>
-    </ion-item>
 
     <swiper-container
       [pagination]="true"
