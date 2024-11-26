@@ -35,7 +35,7 @@ export class InicioPage implements OnInit {
   itemsPerPage: number = 5; // Número de elementos que se muestran en cada carga
   currentPageAnimals: number = 1; // Página actual para los animales
   currentPagePlantas: number = 1; // Página actual para las plantas
-
+  filteredItems: (Animal | Planta)[] = [];
   userId: string = '';
   filteredAnimals: Animal[] = []; // Lista de animales filtrados
   searchTerm: string = ''; // Para almacenar el término de búsqueda
@@ -160,24 +160,34 @@ export class InicioPage implements OnInit {
     });
   }
 
-  // Método para filtrar animales según el término de búsqueda
-  filterAnimals(event: any) {
+
+  // Método para redirigir a la página de información de la atracción
+  goToItem(item: Animal | Planta) {
+    const route = 'familia' in item ? '/adulto/planta-info' : '/adulto/animal-info';
+    this.router.navigate([route, item.id]);
+    this.router.navigate([route, item.id], { queryParams: { metodo: 'searchbar' } });
+    this.searchTerm = '';
+    this.filteredItems = [];
+  }
+
+  filterItems(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
     if (this.searchTerm && this.searchTerm.trim() !== '') {
-      this.filteredAnimals = this.animales.filter(animal =>
+      const filteredAnimales = this.animales.filter(animal =>
         animal.nombre_comun.toLowerCase().includes(this.searchTerm)
       );
+      const filteredPlantas = this.plantas.filter(planta =>
+        planta.nombre_comun.toLowerCase().includes(this.searchTerm)
+      );
+
+      this.filteredItems = [...filteredAnimales, ...filteredPlantas];
     } else {
-      this.filteredAnimals = [];
+      this.filteredItems = [];
     }
   }
 
-  // Método para redirigir a la página de información del animal
-  goToAnimal(animalId: string) {
-    this.router.navigate(['/animal-info-nino', animalId]);
-    this.searchTerm = '';
-    this.filteredAnimals = [];
-  }
+
+
 
   like(animalId: string) {
     const animal = this.animales.find(a => a.id === animalId);
@@ -364,6 +374,7 @@ export class InicioPage implements OnInit {
 
   toggleMostrarPlantas() {
     this.mostrarPlantas = !this.mostrarPlantas;
+
     if (this.mostrarPlantas) {
       this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
       this.currentPagePlantas = 1;
@@ -372,12 +383,10 @@ export class InicioPage implements OnInit {
       this.currentPageAnimals = 1;
     }
 
-    // Habilitamos el infinite scroll
-    const infiniteScroll = document.querySelector('ion-infinite-scroll');
-    if (infiniteScroll) {
-      infiniteScroll.disabled = false;
-    }
+    this.filteredItems = []; // Limpia los resultados filtrados
+    this.searchTerm = '';    // Reinicia el término de búsqueda
   }
+
 
   loadMore(event: any) {
     setTimeout(() => {
