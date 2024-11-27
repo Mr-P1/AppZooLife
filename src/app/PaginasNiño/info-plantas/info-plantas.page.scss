@@ -50,11 +50,12 @@ ion-card-content {
 }
 
 .contenidoPrincipal {
+  --background: none; /* Elimina el background por defecto si es necesario */
   background-image: url(./../../../assets/fondos/fondo_paginas.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
+  background-size: cover; /* Ajusta la imagen para cubrir completamente el modal */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 100%; /* Asegura que el fondo cubra toda la altura */
 }
 
 .custom-card {

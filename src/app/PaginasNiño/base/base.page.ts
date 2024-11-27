@@ -68,7 +68,9 @@ export class BasePage implements OnInit{
       this.pageTitle = 'Eventos';
     } else if (url.includes('mapa')) {
       this.pageTitle = 'Mapa';
-    } else if (url.includes('animal-info')) {
+    } else if (url.includes('mapa')) {
+      this.pageTitle = 'Atracción';
+    }else if (url.includes('info-plantas')) {
       this.pageTitle = 'Atracción';
     } else if (url.includes('info-zoo')) {
       this.pageTitle = 'Información';
