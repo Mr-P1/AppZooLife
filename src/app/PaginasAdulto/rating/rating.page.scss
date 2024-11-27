@@ -1,0 +1,106 @@
+/* Importación de la fuente Chewy */
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+/* Restauración del fondo */
+.rating-modal-content {
+  --background: url(../../../assets/fondos/fondo_paginas.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Chewy', cursive;
+  color: rgb(95, 39, 7);
+  padding: 1rem;
+}
+
+/* Título adicional */
+.rating-title {
+  font-size: 1.8rem;
+  text-align: center;
+  color: white; /* El título es blanco */
+  margin-bottom: 1rem;
+  font-family: 'Chewy', cursive;
+}
+
+/* Contenedor de efecto vidrio */
+.glass-container {
+  background: rgba(255, 255, 255, 0.1); /* Fondo translúcido */
+  backdrop-filter: blur(10px); /* Efecto vidrio */
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra para el efecto */
+  margin: 1rem auto;
+  max-width: 600px; /* Ancho máximo del contenedor */
+}
+
+/* Estilos para las estrellas */
+.stars-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.star {
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: #ccc; /* Color inicial */
+  transition: color 0.3s, transform 0.2s;
+}
+
+.star:hover {
+  color: #ffa807; /* Color al pasar el cursor */
+  transform: scale(1.2); /* Agranda la estrella al pasar el cursor */
+}
+
+.star.selected {
+  color: #ffa807; /* Color de la estrella seleccionada */
+}
+
+/* Contenedor del textarea */
+.textarea-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+ion-textarea {
+  --color: rgb(95, 39, 7);
+  --background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+  --padding-start: 15px; /* Ajuste del padding */
+  --padding-end: 15px;
+  border-radius: 10px; /* Añade un border-radius de 10px */
+  font-family: 'Chewy', cursive;
+  padding: 10px;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de envío */
+.submit-button {
+  --background: linear-gradient(45deg, #f77c30, #ff8800); /* Degradado para el botón */
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 20px;
+  font-family: 'Chewy', cursive;
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+
+.submit-button:hover {
+  transform: scale(1.05); /* Agranda ligeramente el botón al pasar el cursor */
+}
+
+/* Estilo del toolbar */
+ion-toolbar {
+  --background: rgba(16, 49, 22, 0.9); /* Fondo translúcido oscuro */
+  --border-color: transparent;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen sin zoom */
+.rating-modal-content img {
+  object-fit: contain; /* Ajusta la imagen sin zoom */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  height: auto; /* Mantiene las proporciones originales */
+}

@@ -324,36 +324,23 @@ export class TriviaPage implements OnInit, OnDestroy {
   }
 
    //calificación trivia
-   async mostrarCalificacion() {
-    try {
-      const hoy = new Date().toISOString().split('T')[0]; // Fecha actual en formato YYYY-MM-DD
-      const encuestaGuardada = JSON.parse(localStorage.getItem('encuestaRealizada') || '{}');
+async mostrarCalificacion() {
+  try {
+    const hoy = new Date().toISOString().split('T')[0]; // Fecha actual en formato YYYY-MM-DD
+    const encuestaGuardada = JSON.parse(localStorage.getItem('encuestaRealizada') || '{}');
 
-      // Verificar si la encuesta ya se realizó hoy
-      if (encuestaGuardada.fecha === hoy && encuestaGuardada.realizada) {
-        console.log('La encuesta ya fue realizada hoy');
-        return; // Salir si ya se realizó
-      }
-
-      // Mostrar el modal de calificación
-      const modal = await this.modalController.create({
-        component: RatingModalComponent,
-      });
-      await modal.present();
-
-      // Procesar el resultado al cerrar el modal
-      const { data } = await modal.onDidDismiss();
-      if (data?.realizada) {
-        console.log('Encuesta realizada, actualizando localStorage...');
-        localStorage.setItem(
-          'encuestaRealizada',
-          JSON.stringify({ fecha: hoy, realizada: true })
-        );
-      }
-    } catch (error) {
-      console.error('Error al mostrar el modal:', error);
+    // Verificar si la encuesta ya se realizó hoy
+    if (encuestaGuardada.fecha === hoy && encuestaGuardada.realizada) {
+      console.log('La encuesta ya fue realizada hoy');
+      return; // Salir si ya se realizó
     }
+
+    // Redirigir a la página de calificación
+    this.router.navigate(['/adulto/rating']);
+  } catch (error) {
+    console.error('Error al mostrar la página de calificación:', error);
   }
+}
 
 
   yaRealizoEncuestaHoy(): boolean {

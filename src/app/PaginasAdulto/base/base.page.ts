@@ -90,6 +90,8 @@ export class BasePage implements OnInit {
       this.pageTitle = 'Atracción';
     } else if (cleanedUrl.includes('informacion')) {
       this.pageTitle = 'Información';
+    }else if (cleanedUrl.includes('rating')) {
+      this.pageTitle = 'Encuesta';
     }else {
       this.pageTitle = 'Menú';  // Título por defecto
     }

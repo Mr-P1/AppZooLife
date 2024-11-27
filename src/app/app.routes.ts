@@ -80,6 +80,10 @@ export const routes: Routes = [
         path: 'planta-info/:id',
         loadComponent: () => import('./PaginasAdulto/planta-info/planta-info.page').then( m => m.PlantaInfoPage)
       },
+      {
+        path: 'rating',
+        loadComponent: () => import('./PaginasAdulto/rating/rating.page').then( m => m.RatingPage)
+      },
 
 
     ]
@@ -92,6 +96,7 @@ export const routes: Routes = [
     path: 'oirs',
     loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
   },
+
 
 
 
@@ -131,6 +136,7 @@ export const routes: Routes = [
       }
     ]
   },
+
 
 
 
