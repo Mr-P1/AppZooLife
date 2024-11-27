@@ -1,22 +1,11 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/adulto/inicio"></ion-back-button>
-    </ion-buttons>
-    <ion-title>OIRS</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-card class="container-login">
     <form [formGroup]="oirsForm" (ngSubmit)="submitForm()">
       <!-- Logo del bioparque centrado -->
       <div class="ion-text-center ion-margin-vertical lock">
-        <img src=".././../assets/icon/logoBioparque.png" alt="Logo Bioparque">
+        <img src=".././../assets/icon/logoBioparque.png" alt="Logo Bioparque" width="250px">
       </div>
 
-      <!-- Título del formulario -->
-      <h1>ZooLife - OIRS</h1>
+
 
       <!-- Tipo de Solicitud -->
       <ion-item class="ion-margin" lines="none">
@@ -67,10 +56,6 @@
           <ion-text style="text-transform: none;">Enviar Solicitud</ion-text>
         </ion-button>
 
-        <ion-button expand="block" size="large" [strong]="true" class="qr-button" [routerLink]="['/adulto/historial-oirs']">
-          <ion-text style="text-transform: none;">Volver</ion-text>
-        </ion-button>
       </div>
     </form>
-  </ion-card>
 </ion-content>

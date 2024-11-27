@@ -84,6 +84,10 @@ export const routes: Routes = [
         path: 'rating',
         loadComponent: () => import('./PaginasAdulto/rating/rating.page').then( m => m.RatingPage)
       },
+      {
+        path: 'oirs',
+        loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
+      },
 
 
     ]
@@ -91,10 +95,6 @@ export const routes: Routes = [
   {
     path: 'chat/:id',
     loadComponent: () => import('./PaginasAdulto/chat/chat.page').then( m => m.ChatPage)
-  },
-  {
-    path: 'oirs',
-    loadComponent: () => import('./PaginasAdulto/oirs/oirs.page').then( m => m.OirsFormPage)
   },
 
 
