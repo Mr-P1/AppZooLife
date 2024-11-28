@@ -7,7 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/browser';
 import { AuthService } from './../../common/servicios/auth.service';
-import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon, IonInfiniteScroll } from "@ionic/angular/standalone";
+import { IonContent, IonList, IonItem, IonSearchbar, IonLabel, IonCard, IonCardHeader, IonButton, IonCardTitle, IonFab, IonFabButton, IonFabList, IonIcon} from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { leafOutline, pawOutline, star, personCircle, chevronUpCircle, document, colorPalette, globe, qrCodeOutline, earthOutline, mapOutline } from 'ionicons/icons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -22,9 +22,8 @@ import { NotificacionesService } from 'src/app/common/servicios/notificaciones.s
   standalone: true,
   imports: [ZXingScannerModule, IonIcon, IonFabList, IonFabButton, IonFab, IonCardTitle, IonButton, IonCardHeader, IonCard, IonLabel, IonSearchbar, IonItem, IonList, IonContent, CommonModule, RouterLink,]
 })
-export class InicioPage implements OnInit, AfterViewInit {
+export class InicioPage implements OnInit {
   @ViewChild(ZXingScannerComponent) scanner!: ZXingScannerComponent;
-  @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
 
 
@@ -40,9 +39,6 @@ export class InicioPage implements OnInit, AfterViewInit {
   plantas: Planta[] = [];
   displayedAnimals: Animal[] = [];
   displayedPlantas: Planta[] = [];
-  itemsPerPage: number = 5;
-  currentPageAnimals: number = 1;
-  currentPagePlantas: number = 1;
   animalesOriginal: Animal[] = [];
   plantasOriginal: Planta[] = [];
   userId: string = '';
@@ -94,79 +90,32 @@ export class InicioPage implements OnInit, AfterViewInit {
   }
 
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.infiniteScroll) {
-        this.infiniteScroll.disabled = false;  // Configuración inicial
-      }
-    }, 0); // Retraso mínimo para permitir la inicialización completa
+
+  loadAnimals() {
+    this.animalsService.getAnimales().subscribe((data: Animal[]) => {
+      this.animales = data;
+      this.animalesOriginal = [...data];
+      this.displayedAnimals = [...this.animales];  // Carga todos los animales a la vez
+
+      // Obtener áreas y clases únicas de los animales
+      this.areas = [...new Set(this.animales.map(animal => animal.area))];
+      this.clasesAnimales = [...new Set(this.animales.map(animal => animal.clase))];
+    });
+  }
+
+  loadPlantas() {
+    this.animalsService.getPlantas().subscribe((data: Planta[]) => {
+      this.plantas = data;
+      this.plantasOriginal = [...data];
+      this.displayedPlantas = [...this.plantas];  // Carga todas las plantas a la vez
+
+      // Obtener áreas y familias únicas de las plantas
+      this.floraAreas = [...new Set(this.plantas.map(planta => planta.area))];
+      this.familiasPlantas = [...new Set(this.plantas.map(planta => planta.familia))];
+    });
   }
 
 
-// Método para cargar las clases y familias únicas al obtener los datos
-loadAnimals() {
-  this.animalsService.getAnimales().subscribe((data: Animal[]) => {
-    this.animales = data;
-    this.animalesOriginal = [...data];
-    this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
-
-    // Obtener áreas y clases únicas de los animales
-    this.areas = [...new Set(this.animales.map(animal => animal.area))];
-    this.clasesAnimales = [...new Set(this.animales.map(animal => animal.clase))];
-  });
-}
-
-loadPlantas() {
-  this.animalsService.getPlantas().subscribe((data: Planta[]) => {
-    this.plantas = data;
-    this.plantasOriginal = [...data];
-    this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
-
-    // Obtener áreas y familias únicas de las plantas
-    this.floraAreas = [...new Set(this.plantas.map(planta => planta.area))];
-    this.familiasPlantas = [...new Set(this.plantas.map(planta => planta.familia))];
-  });
-}
-
-
-  loadMore(event: any) {
-    setTimeout(() => {
-      if (!this.mostrarPlantas) {
-        const start = this.currentPageAnimals * this.itemsPerPage;
-        const end = start + this.itemsPerPage;
-        this.displayedAnimals = [
-          ...this.displayedAnimals,
-          ...this.animales.slice(start, end),
-        ];
-        this.currentPageAnimals++;
-      } else {
-        const start = this.currentPagePlantas * this.itemsPerPage;
-        const end = start + this.itemsPerPage;
-        this.displayedPlantas = [
-          ...this.displayedPlantas,
-          ...this.plantas.slice(start, end),
-        ];
-        this.currentPagePlantas++;
-      }
-
-      event.target.complete();
-
-      if (
-        (!this.mostrarPlantas && this.displayedAnimals.length >= this.animales.length) ||
-        (this.mostrarPlantas && this.displayedPlantas.length >= this.plantas.length)
-      ) {
-        if (this.infiniteScroll) {  // Verifica que infiniteScroll esté definido
-          this.infiniteScroll.disabled = true;
-        }
-      }
-    }, 1000);
-  }
-
-  enableInfiniteScroll() {
-    if (this.infiniteScroll) {  // Verifica que infiniteScroll esté definido
-      this.infiniteScroll.disabled = false;
-    }
-  }
 
   filterItems(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
@@ -252,35 +201,27 @@ loadPlantas() {
     this.isFilteredByArea = false;
 
     if (this.mostrarPlantas) {
-      this.displayedPlantas = this.plantas.slice(0, this.itemsPerPage);
-      this.currentFamiliaIndex = 0;
+      this.displayedPlantas = this.plantas;  // Carga todas las plantas al cambiar a plantas
     } else {
-      this.displayedAnimals = this.animales.slice(0, this.itemsPerPage);
-      this.currentClaseIndex = 0;
+      this.displayedAnimals = this.animales;  // Carga todos los animales al cambiar a animales
     }
-    this.enableInfiniteScroll();
   }
-
 
 
   toggleOrdenRuta() {
     if (this.isSortedByMap) {
-      // Restauramos el orden original
-      this.displayedAnimals = this.animalesOriginal.slice(0, this.currentPageAnimals * this.itemsPerPage);
-      this.displayedPlantas = this.plantasOriginal.slice(0, this.currentPagePlantas * this.itemsPerPage);
+      // Restauramos el orden original sin paginación
+      this.displayedAnimals = [...this.animalesOriginal];
+      this.displayedPlantas = [...this.plantasOriginal];
     } else {
-      // Ordenamos por `posicion_mapa` y solo mostramos el número de elementos visibles
-      this.displayedAnimals = [...this.animalesOriginal]
-        .sort((a, b) => a.posicion_mapa - b.posicion_mapa)
-        .slice(0, this.currentPageAnimals * this.itemsPerPage);
-
-      this.displayedPlantas = [...this.plantasOriginal]
-        .sort((a, b) => a.posicion_mapa - b.posicion_mapa)
-        .slice(0, this.currentPagePlantas * this.itemsPerPage);
+      // Ordenamos por `posicion_mapa` sin aplicar slice
+      this.displayedAnimals = [...this.animalesOriginal].sort((a, b) => a.posicion_mapa - b.posicion_mapa);
+      this.displayedPlantas = [...this.plantasOriginal].sort((a, b) => a.posicion_mapa - b.posicion_mapa);
     }
 
     this.isSortedByMap = !this.isSortedByMap;
   }
+
 
 
   toggleQrScan() {

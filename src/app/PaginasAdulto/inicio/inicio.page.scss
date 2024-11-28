@@ -8,10 +8,7 @@ ion-content {
   background-repeat: no-repeat;
   background-attachment: fixed; /* Fija la imagen */
   font-family: 'Work Sans', sans-serif;
-  height: 100%;
-  min-height: 100vh; /* Asegura una altura mínima */
   display: flex;
-  flex-direction: column;
 }
 
 
@@ -129,15 +126,6 @@ ion-card-title {
 ion-button img {
   width: 24px;
   height: 24px;
-}
-
-ion-content {
-  --background: none;
-  background-image: url(./../../../assets/fondos/fondoinicio.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
 }
 
 /* Estilo para los botones debajo del carrusel */
