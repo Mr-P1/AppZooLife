@@ -74,15 +74,10 @@ export class TriviaPage implements OnInit, OnDestroy {
           if (data) {
             console.log('Datos del usuario obtenidos:', data);
             this.usuario = data;
+                // Verificamos si el usuario ha visto suficientes animales y plantas
+                let atraccionesVistas = JSON.parse(localStorage.getItem('atraccionesVistasSesion') || '[]');
+                this.animalesVistosCount = atraccionesVistas.length;
 
-            // Realizar consultas individuales para identificar el problema
-            this.preguntaService.getAnimalesVistosPorUsuario(this.userId).subscribe(animalesVistos => {
-              console.log('Animales vistos:', animalesVistos);
-
-              this.preguntaService.getPlantasVistasPorUsuario(this.userId).subscribe(plantasVistas => {
-                console.log('Plantas vistas:', plantasVistas);
-
-                this.animalesVistosCount = animalesVistos.length + plantasVistas.length;
                 this.puedeHacerTrivia = this.animalesVistosCount >= 5;
 
                 if (this.puedeHacerTrivia) {
@@ -127,14 +122,7 @@ export class TriviaPage implements OnInit, OnDestroy {
                   console.log('No hay suficientes animales o plantas vistos para hacer la trivia');
                   this.loading = false;
                 }
-              }, error => {
-                console.error('Error al obtener plantas vistas:', error);
-                this.loading = false;
-              });
-            }, error => {
-              console.error('Error al obtener animales vistos:', error);
-              this.loading = false;
-            });
+
           } else {
             console.log('Datos del usuario no encontrados');
             this.loading = false;
