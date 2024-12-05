@@ -72,6 +72,8 @@ export class BasePage implements OnInit{
       this.pageTitle = 'Atracción';
     }else if (url.includes('info-plantas')) {
       this.pageTitle = 'Atracción';
+    }else if (url.includes('animal-info')) {
+      this.pageTitle = 'Atracción';
     } else if (url.includes('info-zoo')) {
       this.pageTitle = 'Información';
     } else {

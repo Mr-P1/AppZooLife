@@ -1,4 +1,11 @@
 <ion-content class="contenidoPrincipal">
+  <ion-alert
+  [isOpen]="alertaVisible"
+  header="Explorador"
+  subHeader="¡Felicidades!"
+  message="Ya puedes realizar la trivia."
+  [buttons]="alertButtons">
+</ion-alert>
   <ng-container *ngIf="planta$ | async as planta; else loading">
     <ion-card>
       <div>
