@@ -11,13 +11,13 @@
         <!-- Título de la noticia -->
         <ion-card-title>{{ noticia.titulo }}</ion-card-title>
         <!-- Fecha de publicación -->
-        <ion-card-subtitle>Publicado el {{ noticia.fecha_publicacion || noticia.fecha }}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content class="card-content">
         <!-- Descripción o contenido completo de la noticia -->
         <p>{{ noticia.descripcion }}</p>
-      </ion-card-content>
+      </ion-card-content><br>
+      <ion-card-subtitle>Publicado el {{ fechaFormateada | date:'dd/MM/yyyy' }}</ion-card-subtitle>
     </ion-card>
   </ng-container>
 

@@ -10,14 +10,14 @@ import {
 import { Storage, ref, uploadBytes, getDownloadURL, deleteObject } from '@angular/fire/storage';
 import { catchError, Observable, tap, throwError, from } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Timestamp } from 'firebase/firestore';
 
 export interface Noticia {
   id: string;
   titulo: string;
   imagen: string;
   descripcion: string;
-  fecha: string; // Mantén esto si se usa para la fecha de publicación.
-  fecha_publicacion?: string; // Asegúrate de incluir esto si es necesario
+  fecha: string | Timestamp; // Mantén esto si se usa para la fecha de publicación.
 }
 
 const PATH_Noticias = 'Noticias';
@@ -34,13 +34,26 @@ export class NoticiasService {
     return collectionData(this._rutaNoticias, { idField: 'id' }) as Observable<Noticia[]>;
   }
 
-  // Método para obtener una noticia específica por ID
-  getNoticia(id: string): Observable<Noticia | null> {
-    const docRef = doc(this._rutaNoticias, id);
-    return from(getDoc(docRef)).pipe(
-      map(doc => doc.exists() ? { id: doc.id, ...doc.data() } as Noticia : null)
-    );
-  }
+
+// Método para obtener una noticia específica por ID
+getNoticia(id: string): Observable<Noticia | null> {
+  const docRef = doc(this._rutaNoticias, id);
+  return from(getDoc(docRef)).pipe(
+    map(doc => {
+      if (doc.exists()) {
+        const data = doc.data();
+
+        // Verificar si 'fecha' es un Timestamp y convertirlo a Date
+        if (data && data['fecha'] instanceof Timestamp) {
+          data['fecha'] = data['fecha'].toDate(); // Convertir a Date
+        }
+
+        return { id: doc.id, ...data } as Noticia;
+      }
+      return null;
+    })
+  );
+}
 
   addNoticia(noticia: Noticia): Observable<void> {
     return from(addDoc(this._rutaNoticias, noticia)).pipe(
