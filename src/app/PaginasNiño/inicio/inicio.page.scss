@@ -1,6 +1,3 @@
-
-
-
 .animal-card {
   background-image: url('../../../assets/fondos/fondoListaAnimal.jpg');
   background-size: cover;
@@ -122,7 +119,7 @@ ion-card-subtitle {
 
 ion-content {
   --background: none;
-  background-image: url(./../../../assets/fondos/fondoninos.png);
+  background-image: url(./../../../assets/fondos/fondo-ninos-2.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -238,12 +235,14 @@ h2 {
 }
 
 .flora-button::part(native) {
-  background: url('https://img.freepik.com/fotos-premium/fondo-fauna-varios-animales-bosque_744040-2326.jpg') center/cover no-repeat !important;
+  // background: url('https://img.freepik.com/fotos-premium/fondo-fauna-varios-animales-bosque_744040-2326.jpg') center/cover no-repeat !important;
+  background-color: rgb(182, 111, 45);
   --background: none !important;
 }
 
 .fauna-button::part(native) {
-  background: url('https://img.freepik.com/fotos-premium/accidentes-geograficos-majestuosos-tierra-exploracion-fotorrealista-maravillas-naturales_767466-12109.jpg') center/cover no-repeat !important;
+  // background: url('https://img.freepik.com/fotos-premium/accidentes-geograficos-majestuosos-tierra-exploracion-fotorrealista-maravillas-naturales_767466-12109.jpg') center/cover no-repeat !important;
+  background-color: rgb(62, 150, 62);
   --background: none !important;
 }
 
