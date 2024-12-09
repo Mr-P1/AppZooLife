@@ -22,7 +22,13 @@
           <ion-popover trigger="curiosidad-trigger" triggerAction="click">
             <ng-template>
               <div class="glass-container">
-                <p>{{ planta.curiosidad }}</p>
+                <ion-list>
+                  <ion-item class="transparent-item">
+                    <ion-label>
+                      {{ planta.curiosidad }}
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
               </div>
             </ng-template>
           </ion-popover>
@@ -39,7 +45,13 @@
           <ion-popover trigger="precaucion-trigger" triggerAction="click">
             <ng-template>
               <div class="glass-container">
-                <p>{{ planta.precaucion }}</p>
+                <ion-list>
+                  <ion-item class="transparent-item">
+                    <ion-label>
+                      {{ planta.precaucion }}
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
               </div>
             </ng-template>
           </ion-popover>

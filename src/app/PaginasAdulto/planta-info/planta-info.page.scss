@@ -5,26 +5,6 @@
   align-items: center;
 }
 
-//* Estilo del popover */
-ion-popover {
-  --background: transparent !important; /* Fondo transparente */
-  --backdrop-opacity: 0.3; /* Opcional: transparencia para el fondo general */
-}
-
-/* Contenedor con efecto vidrio */
-.glass-container {
-  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
-  backdrop-filter: blur(20px); /* Efecto de desenfoque */
-  border-radius: 12px; /* Bordes redondeados */
-  padding: 15px; /* Espaciado interno */
-  color: white; /* Texto blanco */
-  text-align: justify; /* Alineación del texto */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Borde translúcido */
-  max-width: 90%; /* Asegura que el contenido no se extienda demasiado */
-  margin: 0 auto; /* Centra el contenedor */
-}
-
-
 
   .title-container {
     text-align: center;
@@ -103,3 +83,33 @@ ion-popover {
     object-fit: cover;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
   }
+
+  /* Fondos transparentes para listas */
+ion-list {
+  background: transparent !important; /* Asegura transparencia en el fondo */
+  border: none !important; /* Elimina bordes */
+  box-shadow: none !important; /* Elimina sombras */
+  padding: 0; /* Sin espaciado extra */
+}
+
+/* Fondos transparentes para elementos de la lista */
+.transparent-item {
+  --background: #ffffffb4 !important; /* Transparencia completa */
+  --border-color: transparent !important; /* Sin bordes */
+  font-size: 1rem; /* Ajuste del tamaño de texto */
+  font-family: 'Work Sans', sans-serif !important; /* Fuente consistente */
+  text-align: justify; /* Alineación justificada */
+  // font-weight: 600 !important; /* Poner el texto en negrita */
+}
+
+/* Ajustes generales del ion-popover */
+ion-popover {
+  --background: transparent !important; /* Fondo transparente del popover */
+  --backdrop-opacity: 0.3; /* Opacidad del fondo detrás del popover */
+}
+
+/* Estilo de las etiquetas */
+ion-label {
+  color: rgb(13, 78, 0) !important; /* Asegura que el texto sea blanco */
+}
+

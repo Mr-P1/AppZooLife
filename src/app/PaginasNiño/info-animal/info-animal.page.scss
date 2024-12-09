@@ -106,3 +106,25 @@ ion-card-content {
   color: #007bff; /* Azul */
   font-weight: bold;
 }
+
+/* Fondos transparentes para elementos de la lista */
+.transparent-item {
+  --background: #ffffffb4 !important; /* Transparencia completa */
+  --border-color: transparent !important; /* Sin bordes */
+  font-size: 1rem; /* Ajuste del tamaño de texto */
+  font-family: 'Work Sans', sans-serif !important; /* Fuente consistente */
+  text-align: justify; /* Alineación justificada */
+  // font-weight: 600 !important; /* Poner el texto en negrita */
+}
+
+/* Ajustes generales del ion-popover */
+ion-popover {
+  --background: transparent !important; /* Fondo transparente del popover */
+  --backdrop-opacity: 0.3; /* Opacidad del fondo detrás del popover */
+}
+
+/* Estilo de las etiquetas */
+ion-label {
+  color: rgb(13, 78, 0) !important; /* Asegura que el texto sea blanco */
+}
+

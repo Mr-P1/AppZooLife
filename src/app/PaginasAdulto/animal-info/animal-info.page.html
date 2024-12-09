@@ -24,7 +24,14 @@
           <ion-popover trigger="curiosidad-trigger" triggerAction="click">
             <ng-template>
               <div class="glass-container">
-                <p>{{ animal.dato_curioso }}</p>
+
+                <ion-list>
+                  <ion-item class="transparent-item">
+                    <ion-label>
+                      {{ animal.dato_curioso }}
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
               </div>
             </ng-template>
           </ion-popover>
