@@ -83,18 +83,35 @@ export class PlantaInfoPage implements OnInit {
     // Recupera el contador de la sesión actual desde localStorage
     let atraccionesVistasSesion = JSON.parse(localStorage.getItem('atraccionesVistasSesion') || '[]');
 
-    // Si el animal ya fue contado en esta sesión, no lo cuenta de nuevo
+    // Recupera o inicializa la variable atraccionesVistasPreguntas
+    let atraccionesVistasPreguntas = JSON.parse(localStorage.getItem('atraccionesVistasPreguntas') || '[]');
+    const userId = this.authService.currentUserId;
+
+    // Si la planta no ha sido contada en la sesión actual, la agrega
     if (!atraccionesVistasSesion.includes(plantaId)) {
       atraccionesVistasSesion.push(plantaId);
       localStorage.setItem('atraccionesVistasSesion', JSON.stringify(atraccionesVistasSesion));
 
-      // Verifica si el número de animales vistos en la sesión alcanza el límite
+      // Verifica si el número de plantas vistas en la sesión alcanza el límite para mostrar la alerta
       if (atraccionesVistasSesion.length === this.VIEWS_LIMIT) {
         console.log('Mostrando alerta automáticamente');
         this.alertaVisible = true; // Muestra la alerta
       }
+
+      // Guarda la vista de esta planta en atraccionesVistasPreguntas
+      if (userId) {
+        atraccionesVistasPreguntas.push({
+          id: plantaId,       // ID de la planta vista
+          tipo: 'planta',     // Tipo de atracción
+          userId: userId      // ID del usuario
+        });
+
+        // Guarda los datos en el localStorage
+        localStorage.setItem('atraccionesVistasPreguntas', JSON.stringify(atraccionesVistasPreguntas));
+      }
     }
   }
+
 
   private redirigirATrivia() {
     this.alertaVisible = false; // Cierra la alerta

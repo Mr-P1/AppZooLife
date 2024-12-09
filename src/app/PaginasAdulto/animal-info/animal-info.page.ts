@@ -83,18 +83,35 @@ export class AnimalInfoPage implements OnInit, OnDestroy {
     // Recupera el contador de la sesión actual desde localStorage
     let atraccionesVistasSesion = JSON.parse(localStorage.getItem('atraccionesVistasSesion') || '[]');
 
-    // Si el animal ya fue contado en esta sesión, no lo cuenta de nuevo
+    // Recupera o inicializa la variable atraccionesVistasPreguntas
+    let atraccionesVistasPreguntas = JSON.parse(localStorage.getItem('atraccionesVistasPreguntas') || '[]');
+    const userId = this.authService.currentUserId;
+
+    // Si el animal no ha sido contado en la sesión actual, lo agrega
     if (!atraccionesVistasSesion.includes(animalId)) {
       atraccionesVistasSesion.push(animalId);
       localStorage.setItem('atraccionesVistasSesion', JSON.stringify(atraccionesVistasSesion));
 
-      // Verifica si el número de animales vistos en la sesión alcanza el límite
+      // Verifica si el número de animales vistos en la sesión alcanza el límite para mostrar la alerta
       if (atraccionesVistasSesion.length === this.VIEWS_LIMIT) {
         console.log('Mostrando alerta automáticamente');
         this.alertaVisible = true; // Muestra la alerta
       }
+
+      // Guarda la vista de este animal en atraccionesVistasPreguntas
+      if (userId) {
+        atraccionesVistasPreguntas.push({
+          id: animalId,       // ID del animal visto
+          tipo: 'animal',     // Tipo de atracción
+          userId: userId      // ID del usuario
+        });
+
+        // Guarda los datos en el localStorage
+        localStorage.setItem('atraccionesVistasPreguntas', JSON.stringify(atraccionesVistasPreguntas));
+      }
     }
   }
+
 
   private redirigirATrivia() {
     this.alertaVisible = false; // Cierra la alerta

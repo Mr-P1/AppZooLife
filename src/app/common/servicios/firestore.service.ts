@@ -238,42 +238,52 @@ export class FirestoreService {
     return from(getDocs(q)).pipe(map((snapshot) => !snapshot.empty));
   }
 
-  // Método para obtener preguntas de trivia basadas en los animales vistos por el usuario
-  getPreguntasTriviaPorAnimalesVistos(userId: string): Observable<PreguntaTrivia[]> {
-    const animalesVistosQuery = query(this._rutaAnimalesVistos, where('userId', '==', userId));
-    return from(getDocs(animalesVistosQuery)).pipe(
-      map((snapshot) => snapshot.docs.map((doc) => doc.data()['animalId'])),
-      switchMap((animalIds: string[]) => {
-        if (animalIds.length > 0) {
-          const preguntasQuery = query(this._preguntasTrivia, where('animal_id', 'in', animalIds));
-          return collectionData(preguntasQuery, { idField: 'id' }) as Observable<PreguntaTrivia[]>;
-        } else {
-          return of([]); // Devuelve una lista vacía si no hay animales vistos
-        }
-      })
-    );
+// Método para obtener preguntas de trivia basadas en los animales vistos por el usuario
+getPreguntasTriviaPorAnimalesVistos(userId: string): Observable<PreguntaTrivia[]> {
+  // Recupera el listado de atracciones vistas desde localStorage
+  const atraccionesVistasPreguntas = JSON.parse(localStorage.getItem('atraccionesVistasPreguntas') || '[]');
+
+  // Filtra las atracciones vistas por el usuario y solo obtiene los animales
+  const animalesVistos = atraccionesVistasPreguntas.filter((item: any) => item.userId === userId && item.tipo === 'animal');
+
+  // Extrae los IDs de los animales vistos
+  const animalIds = animalesVistos.map((item: any) => item.id);
+
+  console.log('IDs de animales vistos:', animalIds); // Para depuración
+
+  // Si hay animales vistos, realizamos la consulta
+  if (animalIds.length > 0) {
+    const preguntasQuery = query(this._preguntasTrivia, where('animal_id', 'in', animalIds));
+
+    // Ejecuta la consulta y devuelve las preguntas de trivia de animales
+    return collectionData(preguntasQuery, { idField: 'id' }) as Observable<PreguntaTrivia[]>;
+  } else {
+    // Si no hay animales vistos, retorna una lista vacía
+    return of([]);
   }
+}
 
   // Método para obtener preguntas de trivia basadas en las plantas vistas por el usuario
-getPreguntasTriviaPorPlantasVistas(userId: string): Observable<PreguntaTrivia[]> {
-  // Consultar las plantas vistas por el usuario
-  const plantasVistasQuery = query(this._rutaPlantasVistas, where('userId', '==', userId));
-  return from(getDocs(plantasVistasQuery)).pipe(
-    // Obtener los IDs de las plantas vistas por el usuario
-    map((snapshot) => snapshot.docs.map((doc) => doc.data()['plantaId'])),
-    switchMap((plantaIds: string[]) => {
-      // Verificar si el usuario ha visto alguna planta
-      if (plantaIds.length > 0) {
-        // Consultar las preguntas de trivia asociadas con las plantas vistas
-        const preguntasQuery = query(this._preguntasTriviaPlantas, where('planta_id', 'in', plantaIds));
-        return collectionData(preguntasQuery, { idField: 'id' }) as Observable<PreguntaTrivia[]>;
-      } else {
-        // Si no ha visto ninguna planta, devolver una lista vacía
-        return of([]);
-      }
-    })
-  );
-}
+  getPreguntasTriviaPorPlantasVistas(userId: string): Observable<PreguntaTrivia[]> {
+    // Recupera el listado de atracciones vistas desde localStorage
+    const atraccionesVistasPreguntas = JSON.parse(localStorage.getItem('atraccionesVistasPreguntas') || '[]');
+
+    // Filtra las plantas vistas por el usuario
+    const plantasVistas = atraccionesVistasPreguntas.filter((item: any) => item.tipo === 'planta' && item.userId === userId);
+
+    // Si hay plantas vistas, obtenemos sus IDs
+    const plantaIds = plantasVistas.map((item: any) => item.id);
+
+    if (plantaIds.length > 0) {
+      // Si existen plantas vistas, consultamos las preguntas de trivia asociadas con esas plantas
+      const preguntasQuery = query(this._preguntasTriviaPlantas, where('planta_id', 'in', plantaIds));
+      return collectionData(preguntasQuery, { idField: 'id' }) as Observable<PreguntaTrivia[]>;
+    } else {
+      // Si no hay plantas vistas, devolvemos una lista vacía
+      return of([]);
+    }
+  }
+
 
   // Método para obtener los animales vistos por un usuario
   getAnimalesVistosPorUsuario(userId: string): Observable<any[]> {
